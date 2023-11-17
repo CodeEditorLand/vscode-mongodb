@@ -5,27 +5,25 @@
 
 // Generated from ./grammar/mongo.g4 by ANTLR 4.6-SNAPSHOT
 
+import { ParseTreeVisitor } from "antlr4ts/tree/ParseTreeVisitor";
 
-import { ParseTreeVisitor } from 'antlr4ts/tree/ParseTreeVisitor';
-
-import { MongoCommandsContext } from './mongoParser';
-import { CommandsContext } from './mongoParser';
-import { CommandContext } from './mongoParser';
-import { EmptyCommandContext } from './mongoParser';
-import { CollectionContext } from './mongoParser';
-import { FunctionCallContext } from './mongoParser';
-import { ArgumentsContext } from './mongoParser';
-import { ArgumentListContext } from './mongoParser';
-import { ObjectLiteralContext } from './mongoParser';
-import { ArrayLiteralContext } from './mongoParser';
-import { ElementListContext } from './mongoParser';
-import { PropertyNameAndValueListContext } from './mongoParser';
-import { PropertyAssignmentContext } from './mongoParser';
-import { PropertyValueContext } from './mongoParser';
-import { LiteralContext } from './mongoParser';
-import { PropertyNameContext } from './mongoParser';
-import { CommentContext } from './mongoParser';
-
+import { MongoCommandsContext } from "./mongoParser";
+import { CommandsContext } from "./mongoParser";
+import { CommandContext } from "./mongoParser";
+import { EmptyCommandContext } from "./mongoParser";
+import { CollectionContext } from "./mongoParser";
+import { FunctionCallContext } from "./mongoParser";
+import { ArgumentsContext } from "./mongoParser";
+import { ArgumentListContext } from "./mongoParser";
+import { ObjectLiteralContext } from "./mongoParser";
+import { ArrayLiteralContext } from "./mongoParser";
+import { ElementListContext } from "./mongoParser";
+import { PropertyNameAndValueListContext } from "./mongoParser";
+import { PropertyAssignmentContext } from "./mongoParser";
+import { PropertyValueContext } from "./mongoParser";
+import { LiteralContext } from "./mongoParser";
+import { PropertyNameContext } from "./mongoParser";
+import { CommentContext } from "./mongoParser";
 
 /**
  * This interface defines a complete generic visitor for a parse tree produced
@@ -117,7 +115,9 @@ export interface mongoVisitor<Result> extends ParseTreeVisitor<Result> {
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	visitPropertyNameAndValueList?: (ctx: PropertyNameAndValueListContext) => Result;
+	visitPropertyNameAndValueList?: (
+		ctx: PropertyNameAndValueListContext
+	) => Result;
 
 	/**
 	 * Visit a parse tree produced by `mongoParser.propertyAssignment`.
@@ -154,4 +154,3 @@ export interface mongoVisitor<Result> extends ParseTreeVisitor<Result> {
 	 */
 	visitComment?: (ctx: CommentContext) => Result;
 }
-
