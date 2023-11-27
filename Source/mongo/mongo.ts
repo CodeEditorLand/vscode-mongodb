@@ -122,8 +122,8 @@ export class Model implements IMongoResource {
 			server instanceof Server
 				? server.id
 				: server instanceof NoConnectionServer
-				? server.id
-				: null;
+				  ? server.id
+				  : null;
 		const index = this._servers.findIndex((value) => value.id === id);
 		if (index !== -1) {
 			this._servers.splice(index, 1);
