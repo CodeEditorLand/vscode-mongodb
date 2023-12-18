@@ -3,36 +3,28 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 import * as path from "path";
-import * as nls from "vscode-nls";
-import {
-	workspace,
-	languages,
-	ExtensionContext,
-	extensions,
-	Uri,
-	Range,
-} from "vscode";
+import { ExtensionContext, Range, Uri } from "vscode";
 import {
 	LanguageClient,
 	LanguageClientOptions,
 	RequestType,
 	ServerOptions,
 	TransportKind,
-	NotificationType,
 } from "vscode-languageclient";
+import * as nls from "vscode-nls";
 import { Database } from "./mongo";
 
 const localize = nls.loadMessageBundle();
 
 namespace ConnectDBRequest {
 	export const type: RequestType<string, string, any, any> = new RequestType(
-		"vscode/content"
+		"vscode/content",
 	);
 }
 
 namespace ColorSymbolRequest {
 	export const type: RequestType<string, Range[], any, any> = new RequestType(
-		"json/colorSymbols"
+		"json/colorSymbols",
 	);
 }
 
@@ -41,15 +33,15 @@ export default class MongoDBLanguageClient {
 
 	constructor(context: ExtensionContext) {
 		// The server is implemented in node
-		let serverModule = context.asAbsolutePath(
-			path.join("out", "src", "mongo", "languageServer.js")
+		const serverModule = context.asAbsolutePath(
+			path.join("out", "src", "mongo", "languageServer.js"),
 		);
 		// The debug options for the server
-		let debugOptions = { execArgv: ["--nolazy", "--debug=6005"] };
+		const debugOptions = { execArgv: ["--nolazy", "--debug=6005"] };
 
 		// If the extension is launch in debug mode the debug server options are use
 		// Otherwise the run options are used
-		let serverOptions: ServerOptions = {
+		const serverOptions: ServerOptions = {
 			run: {
 				module: serverModule,
 				transport: TransportKind.ipc,
@@ -63,7 +55,7 @@ export default class MongoDBLanguageClient {
 		};
 
 		// Options to control the language client
-		let clientOptions: LanguageClientOptions = {
+		const clientOptions: LanguageClientOptions = {
 			// Register the server for mongo javascript documents
 			documentSelector: ["mongo"],
 		};
@@ -73,9 +65,9 @@ export default class MongoDBLanguageClient {
 			"mongo",
 			localize("mongo.server.name", "Mongo Language Server"),
 			serverOptions,
-			clientOptions
+			clientOptions,
 		);
-		let disposable = this.client.start();
+		const disposable = this.client.start();
 
 		// Push the disposable to the context's subscriptions so that the
 		// client can be deactivated on extension deactivation

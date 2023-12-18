@@ -116,7 +116,7 @@ export interface mongoVisitor<Result> extends ParseTreeVisitor<Result> {
 	 * @return the visitor result
 	 */
 	visitPropertyNameAndValueList?: (
-		ctx: PropertyNameAndValueListContext
+		ctx: PropertyNameAndValueListContext,
 	) => Result;
 
 	/**

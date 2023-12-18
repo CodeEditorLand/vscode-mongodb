@@ -3,15 +3,14 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 import {
-	TreeDataProvider,
-	Command,
+	Disposable,
 	Event,
 	EventEmitter,
-	Disposable,
-	TreeItem,
 	ExtensionContext,
+	TreeDataProvider,
+	TreeItem,
 } from "vscode";
-import { Model, Server, Database, IMongoResource } from "./mongo";
+import { IMongoResource, Model } from "./mongo";
 
 export class MongoExplorer implements TreeDataProvider<IMongoResource> {
 	private _disposables: Map<IMongoResource, Disposable[]> = new Map<
@@ -26,7 +25,7 @@ export class MongoExplorer implements TreeDataProvider<IMongoResource> {
 
 	constructor(
 		private model: Model,
-		private extensionContext: ExtensionContext
+		private extensionContext: ExtensionContext,
 	) {
 		this.model.onChange(() => this._onDidChangeTreeData.fire());
 	}
@@ -49,11 +48,11 @@ export class MongoExplorer implements TreeDataProvider<IMongoResource> {
 				children.map((child) => {
 					if (child.onChange) {
 						return child.onChange(() =>
-							this._onDidChangeTreeData.fire(child)
+							this._onDidChangeTreeData.fire(child),
 						);
 					}
 					return new Disposable(() => {});
-				})
+				}),
 			);
 			return children;
 		});

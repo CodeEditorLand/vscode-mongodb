@@ -3,18 +3,17 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { ParseTreeVisitor } from "antlr4ts/tree/ParseTreeVisitor";
+import { ParserRuleContext } from "antlr4ts/ParserRuleContext";
+import { ErrorNode } from "antlr4ts/tree/ErrorNode";
 import { ParseTree } from "antlr4ts/tree/ParseTree";
 import { TerminalNode } from "antlr4ts/tree/TerminalNode";
-import { ErrorNode } from "antlr4ts/tree/ErrorNode";
-import { ParserRuleContext } from "antlr4ts/ParserRuleContext";
 import {
-	CommandsContext,
+	ArgumentListContext,
+	CollectionContext,
 	CommandContext,
+	CommandsContext,
 	FunctionCallContext,
 	MongoCommandsContext,
-	CollectionContext,
-	ArgumentListContext,
 } from "./mongoParser";
 import { mongoVisitor } from "./mongoVisitor";
 

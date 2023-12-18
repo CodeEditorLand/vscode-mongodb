@@ -3,13 +3,12 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 import * as cp from "child_process";
-import * as vscode from "vscode";
 import * as os from "os";
-import { IDisposable, toDisposable, dispose } from "./../util";
 import { EventEmitter, window } from "vscode";
+import { IDisposable, toDisposable } from "./../util";
 
 export class Shell {
-	private executionId: number = 0;
+	private executionId = 0;
 	private disposables: IDisposable[] = [];
 
 	private onResult: EventEmitter<{ exitCode; result; stderr }> =
@@ -17,7 +16,7 @@ export class Shell {
 
 	public static create(
 		execPath: string,
-		connectionString: string
+		connectionString: string,
 	): Promise<Shell> {
 		return new Promise((c, e) => {
 			try {
@@ -28,7 +27,7 @@ export class Shell {
 				return c(new Shell(shellProcess));
 			} catch (error) {
 				e(
-					`Error while creating mongo shell with path ${execPath}: ${error}`
+					`Error while creating mongo shell with path ${execPath}: ${error}`,
 				);
 			}
 		});
@@ -42,14 +41,14 @@ export class Shell {
 		const once = (ee: NodeJS.EventEmitter, name: string, fn: Function) => {
 			ee.once(name, fn);
 			this.disposables.push(
-				toDisposable(() => ee.removeListener(name, fn))
+				toDisposable(() => ee.removeListener(name, fn)),
 			);
 		};
 
 		const on = (ee: NodeJS.EventEmitter, name: string, fn: Function) => {
 			ee.on(name, fn);
 			this.disposables.push(
-				toDisposable(() => ee.removeListener(name, fn))
+				toDisposable(() => ee.removeListener(name, fn)),
 			);
 		};
 
@@ -58,7 +57,7 @@ export class Shell {
 
 		let buffers: string[] = [];
 		on(this.mongoShell.stdout, "data", (b) => {
-			let data: string = b.toString();
+			const data: string = b.toString();
 			const delimitter = `${this.executionId}${os.EOL}`;
 			if (data.endsWith(delimitter)) {
 				const result =
@@ -76,10 +75,10 @@ export class Shell {
 		});
 
 		on(this.mongoShell.stderr, "data", (result) =>
-			this.onResult.fire(result)
+			this.onResult.fire(result),
 		);
 		once(this.mongoShell.stderr, "close", (result) =>
-			this.onResult.fire(result)
+			this.onResult.fire(result),
 		);
 	}
 
@@ -122,7 +121,7 @@ export class Shell {
 					lines[lines.length - 1] === 'Type "it" for more'
 						? lines.splice(lines.length - 1, 1)
 						: lines;
-				let value = lines.join(os.EOL);
+				const value = lines.join(os.EOL);
 				executed = true;
 				c(lines.join(os.EOL));
 				if (handler) {

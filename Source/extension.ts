@@ -3,22 +3,20 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-"use strict";
-
-import * as vscode from "vscode";
 import * as fs from "fs";
 import * as path from "path";
-import { MongoExplorer } from "./mongo/explorer";
+import * as vscode from "vscode";
 import { MongoCommands } from "./mongo/commands";
-import {
-	Model,
-	Database,
-	Server,
-	IMongoResource,
-	MongoCommand,
-	Collection,
-} from "./mongo/mongo";
+import { MongoExplorer } from "./mongo/explorer";
 import MongoDBLanguageClient from "./mongo/languageClient";
+import {
+	Collection,
+	Database,
+	IMongoResource,
+	Model,
+	MongoCommand,
+	Server,
+} from "./mongo/mongo";
 
 let connectedDb: Database = null;
 let languageClient: MongoDBLanguageClient = null;
@@ -39,51 +37,51 @@ export function activate(context: vscode.ExtensionContext) {
 			// Commands
 			context.subscriptions.push(
 				vscode.commands.registerCommand("mongo.addServer", () =>
-					addServer()
-				)
+					addServer(),
+				),
 			);
 			context.subscriptions.push(
 				vscode.commands.registerCommand("mongo.refreshExplorer", () =>
-					explorer.refresh()
-				)
+					explorer.refresh(),
+				),
 			);
 			context.subscriptions.push(
 				vscode.commands.registerCommand(
 					"mongo.removeServer",
-					(element: IMongoResource) => model.remove(element)
-				)
+					(element: IMongoResource) => model.remove(element),
+				),
 			);
 			context.subscriptions.push(
 				vscode.commands.registerCommand(
 					"mongo.createDatabase",
-					(server: Server) => createDatabase(server)
-				)
+					(server: Server) => createDatabase(server),
+				),
 			);
 
 			vscode.window.setStatusBarMessage("Mongo: Not connected");
 			context.subscriptions.push(
 				vscode.commands.registerCommand(
 					"mongo.connect",
-					(element: Database) => connectToDatabase(element)
-				)
+					(element: Database) => connectToDatabase(element),
+				),
 			);
 			context.subscriptions.push(
 				vscode.commands.registerCommand(
 					"mongo.dropDb",
-					(element: Database) => dropDatabase(element)
-				)
+					(element: Database) => dropDatabase(element),
+				),
 			);
 			context.subscriptions.push(
 				vscode.commands.registerCommand("mongo.connectDb", () => {
 					vscode.window
 						.showQuickPick(getDatabaseQuickPicks())
 						.then((pick) => connectToDatabase(pick.database));
-				})
+				}),
 			);
 			context.subscriptions.push(
 				vscode.commands.registerCommand("mongo.newScrapbook", () =>
-					createScrapbook()
-				)
+					createScrapbook(),
+				),
 			);
 			context.subscriptions.push(
 				vscode.commands.registerCommand(
@@ -91,14 +89,14 @@ export function activate(context: vscode.ExtensionContext) {
 					() =>
 						(lastCommand =
 							MongoCommands.executeCommandFromActiveEditor(
-								connectedDb
-							))
-				)
+								connectedDb,
+							)),
+				),
 			);
 			context.subscriptions.push(
 				vscode.commands.registerCommand("mongo.updateDocuments", () =>
-					MongoCommands.updateDocuments(connectedDb, lastCommand)
-				)
+					MongoCommands.updateDocuments(connectedDb, lastCommand),
+				),
 			);
 			context.subscriptions.push(
 				vscode.commands.registerCommand(
@@ -106,14 +104,14 @@ export function activate(context: vscode.ExtensionContext) {
 					(collection: Collection) => {
 						connectToDatabase(collection.db);
 						lastCommand = MongoCommands.getCommand(
-							`db.${collection.label}.find()`
+							`db.${collection.label}.find()`,
 						);
 						MongoCommands.executeCommand(
 							lastCommand,
-							connectedDb
+							connectedDb,
 						).then((result) => MongoCommands.showResult(result));
-					}
-				)
+					},
+				),
 			);
 		});
 	}
@@ -126,11 +124,14 @@ function createScrapbook(): Thenable<void> {
 		const max = 99999;
 		while (count < max) {
 			uri = vscode.Uri.file(
-				path.join(vscode.workspace.rootPath, `Scrapbook-${count}.mongo`)
+				path.join(
+					vscode.workspace.rootPath,
+					`Scrapbook-${count}.mongo`,
+				),
 			);
 			if (
 				!vscode.workspace.textDocuments.find(
-					(doc) => doc.uri.fsPath === uri.fsPath
+					(doc) => doc.uri.fsPath === uri.fsPath,
 				) &&
 				!fs.existsSync(uri.fsPath)
 			) {
@@ -148,7 +149,7 @@ function createScrapbook(): Thenable<void> {
 		vscode.workspace
 			.openTextDocument(uri)
 			.then((textDocument) =>
-				vscode.window.showTextDocument(textDocument)
+				vscode.window.showTextDocument(textDocument),
 			);
 	});
 }
@@ -182,7 +183,7 @@ function createDatabase(server: Server): void {
 							server
 								.createDatabase(database, collection)
 								.then((database) =>
-									connectToDatabase(database)
+									connectToDatabase(database),
 								);
 						}
 					});
@@ -208,12 +209,12 @@ function getDatabaseQuickPicks(): Thenable<DatabaseQuickPick[]> {
 					quickPicks.push(
 						...databases.map(
 							(database) =>
-								new DatabaseQuickPick(<Database>database)
-						)
+								new DatabaseQuickPick(<Database>database),
+						),
 					);
 				});
 				return quickPicks;
-			}
+			},
 		);
 	});
 }
@@ -225,7 +226,7 @@ function dropDatabase(database: Database): void {
 				database.id +
 				"' and its collections?",
 			{ modal: true },
-			"Drop"
+			"Drop",
 		)
 		.then((result) => {
 			if (result === "Drop") {
@@ -247,12 +248,12 @@ function connectToDatabase(database: Database): void {
 	connectedDb = database;
 	languageClient.connect(database);
 	vscode.window.setStatusBarMessage(
-		"Mongo: " + database.server.label + "/" + connectedDb.id
+		"Mongo: " + database.server.label + "/" + connectedDb.id,
 	);
 }
 
 async function createStorageFolder(
-	context: vscode.ExtensionContext
+	context: vscode.ExtensionContext,
 ): Promise<void> {
 	return new Promise<void>((c, e) => {
 		fs.exists(context.storagePath, (exists) => {

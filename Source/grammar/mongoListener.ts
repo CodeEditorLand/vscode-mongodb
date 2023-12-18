@@ -156,14 +156,14 @@ export interface mongoListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	enterPropertyNameAndValueList?: (
-		ctx: PropertyNameAndValueListContext
+		ctx: PropertyNameAndValueListContext,
 	) => void;
 	/**
 	 * Exit a parse tree produced by `mongoParser.propertyNameAndValueList`.
 	 * @param ctx the parse tree
 	 */
 	exitPropertyNameAndValueList?: (
-		ctx: PropertyNameAndValueListContext
+		ctx: PropertyNameAndValueListContext,
 	) => void;
 
 	/**

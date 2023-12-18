@@ -1,25 +1,24 @@
+import { Db, MongoClient } from "mongodb";
+import {
+	LanguageService as JsonLanguageService,
+	SchemaConfiguration,
+	getLanguageService,
+} from "vscode-json-languageservice";
 /*---------------------------------------------------------------------------------------------
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 import {
-	TextDocumentPositionParams,
-	TextDocuments,
+	CompletionItem,
 	IConnection,
 	InitializeParams,
 	InitializeResult,
-	CompletionItem,
+	TextDocumentPositionParams,
+	TextDocuments,
 } from "vscode-languageserver";
 import URI from "vscode-uri";
-import { MongoClient, Db, Cursor } from "mongodb";
 import { MongoScriptDocumentManager } from "./mongoScript";
 import SchemaService from "./schemaService";
-import {
-	getLanguageService,
-	LanguageService as JsonLanguageService,
-	SchemaConfiguration,
-} from "vscode-json-languageservice";
-import { JSONSchema } from "vscode-json-languageservice/lib/jsonSchema";
 
 export class LanguageService {
 	private textDocuments: TextDocuments = new TextDocuments();
@@ -46,7 +45,7 @@ export class LanguageService {
 						completionProvider: { triggerCharacters: ["."] },
 					},
 				};
-			}
+			},
 		);
 
 		connection.onCompletion((textDocumentPosition) => {
@@ -62,7 +61,7 @@ export class LanguageService {
 						.then((schemas) => {
 							this.configureSchemas(schemas);
 						});
-				}
+				},
 			);
 		});
 
@@ -81,22 +80,22 @@ export class LanguageService {
 
 		this.mongoDocumentsManager = new MongoScriptDocumentManager(
 			this.schemaService,
-			this.jsonLanguageService
+			this.jsonLanguageService,
 		);
 	}
 
 	provideCompletionItems(
-		positionParams: TextDocumentPositionParams
+		positionParams: TextDocumentPositionParams,
 	): Promise<CompletionItem[]> {
 		const textDocument = this.textDocuments.get(
-			positionParams.textDocument.uri
+			positionParams.textDocument.uri,
 		);
 		const mongoScriptDocument = this.mongoDocumentsManager.getDocument(
 			textDocument,
-			this.db
+			this.db,
 		);
 		return mongoScriptDocument.provideCompletionItemsAt(
-			positionParams.position
+			positionParams.position,
 		);
 	}
 

@@ -3,11 +3,9 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-"use strict";
-
-import { Event } from "vscode";
-import { dirname } from "path";
 import * as fs from "fs";
+import { dirname } from "path";
+import { Event } from "vscode";
 
 export function log(...args: any[]): void {
 	console.log.apply(console, ["vscode-mongo:", ...args]);
@@ -39,20 +37,20 @@ export function mapEvent<I, O>(event: Event<I>, map: (i: I) => O): Event<O> {
 
 export function filterEvent<T>(
 	event: Event<T>,
-	filter: (e: T) => boolean
+	filter: (e: T) => boolean,
 ): Event<T> {
 	return (listener, thisArgs = null, disposables?) =>
 		event(
 			(e) => filter(e) && listener.call(thisArgs, e),
 			null,
-			disposables
+			disposables,
 		);
 }
 
 export function anyEvent<T>(...events: Event<T>[]): Event<T> {
 	return (listener, thisArgs = null, disposables?) => {
 		const result = combinedDisposable(
-			events.map((event) => event((i) => listener.call(thisArgs, i)))
+			events.map((event) => event((i) => listener.call(thisArgs, i))),
 		);
 
 		if (disposables) {
@@ -66,7 +64,7 @@ export function anyEvent<T>(...events: Event<T>[]): Event<T> {
 export function done<T>(promise: Promise<T>): Promise<void> {
 	return promise.then<void>(
 		() => void 0,
-		() => void 0
+		() => void 0,
 	);
 }
 
@@ -78,7 +76,7 @@ export function once<T>(event: Event<T>): Event<T> {
 				return listener.call(thisArgs, e);
 			},
 			null,
-			disposables
+			disposables,
 		);
 
 		return result;
@@ -115,7 +113,7 @@ export function uniqBy<T>(arr: T[], fn: (el: T) => string): T[] {
 
 export function groupBy<T>(
 	arr: T[],
-	fn: (el: T) => string
+	fn: (el: T) => string,
 ): { [key: string]: T[] } {
 	return arr.reduce((result, el) => {
 		const key = fn(el);
@@ -131,7 +129,7 @@ export function denodeify<R>(fn: Function): (...args) => Promise<R> {
 
 export function nfcall<R>(fn: Function, ...args): Promise<R> {
 	return new Promise((c, e) =>
-		fn(...args, (err, r) => (err ? e(err) : c(r)))
+		fn(...args, (err, r) => (err ? e(err) : c(r))),
 	);
 }
 

@@ -5,30 +5,22 @@
 import { ANTLRInputStream as InputStream } from "antlr4ts/ANTLRInputStream";
 import { CommonTokenStream } from "antlr4ts/CommonTokenStream";
 import { ParserRuleContext } from "antlr4ts/ParserRuleContext";
-import { TerminalNode } from "antlr4ts/tree/TerminalNode";
-import { ParseTree } from "antlr4ts/tree/ParseTree";
-import { ErrorNode } from "antlr4ts/tree/ErrorNode";
 import { Interval } from "antlr4ts/misc/Interval";
-import { Token } from "antlr4ts/Token";
+import { ParseTree } from "antlr4ts/tree/ParseTree";
+import { TerminalNode } from "antlr4ts/tree/TerminalNode";
 import { Db } from "mongodb";
-import * as mongoParser from "./../../grammar/mongoParser";
+import { LanguageService as JsonLanguageService } from "vscode-json-languageservice";
+import { CompletionItem, Position, TextDocument } from "vscode-languageserver";
 import { mongoLexer } from "./../../grammar/mongoLexer";
+import * as mongoParser from "./../../grammar/mongoParser";
 import { MongoVisitor } from "./../../grammar/visitors";
 import { CompletionItemsVisitor } from "./completionItemProvider";
 import SchemaService from "./schemaService";
-import { LanguageService as JsonLanguageService } from "vscode-json-languageservice";
-import {
-	TextDocument,
-	CompletionItem,
-	Position,
-	Range,
-	CompletionItemKind,
-} from "vscode-languageserver";
 
 export class MongoScriptDocumentManager {
 	constructor(
 		private schemaService: SchemaService,
-		private jsonLanguageService: JsonLanguageService
+		private jsonLanguageService: JsonLanguageService,
 	) {}
 
 	getDocument(textDocument: TextDocument, db: Db): MongoScriptDocument {
@@ -36,7 +28,7 @@ export class MongoScriptDocumentManager {
 			textDocument,
 			db,
 			this.schemaService,
-			this.jsonLanguageService
+			this.jsonLanguageService,
 		);
 	}
 }
@@ -48,7 +40,7 @@ export class MongoScriptDocument {
 		private textDocument: TextDocument,
 		private db: Db,
 		private schemaService: SchemaService,
-		private jsonLanguageService: JsonLanguageService
+		private jsonLanguageService: JsonLanguageService,
 	) {
 		this._lexer = new mongoLexer(new InputStream(textDocument.getText()));
 		this._lexer.removeErrorListeners();
@@ -56,7 +48,7 @@ export class MongoScriptDocument {
 
 	provideCompletionItemsAt(position: Position): Promise<CompletionItem[]> {
 		const parser = new mongoParser.mongoParser(
-			new CommonTokenStream(this._lexer)
+			new CommonTokenStream(this._lexer),
 		);
 		parser.removeErrorListeners();
 
@@ -68,7 +60,7 @@ export class MongoScriptDocument {
 				this.db,
 				offset,
 				this.schemaService,
-				this.jsonLanguageService
+				this.jsonLanguageService,
 			).visit(lastNode);
 		}
 		return Promise.resolve([]);
@@ -99,7 +91,7 @@ class NodeFinder extends MongoVisitor<ParseTree> {
 
 	protected aggregateResult(
 		aggregate: ParseTree,
-		nextResult: ParseTree
+		nextResult: ParseTree,
 	): ParseTree {
 		if (aggregate && nextResult) {
 			const aggregateStart =
@@ -121,7 +113,7 @@ class NodeFinder extends MongoVisitor<ParseTree> {
 
 			if (
 				Interval.of(aggregateStart, aggregateStop).properlyContains(
-					Interval.of(nextResultStart, nextResultStop)
+					Interval.of(nextResultStart, nextResultStop),
 				)
 			) {
 				return aggregate;

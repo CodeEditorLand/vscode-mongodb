@@ -1,27 +1,23 @@
+import * as fs from "fs";
+import * as path from "path";
+import * as vm from "vm";
 /*---------------------------------------------------------------------------------------------
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 import * as vscode from "vscode";
-import * as vm from "vm";
-import * as cp from "child_process";
-import * as fs from "fs";
-import * as path from "path";
 
 import {
-	MongoClient,
-	Db,
-	ReadPreference,
-	Code,
-	Server as MongoServer,
 	Collection as MongoCollection,
-	Cursor,
-	ObjectID,
+	Db,
+	MongoClient,
 	MongoError,
+	ObjectID,
 	ReplSet,
+	Server as MongoServer,
 } from "mongodb";
+import { Command, Event, EventEmitter } from "vscode";
 import { Shell } from "./shell";
-import { EventEmitter, Event, Command } from "vscode";
 
 export interface MongoCommand {
 	range: vscode.Range;
@@ -57,7 +53,7 @@ class ServersJson {
 					});
 				} else {
 					fs.writeFile(this._filePath, JSON.stringify([]), () =>
-						c([])
+						c([]),
 					);
 				}
 			});
@@ -99,8 +95,8 @@ export class Model implements IMongoResource {
 			this._serverConnections = serverConnections;
 			return Promise.all(
 				this._serverConnections.map((server) =>
-					this.resolveServer(server, false)
-				)
+					this.resolveServer(server, false),
+				),
 			).then((servers) => {
 				this._servers = servers.filter((server) => !!server);
 				return this._servers;
@@ -122,8 +118,8 @@ export class Model implements IMongoResource {
 			server instanceof Server
 				? server.id
 				: server instanceof NoConnectionServer
-					? server.id
-					: null;
+				  ? server.id
+				  : null;
 		const index = this._servers.findIndex((value) => value.id === id);
 		if (index !== -1) {
 			this._servers.splice(index, 1);
@@ -134,7 +130,7 @@ export class Model implements IMongoResource {
 
 	private resolveServer(
 		connectionString: string,
-		throwError: boolean
+		throwError: boolean,
 	): Promise<IMongoResource> {
 		return new Promise((c, e) => {
 			MongoClient.connect(
@@ -148,14 +144,14 @@ export class Model implements IMongoResource {
 							c(
 								new NoConnectionServer(
 									connectionString,
-									error.message
-								)
+									error.message,
+								),
 							);
 						}
 					} else {
 						c(new Server(connectionString, db.serverConfig));
 					}
-				}
+				},
 			);
 		});
 	}
@@ -165,10 +161,7 @@ export class NoConnectionServer implements IMongoResource {
 	readonly contextValue: string = "mongoServer";
 	readonly label: string;
 
-	constructor(
-		readonly id: string,
-		private readonly error: string
-	) {
+	constructor(readonly id: string, private readonly error: string) {
 		this.label = id;
 	}
 }
@@ -182,7 +175,7 @@ export class Server implements IMongoResource {
 
 	constructor(
 		public readonly id: string,
-		private readonly mongoServer: MongoServer
+		private readonly mongoServer: MongoServer,
 	) {
 		//console.log(mongoServer);
 	}
@@ -193,7 +186,7 @@ export class Server implements IMongoResource {
 			// get the first connection string from the seedlist for the ReplSet
 			// this may not be best solution, but the connection (below) gives
 			// the replicaset host name, which is different than what is in the connection string
-			let rs: any = this.mongoServer;
+			const rs: any = this.mongoServer;
 			return rs.s.replset.s.seedlist[0].host;
 
 			// returns the replication set host name (different from connction string)
@@ -208,7 +201,7 @@ export class Server implements IMongoResource {
 	get port(): string {
 		// Azure CosmosDB comes back as a ReplSet
 		if (this.mongoServer instanceof ReplSet) {
-			let rs: any = this.mongoServer;
+			const rs: any = this.mongoServer;
 			return rs.s.replset.s.seedlist[0].port;
 
 			// returns the replication set port (different from connction string)
@@ -234,11 +227,11 @@ export class Server implements IMongoResource {
 					.listDatabases()
 					.then((value: { databases: { name }[] }) => {
 						this._databases = value.databases.map(
-							(database) => new Database(database.name, this)
+							(database) => new Database(database.name, this),
 						);
 						db.close();
 						return <IMongoResource[]>this._databases;
-					})
+					}),
 		);
 	}
 
@@ -265,10 +258,7 @@ export class Database implements IMongoResource {
 	private _onChange: EventEmitter<void> = new EventEmitter<void>();
 	readonly onChange: Event<void> = this._onChange.event;
 
-	constructor(
-		readonly id: string,
-		readonly server: Server
-	) {}
+	constructor(readonly id: string, readonly server: Server) {}
 
 	get label(): string {
 		return this.id;
@@ -284,7 +274,7 @@ export class Database implements IMongoResource {
 				"..",
 				"media",
 				"dark",
-				"database-dark.png"
+				"database-dark.png",
 			),
 			dark: path.join(
 				__filename,
@@ -294,7 +284,7 @@ export class Database implements IMongoResource {
 				"..",
 				"media",
 				"light",
-				"database-light.png"
+				"database-light.png",
 			),
 		};
 	}
@@ -305,7 +295,7 @@ export class Database implements IMongoResource {
 		return <Promise<IMongoResource[]>>this.getDb().then((db) => {
 			return db.collections().then((collections) => {
 				return collections.map(
-					(collection) => new Collection(collection, this)
+					(collection) => new Collection(collection, this),
 				);
 			});
 		});
@@ -326,7 +316,7 @@ export class Database implements IMongoResource {
 				if (collection) {
 					const result = new Collection(
 						collection,
-						this
+						this,
 					).executeCommand(command.name, command.arguments);
 					if (result) {
 						return result;
@@ -334,7 +324,7 @@ export class Database implements IMongoResource {
 				}
 				return reportProgress(
 					this.executeCommandInShell(command),
-					"Executing command"
+					"Executing command",
 				);
 			});
 		}
@@ -342,27 +332,27 @@ export class Database implements IMongoResource {
 		if (command.name === "createCollection") {
 			return reportProgress(
 				this.createCollection(stripQuotes(command.arguments)).then(() =>
-					JSON.stringify({ Created: "Ok" })
+					JSON.stringify({ Created: "Ok" }),
 				),
-				"Creating collection"
+				"Creating collection",
 			);
 		} else {
 			return reportProgress(
 				this.executeCommandInShell(command),
-				"Executing command"
+				"Executing command",
 			);
 		}
 	}
 
 	updateDocuments(
 		documentOrDocuments: any,
-		collectionName: string
+		collectionName: string,
 	): Thenable<string> {
 		return this.getDb().then((db) => {
 			const collection = db.collection(collectionName);
 			if (collection) {
 				return new Collection(collection, this).update(
-					documentOrDocuments
+					documentOrDocuments,
 				);
 			}
 		});
@@ -394,7 +384,7 @@ export class Database implements IMongoResource {
 
 	private getCollection(collection: string): Promise<Collection> {
 		return this.getDb().then(
-			(db) => new Collection(db.collection(collection), this)
+			(db) => new Collection(db.collection(collection), this),
 		);
 	}
 
@@ -406,7 +396,9 @@ export class Database implements IMongoResource {
 		const shellPath = <string>(
 			vscode.workspace.getConfiguration().get("mongo.shell.path")
 		);
-		if (!shellPath) {
+		if (shellPath) {
+			return this.createShell(shellPath);
+		} else {
 			return <Promise<null>>vscode.window
 				.showInputBox({
 					placeHolder: "Configure the path to mongo shell executable",
@@ -416,10 +408,8 @@ export class Database implements IMongoResource {
 					vscode.workspace
 						.getConfiguration()
 						.update("mongo.shell.path", value, true)
-						.then(() => this.createShell(value))
+						.then(() => this.createShell(value)),
 				);
-		} else {
-			return this.createShell(shellPath);
 		}
 	}
 
@@ -428,16 +418,13 @@ export class Database implements IMongoResource {
 			(shell) => {
 				return shell.useDatabase(this.id).then(() => shell);
 			},
-			(error) => vscode.window.showErrorMessage(error)
+			(error) => vscode.window.showErrorMessage(error),
 		);
 	}
 }
 
 export class Collection implements IMongoResource {
-	constructor(
-		private collection: MongoCollection,
-		readonly db: Database
-	) {}
+	constructor(private collection: MongoCollection, readonly db: Database) {}
 
 	get id(): string {
 		return this.collection.collectionName;
@@ -457,7 +444,7 @@ export class Collection implements IMongoResource {
 				"..",
 				"media",
 				"dark",
-				"collection-dark.png"
+				"collection-dark.png",
 			),
 			dark: path.join(
 				__filename,
@@ -467,7 +454,7 @@ export class Collection implements IMongoResource {
 				"..",
 				"media",
 				"light",
-				"collection-light.png"
+				"collection-light.png",
 			),
 		};
 	}
@@ -483,7 +470,7 @@ export class Collection implements IMongoResource {
 			if (name === "find") {
 				return reportProgress(
 					this.find(args ? parseJSContent(args) : undefined),
-					"Running find query"
+					"Running find query",
 				);
 			}
 			if (name === "drop") {
@@ -492,43 +479,43 @@ export class Collection implements IMongoResource {
 			if (name === "findOne") {
 				return reportProgress(
 					this.findOne(args ? parseJSContent(args) : undefined),
-					"Running find query"
+					"Running find query",
 				);
 			}
 			if (name === "insertMany") {
 				return reportProgress(
 					this.insertMany(args ? parseJSContent(args) : undefined),
-					"Inserting documents"
+					"Inserting documents",
 				);
 			}
 			if (name === "insert") {
 				return reportProgress(
 					this.insert(args ? parseJSContent(args) : undefined),
-					"Inserting document"
+					"Inserting document",
 				);
 			}
 			if (name === "insertOne") {
 				return reportProgress(
 					this.insertOne(args ? parseJSContent(args) : undefined),
-					"Inserting document"
+					"Inserting document",
 				);
 			}
 			if (name === "deleteOne") {
 				return reportProgress(
 					this.deleteOne(args ? parseJSContent(args) : undefined),
-					"Deleting document"
+					"Deleting document",
 				);
 			}
 			if (name === "deleteMany") {
 				return reportProgress(
 					this.deleteMany(args ? parseJSContent(args) : undefined),
-					"Deleting documents"
+					"Deleting documents",
 				);
 			}
 			if (name === "remove") {
 				return reportProgress(
 					this.remove(args ? parseJSContent(args) : undefined),
-					"Removing"
+					"Removing",
 				);
 			}
 			return null;
@@ -538,7 +525,7 @@ export class Collection implements IMongoResource {
 	}
 
 	update(documentOrDocuments: any): Thenable<string> {
-		let operations = this.toOperations(documentOrDocuments);
+		const operations = this.toOperations(documentOrDocuments);
 		return reportProgress(
 			this.collection.bulkWrite(operations, { w: 1 }).then(
 				(result) => {
@@ -547,9 +534,9 @@ export class Collection implements IMongoResource {
 				(error) => {
 					console.log(error);
 					return Promise.resolve(null);
-				}
+				},
 			),
-			"Updating"
+			"Updating",
 		);
 	}
 
@@ -650,7 +637,7 @@ function reportProgress<T>(promise: Thenable<T>, title: string): Thenable<T> {
 		},
 		(progress) => {
 			return promise;
-		}
+		},
 	);
 }
 

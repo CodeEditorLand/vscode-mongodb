@@ -5,25 +5,21 @@
 
 // Generated from ./grammar/mongo.g4 by ANTLR 4.6-SNAPSHOT
 
-import { ATN } from "antlr4ts/atn/ATN";
-import { ATNDeserializer } from "antlr4ts/atn/ATNDeserializer";
-import { FailedPredicateException } from "antlr4ts/FailedPredicateException";
 import { NotNull } from "antlr4ts/Decorators";
-import { NoViableAltException } from "antlr4ts/NoViableAltException";
 import { Override } from "antlr4ts/Decorators";
+import { NoViableAltException } from "antlr4ts/NoViableAltException";
 import { Parser } from "antlr4ts/Parser";
 import { ParserRuleContext } from "antlr4ts/ParserRuleContext";
-import { ParserATNSimulator } from "antlr4ts/atn/ParserATNSimulator";
-import { ParseTreeListener } from "antlr4ts/tree/ParseTreeListener";
-import { ParseTreeVisitor } from "antlr4ts/tree/ParseTreeVisitor";
 import { RecognitionException } from "antlr4ts/RecognitionException";
-import { RuleContext } from "antlr4ts/RuleContext";
 import { RuleVersion } from "antlr4ts/RuleVersion";
-import { TerminalNode } from "antlr4ts/tree/TerminalNode";
 import { Token } from "antlr4ts/Token";
 import { TokenStream } from "antlr4ts/TokenStream";
 import { Vocabulary } from "antlr4ts/Vocabulary";
 import { VocabularyImpl } from "antlr4ts/VocabularyImpl";
+import { ATN } from "antlr4ts/atn/ATN";
+import { ATNDeserializer } from "antlr4ts/atn/ATNDeserializer";
+import { ParserATNSimulator } from "antlr4ts/atn/ParserATNSimulator";
+import { TerminalNode } from "antlr4ts/tree/TerminalNode";
 
 import * as Utils from "antlr4ts/misc/Utils";
 
@@ -148,7 +144,7 @@ export class mongoParser extends Parser {
 	public static readonly VOCABULARY: Vocabulary = new VocabularyImpl(
 		mongoParser._LITERAL_NAMES,
 		mongoParser._SYMBOLIC_NAMES,
-		[]
+		[],
 	);
 
 	@Override
@@ -178,9 +174,9 @@ export class mongoParser extends Parser {
 	}
 	@RuleVersion(0)
 	public mongoCommands(): MongoCommandsContext {
-		let _localctx: MongoCommandsContext = new MongoCommandsContext(
+		const _localctx: MongoCommandsContext = new MongoCommandsContext(
 			this._ctx,
-			this.state
+			this.state,
 		);
 		this.enterRule(_localctx, 0, mongoParser.RULE_mongoCommands);
 		try {
@@ -206,9 +202,9 @@ export class mongoParser extends Parser {
 	}
 	@RuleVersion(0)
 	public commands(): CommandsContext {
-		let _localctx: CommandsContext = new CommandsContext(
+		const _localctx: CommandsContext = new CommandsContext(
 			this._ctx,
-			this.state
+			this.state,
 		);
 		this.enterRule(_localctx, 2, mongoParser.RULE_commands);
 		let _la: number;
@@ -223,25 +219,22 @@ export class mongoParser extends Parser {
 						this.state = 40;
 						this._errHandler.sync(this);
 						switch (this._input.LA(1)) {
-							case mongoParser.DB:
-								{
-									this.state = 37;
-									this.command();
-								}
-								break;
-							case mongoParser.SEMICOLON:
-								{
-									this.state = 38;
-									this.emptyCommand();
-								}
-								break;
+							case mongoParser.DB: {
+								this.state = 37;
+								this.command();
+							}
+							break;
+							case mongoParser.SEMICOLON: {
+								this.state = 38;
+								this.emptyCommand();
+							}
+							break;
 							case mongoParser.SingleLineComment:
-							case mongoParser.MultiLineComment:
-								{
-									this.state = 39;
-									this.comment();
-								}
-								break;
+							case mongoParser.MultiLineComment: {
+								this.state = 39;
+								this.comment();
+							}
+							break;
 							default:
 								throw new NoViableAltException(this);
 						}
@@ -274,9 +267,9 @@ export class mongoParser extends Parser {
 	}
 	@RuleVersion(0)
 	public command(): CommandContext {
-		let _localctx: CommandContext = new CommandContext(
+		const _localctx: CommandContext = new CommandContext(
 			this._ctx,
-			this.state
+			this.state,
 		);
 		this.enterRule(_localctx, 4, mongoParser.RULE_command);
 		try {
@@ -291,37 +284,34 @@ export class mongoParser extends Parser {
 				switch (
 					this.interpreter.adaptivePredict(this._input, 2, this._ctx)
 				) {
-					case 1:
+					case 1: {
+						this.state = 46;
+						this.functionCall();
+					}
+					break;
+
+					case 2: {
 						{
-							this.state = 46;
+							this.state = 47;
+							this.collection();
+							this.state = 48;
+							this.match(mongoParser.DOT);
+							this.state = 49;
 							this.functionCall();
 						}
-						break;
-
-					case 2:
-						{
-							{
-								this.state = 47;
-								this.collection();
-								this.state = 48;
-								this.match(mongoParser.DOT);
-								this.state = 49;
-								this.functionCall();
-							}
-						}
-						break;
+					}
+					break;
 				}
 				this.state = 54;
 				this._errHandler.sync(this);
 				switch (
 					this.interpreter.adaptivePredict(this._input, 3, this._ctx)
 				) {
-					case 1:
-						{
-							this.state = 53;
-							this.match(mongoParser.SEMICOLON);
-						}
-						break;
+					case 1: {
+						this.state = 53;
+						this.match(mongoParser.SEMICOLON);
+					}
+					break;
 				}
 			}
 		} catch (re) {
@@ -339,9 +329,9 @@ export class mongoParser extends Parser {
 	}
 	@RuleVersion(0)
 	public emptyCommand(): EmptyCommandContext {
-		let _localctx: EmptyCommandContext = new EmptyCommandContext(
+		const _localctx: EmptyCommandContext = new EmptyCommandContext(
 			this._ctx,
-			this.state
+			this.state,
 		);
 		this.enterRule(_localctx, 6, mongoParser.RULE_emptyCommand);
 		try {
@@ -365,9 +355,9 @@ export class mongoParser extends Parser {
 	}
 	@RuleVersion(0)
 	public collection(): CollectionContext {
-		let _localctx: CollectionContext = new CollectionContext(
+		const _localctx: CollectionContext = new CollectionContext(
 			this._ctx,
-			this.state
+			this.state,
 		);
 		this.enterRule(_localctx, 8, mongoParser.RULE_collection);
 		try {
@@ -391,9 +381,9 @@ export class mongoParser extends Parser {
 	}
 	@RuleVersion(0)
 	public functionCall(): FunctionCallContext {
-		let _localctx: FunctionCallContext = new FunctionCallContext(
+		const _localctx: FunctionCallContext = new FunctionCallContext(
 			this._ctx,
-			this.state
+			this.state,
 		);
 		this.enterRule(_localctx, 10, mongoParser.RULE_functionCall);
 		try {
@@ -401,7 +391,7 @@ export class mongoParser extends Parser {
 			{
 				this.state = 60;
 				_localctx._FUNCTION_NAME = this.match(
-					mongoParser.STRING_LITERAL
+					mongoParser.STRING_LITERAL,
 				);
 				this.state = 61;
 				this.arguments();
@@ -421,9 +411,9 @@ export class mongoParser extends Parser {
 	}
 	@RuleVersion(0)
 	public arguments(): ArgumentsContext {
-		let _localctx: ArgumentsContext = new ArgumentsContext(
+		const _localctx: ArgumentsContext = new ArgumentsContext(
 			this._ctx,
-			this.state
+			this.state,
 		);
 		this.enterRule(_localctx, 12, mongoParser.RULE_arguments);
 		let _la: number;
@@ -470,9 +460,9 @@ export class mongoParser extends Parser {
 	}
 	@RuleVersion(0)
 	public argumentList(): ArgumentListContext {
-		let _localctx: ArgumentListContext = new ArgumentListContext(
+		const _localctx: ArgumentListContext = new ArgumentListContext(
 			this._ctx,
-			this.state
+			this.state,
 		);
 		this.enterRule(_localctx, 14, mongoParser.RULE_argumentList);
 		try {
@@ -521,9 +511,9 @@ export class mongoParser extends Parser {
 	}
 	@RuleVersion(0)
 	public objectLiteral(): ObjectLiteralContext {
-		let _localctx: ObjectLiteralContext = new ObjectLiteralContext(
+		const _localctx: ObjectLiteralContext = new ObjectLiteralContext(
 			this._ctx,
-			this.state
+			this.state,
 		);
 		this.enterRule(_localctx, 16, mongoParser.RULE_objectLiteral);
 		let _la: number;
@@ -570,9 +560,9 @@ export class mongoParser extends Parser {
 	}
 	@RuleVersion(0)
 	public arrayLiteral(): ArrayLiteralContext {
-		let _localctx: ArrayLiteralContext = new ArrayLiteralContext(
+		const _localctx: ArrayLiteralContext = new ArrayLiteralContext(
 			this._ctx,
-			this.state
+			this.state,
 		);
 		this.enterRule(_localctx, 18, mongoParser.RULE_arrayLiteral);
 		let _la: number;
@@ -620,9 +610,9 @@ export class mongoParser extends Parser {
 	}
 	@RuleVersion(0)
 	public elementList(): ElementListContext {
-		let _localctx: ElementListContext = new ElementListContext(
+		const _localctx: ElementListContext = new ElementListContext(
 			this._ctx,
-			this.state
+			this.state,
 		);
 		this.enterRule(_localctx, 20, mongoParser.RULE_elementList);
 		let _la: number;
@@ -663,12 +653,12 @@ export class mongoParser extends Parser {
 	}
 	@RuleVersion(0)
 	public propertyNameAndValueList(): PropertyNameAndValueListContext {
-		let _localctx: PropertyNameAndValueListContext =
+		const _localctx: PropertyNameAndValueListContext =
 			new PropertyNameAndValueListContext(this._ctx, this.state);
 		this.enterRule(
 			_localctx,
 			22,
-			mongoParser.RULE_propertyNameAndValueList
+			mongoParser.RULE_propertyNameAndValueList,
 		);
 		try {
 			let _alt: number;
@@ -681,7 +671,7 @@ export class mongoParser extends Parser {
 				_alt = this.interpreter.adaptivePredict(
 					this._input,
 					10,
-					this._ctx
+					this._ctx,
 				);
 				while (_alt !== 2 && _alt !== ATN.INVALID_ALT_NUMBER) {
 					if (_alt === 1) {
@@ -699,7 +689,7 @@ export class mongoParser extends Parser {
 					_alt = this.interpreter.adaptivePredict(
 						this._input,
 						10,
-						this._ctx
+						this._ctx,
 					);
 				}
 			}
@@ -718,7 +708,7 @@ export class mongoParser extends Parser {
 	}
 	@RuleVersion(0)
 	public propertyAssignment(): PropertyAssignmentContext {
-		let _localctx: PropertyAssignmentContext =
+		const _localctx: PropertyAssignmentContext =
 			new PropertyAssignmentContext(this._ctx, this.state);
 		this.enterRule(_localctx, 24, mongoParser.RULE_propertyAssignment);
 		try {
@@ -746,9 +736,9 @@ export class mongoParser extends Parser {
 	}
 	@RuleVersion(0)
 	public propertyValue(): PropertyValueContext {
-		let _localctx: PropertyValueContext = new PropertyValueContext(
+		const _localctx: PropertyValueContext = new PropertyValueContext(
 			this._ctx,
-			this.state
+			this.state,
 		);
 		this.enterRule(_localctx, 26, mongoParser.RULE_propertyValue);
 		try {
@@ -804,9 +794,9 @@ export class mongoParser extends Parser {
 	}
 	@RuleVersion(0)
 	public literal(): LiteralContext {
-		let _localctx: LiteralContext = new LiteralContext(
+		const _localctx: LiteralContext = new LiteralContext(
 			this._ctx,
-			this.state
+			this.state,
 		);
 		this.enterRule(_localctx, 28, mongoParser.RULE_literal);
 		let _la: number;
@@ -822,23 +812,21 @@ export class mongoParser extends Parser {
 						this.state = 115;
 						_la = this._input.LA(1);
 						if (
-							!(
-								(_la & ~0x1f) === 0 &&
-								((1 << _la) &
-									((1 << mongoParser.StringLiteral) |
-										(1 << mongoParser.NullLiteral) |
-										(1 << mongoParser.BooleanLiteral))) !==
-									0
-							)
+							(_la & ~0x1f) === 0 &&
+							((1 << _la) &
+								((1 << mongoParser.StringLiteral) |
+									(1 << mongoParser.NullLiteral) |
+									(1 << mongoParser.BooleanLiteral))) !==
+								0
 						) {
-							this._errHandler.recoverInline(this);
-						} else {
 							if (this._input.LA(1) === Token.EOF) {
 								this.matchedEOF = true;
 							}
 
 							this._errHandler.reportMatch(this);
 							this.consume();
+						} else {
+							this._errHandler.recoverInline(this);
 						}
 					}
 					break;
@@ -867,9 +855,9 @@ export class mongoParser extends Parser {
 	}
 	@RuleVersion(0)
 	public propertyName(): PropertyNameContext {
-		let _localctx: PropertyNameContext = new PropertyNameContext(
+		const _localctx: PropertyNameContext = new PropertyNameContext(
 			this._ctx,
-			this.state
+			this.state,
 		);
 		this.enterRule(_localctx, 30, mongoParser.RULE_propertyName);
 		try {
@@ -893,9 +881,9 @@ export class mongoParser extends Parser {
 	}
 	@RuleVersion(0)
 	public comment(): CommentContext {
-		let _localctx: CommentContext = new CommentContext(
+		const _localctx: CommentContext = new CommentContext(
 			this._ctx,
-			this.state
+			this.state,
 		);
 		this.enterRule(_localctx, 32, mongoParser.RULE_comment);
 		let _la: number;
@@ -905,19 +893,17 @@ export class mongoParser extends Parser {
 				this.state = 121;
 				_la = this._input.LA(1);
 				if (
-					!(
-						_la === mongoParser.SingleLineComment ||
-						_la === mongoParser.MultiLineComment
-					)
+					_la === mongoParser.SingleLineComment ||
+					_la === mongoParser.MultiLineComment
 				) {
-					this._errHandler.recoverInline(this);
-				} else {
 					if (this._input.LA(1) === Token.EOF) {
 						this.matchedEOF = true;
 					}
 
 					this._errHandler.reportMatch(this);
 					this.consume();
+				} else {
+					this._errHandler.recoverInline(this);
 				}
 			}
 		} catch (re) {
@@ -987,7 +973,7 @@ export class mongoParser extends Parser {
 	public static get _ATN(): ATN {
 		if (!mongoParser.__ATN) {
 			mongoParser.__ATN = new ATNDeserializer().deserialize(
-				Utils.toCharArray(mongoParser._serializedATN)
+				Utils.toCharArray(mongoParser._serializedATN),
 			);
 		}
 
@@ -1037,7 +1023,7 @@ export class CommandsContext extends ParserRuleContext {
 	public emptyCommand(): EmptyCommandContext[];
 	public emptyCommand(i: number): EmptyCommandContext;
 	public emptyCommand(
-		i?: number
+		i?: number,
 	): EmptyCommandContext | EmptyCommandContext[] {
 		if (i === undefined) {
 			return this.getRuleContexts(EmptyCommandContext);
@@ -1320,7 +1306,7 @@ export class ElementListContext extends ParserRuleContext {
 	public propertyValue(): PropertyValueContext[];
 	public propertyValue(i: number): PropertyValueContext;
 	public propertyValue(
-		i?: number
+		i?: number,
 	): PropertyValueContext | PropertyValueContext[] {
 		if (i === undefined) {
 			return this.getRuleContexts(PropertyValueContext);
@@ -1354,7 +1340,7 @@ export class PropertyNameAndValueListContext extends ParserRuleContext {
 	public propertyAssignment(): PropertyAssignmentContext[];
 	public propertyAssignment(i: number): PropertyAssignmentContext;
 	public propertyAssignment(
-		i?: number
+		i?: number,
 	): PropertyAssignmentContext | PropertyAssignmentContext[] {
 		if (i === undefined) {
 			return this.getRuleContexts(PropertyAssignmentContext);

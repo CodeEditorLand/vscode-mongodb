@@ -5,16 +5,16 @@
 
 // Generated from ./grammar/mongo.g4 by ANTLR 4.6-SNAPSHOT
 
-import { ATN } from "antlr4ts/atn/ATN";
-import { ATNDeserializer } from "antlr4ts/atn/ATNDeserializer";
 import { CharStream } from "antlr4ts/CharStream";
-import { Lexer } from "antlr4ts/Lexer";
-import { LexerATNSimulator } from "antlr4ts/atn/LexerATNSimulator";
 import { NotNull } from "antlr4ts/Decorators";
 import { Override } from "antlr4ts/Decorators";
+import { Lexer } from "antlr4ts/Lexer";
 import { RuleContext } from "antlr4ts/RuleContext";
 import { Vocabulary } from "antlr4ts/Vocabulary";
 import { VocabularyImpl } from "antlr4ts/VocabularyImpl";
+import { ATN } from "antlr4ts/atn/ATN";
+import { ATNDeserializer } from "antlr4ts/atn/ATNDeserializer";
+import { LexerATNSimulator } from "antlr4ts/atn/LexerATNSimulator";
 
 import * as Utils from "antlr4ts/misc/Utils";
 
@@ -133,7 +133,7 @@ export class mongoLexer extends Lexer {
 	public static readonly VOCABULARY: Vocabulary = new VocabularyImpl(
 		mongoLexer._LITERAL_NAMES,
 		mongoLexer._SYMBOLIC_NAMES,
-		[]
+		[],
 	);
 
 	@Override
@@ -175,7 +175,7 @@ export class mongoLexer extends Lexer {
 	public sempred(
 		_localctx: RuleContext,
 		ruleIndex: number,
-		predIndex: number
+		predIndex: number,
 	): boolean {
 		switch (ruleIndex) {
 			case 21:
@@ -185,7 +185,7 @@ export class mongoLexer extends Lexer {
 	}
 	private STRING_LITERAL_sempred(
 		_localctx: RuleContext,
-		predIndex: number
+		predIndex: number,
 	): boolean {
 		switch (predIndex) {
 			case 0:
@@ -303,7 +303,7 @@ export class mongoLexer extends Lexer {
 	public static get _ATN(): ATN {
 		if (!mongoLexer.__ATN) {
 			mongoLexer.__ATN = new ATNDeserializer().deserialize(
-				Utils.toCharArray(mongoLexer._serializedATN)
+				Utils.toCharArray(mongoLexer._serializedATN),
 			);
 		}
 
