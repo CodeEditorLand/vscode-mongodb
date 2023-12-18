@@ -23,25 +23,25 @@ export default class SchemaService {
 					...[
 						{
 							uri: this.queryCollectionSchema(
-								collection.collectionName,
+								collection.collectionName
 							),
 							fileMatch: [
 								this.queryDocumentUri(
-									collection.collectionName,
+									collection.collectionName
 								),
 							],
 						},
 						{
 							uri: this.aggregateCollectionSchema(
-								collection.collectionName,
+								collection.collectionName
 							),
 							fileMatch: [
 								this.aggregateDocumentUri(
-									collection.collectionName,
+									collection.collectionName
 								),
 							],
 						},
-					],
+					]
 				);
 			}
 			return schemas;
@@ -73,9 +73,9 @@ export default class SchemaService {
 			return this._resolveQueryCollectionSchema(
 				uri.substring(
 					"mongo://query/".length,
-					uri.length - ".schema".length,
+					uri.length - ".schema".length
 				),
-				uri,
+				uri
 			).then((schema) => {
 				this._schemasCache.set(uri, schema);
 				return schema;
@@ -85,8 +85,8 @@ export default class SchemaService {
 			return this._resolveAggregateCollectionSchema(
 				uri.substring(
 					"mongo://aggregate/".length,
-					uri.length - ".schema".length,
-				),
+					uri.length - ".schema".length
+				)
 			).then((schema) => {
 				this._schemasCache.set(uri, schema);
 				return schema;
@@ -97,7 +97,7 @@ export default class SchemaService {
 
 	private _resolveQueryCollectionSchema(
 		collectionName: string,
-		schemaUri: string,
+		schemaUri: string
 	): Thenable<string> {
 		const collection = this._db.collection(collectionName);
 		const cursor = collection.find();
@@ -118,7 +118,7 @@ export default class SchemaService {
 	}
 
 	private _resolveAggregateCollectionSchema(
-		collectionName: string,
+		collectionName: string
 	): Thenable<string> {
 		const collection = this._db.collection(collectionName);
 		const cursor = collection.find();
@@ -127,7 +127,7 @@ export default class SchemaService {
 				const schema: JSONSchema = {
 					type: "array",
 					items: this.getAggregateStagePropertiesSchema(
-						this.queryCollectionSchema(collectionName),
+						this.queryCollectionSchema(collectionName)
 					),
 				};
 				c(JSON.stringify(schema));
@@ -138,7 +138,7 @@ export default class SchemaService {
 	private setSchemaForDocument(
 		parent: string,
 		document: any,
-		schema: JSONSchema,
+		schema: JSONSchema
 	): void {
 		const type = Array.isArray(document) ? "array" : typeof document;
 		if (type === "object") {
@@ -150,7 +150,7 @@ export default class SchemaService {
 					parent,
 					property,
 					document,
-					schema,
+					schema
 				);
 			}
 		}
@@ -160,7 +160,7 @@ export default class SchemaService {
 		parent: string,
 		property: string,
 		document: any,
-		schema: JSONSchema,
+		schema: JSONSchema
 	): void {
 		const scopedProperty = parent ? `${parent}.${property}` : property;
 		const value = document[property];
@@ -225,7 +225,7 @@ Use the $where operator to pass either a string containing a JavaScript expressi
 
 	private setLogicalOperatorProperties(
 		schema: JSONSchema,
-		schemaUri: string,
+		schemaUri: string
 	): void {
 		schema.properties.$or = {
 			type: "array",
@@ -454,7 +454,7 @@ Use the $where operator to pass either a string containing a JavaScript expressi
 	}
 
 	private getAggregateStagePropertiesSchema(
-		querySchemaUri: string,
+		querySchemaUri: string
 	): JSONSchema {
 		const schemas: JSONSchema[] = [];
 		schemas.push({
@@ -696,7 +696,7 @@ Use the $where operator to pass either a string containing a JavaScript expressi
 		result: any[],
 		cursor: Cursor<any>,
 		batchSize: number,
-		callback: (result: any[]) => void,
+		callback: (result: any[]) => void
 	): void {
 		if (result.length === batchSize) {
 			callback(result);

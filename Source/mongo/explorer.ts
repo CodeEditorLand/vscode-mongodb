@@ -26,7 +26,7 @@ export class MongoExplorer implements TreeDataProvider<IMongoResource> {
 
 	constructor(
 		private model: Model,
-		private extensionContext: ExtensionContext,
+		private extensionContext: ExtensionContext
 	) {
 		this.model.onChange(() => this._onDidChangeTreeData.fire());
 	}
@@ -49,11 +49,11 @@ export class MongoExplorer implements TreeDataProvider<IMongoResource> {
 				children.map((child) => {
 					if (child.onChange) {
 						return child.onChange(() =>
-							this._onDidChangeTreeData.fire(child),
+							this._onDidChangeTreeData.fire(child)
 						);
 					}
 					return new Disposable(() => {});
-				}),
+				})
 			);
 			return children;
 		});

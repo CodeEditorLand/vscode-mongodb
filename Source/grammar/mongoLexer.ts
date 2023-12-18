@@ -133,7 +133,7 @@ export class mongoLexer extends Lexer {
 	public static readonly VOCABULARY: Vocabulary = new VocabularyImpl(
 		mongoLexer._LITERAL_NAMES,
 		mongoLexer._SYMBOLIC_NAMES,
-		[],
+		[]
 	);
 
 	@Override
@@ -175,7 +175,7 @@ export class mongoLexer extends Lexer {
 	public sempred(
 		_localctx: RuleContext,
 		ruleIndex: number,
-		predIndex: number,
+		predIndex: number
 	): boolean {
 		switch (ruleIndex) {
 			case 21:
@@ -185,7 +185,7 @@ export class mongoLexer extends Lexer {
 	}
 	private STRING_LITERAL_sempred(
 		_localctx: RuleContext,
-		predIndex: number,
+		predIndex: number
 	): boolean {
 		switch (predIndex) {
 			case 0:
@@ -303,7 +303,7 @@ export class mongoLexer extends Lexer {
 	public static get _ATN(): ATN {
 		if (!mongoLexer.__ATN) {
 			mongoLexer.__ATN = new ATNDeserializer().deserialize(
-				Utils.toCharArray(mongoLexer._serializedATN),
+				Utils.toCharArray(mongoLexer._serializedATN)
 			);
 		}
 

@@ -46,7 +46,7 @@ export class LanguageService {
 						completionProvider: { triggerCharacters: ["."] },
 					},
 				};
-			},
+			}
 		);
 
 		connection.onCompletion((textDocumentPosition) => {
@@ -62,7 +62,7 @@ export class LanguageService {
 						.then((schemas) => {
 							this.configureSchemas(schemas);
 						});
-				},
+				}
 			);
 		});
 
@@ -81,22 +81,22 @@ export class LanguageService {
 
 		this.mongoDocumentsManager = new MongoScriptDocumentManager(
 			this.schemaService,
-			this.jsonLanguageService,
+			this.jsonLanguageService
 		);
 	}
 
 	provideCompletionItems(
-		positionParams: TextDocumentPositionParams,
+		positionParams: TextDocumentPositionParams
 	): Promise<CompletionItem[]> {
 		const textDocument = this.textDocuments.get(
-			positionParams.textDocument.uri,
+			positionParams.textDocument.uri
 		);
 		const mongoScriptDocument = this.mongoDocumentsManager.getDocument(
 			textDocument,
-			this.db,
+			this.db
 		);
 		return mongoScriptDocument.provideCompletionItemsAt(
-			positionParams.position,
+			positionParams.position
 		);
 	}
 

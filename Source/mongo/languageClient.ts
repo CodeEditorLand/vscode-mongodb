@@ -26,13 +26,13 @@ const localize = nls.loadMessageBundle();
 
 namespace ConnectDBRequest {
 	export const type: RequestType<string, string, any, any> = new RequestType(
-		"vscode/content",
+		"vscode/content"
 	);
 }
 
 namespace ColorSymbolRequest {
 	export const type: RequestType<string, Range[], any, any> = new RequestType(
-		"json/colorSymbols",
+		"json/colorSymbols"
 	);
 }
 
@@ -42,7 +42,7 @@ export default class MongoDBLanguageClient {
 	constructor(context: ExtensionContext) {
 		// The server is implemented in node
 		let serverModule = context.asAbsolutePath(
-			path.join("out", "src", "mongo", "languageServer.js"),
+			path.join("out", "src", "mongo", "languageServer.js")
 		);
 		// The debug options for the server
 		let debugOptions = { execArgv: ["--nolazy", "--debug=6005"] };
@@ -73,7 +73,7 @@ export default class MongoDBLanguageClient {
 			"mongo",
 			localize("mongo.server.name", "Mongo Language Server"),
 			serverOptions,
-			clientOptions,
+			clientOptions
 		);
 		let disposable = this.client.start();
 

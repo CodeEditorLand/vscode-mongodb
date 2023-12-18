@@ -3,7 +3,10 @@
 		"lineComment": "//",
 		"blockComment": ["/*", "*/"]
 	},
-	"brackets": [["{", "}"], ["[", "]"]],
+	"brackets": [
+		["{", "}"],
+		["[", "]"]
+	],
 	"autoClosingPairs": [
 		{
 			"open": "{",

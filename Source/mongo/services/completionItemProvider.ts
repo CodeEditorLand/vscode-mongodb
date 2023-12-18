@@ -33,7 +33,7 @@ export class CompletionItemsVisitor extends MongoVisitor<
 		private db: Db,
 		private offset: number,
 		private schemaService: SchemaService,
-		private jsonLanguageService: JsonLanguageService,
+		private jsonLanguageService: JsonLanguageService
 	) {
 		super();
 		this.at = this.textDocument.positionAt(this.offset);
@@ -41,22 +41,22 @@ export class CompletionItemsVisitor extends MongoVisitor<
 
 	visitCommands(ctx: mongoParser.CommandsContext): Promise<CompletionItem[]> {
 		return this.thenable(
-			this.createDbKeywordCompletion(this.createRange(ctx)),
+			this.createDbKeywordCompletion(this.createRange(ctx))
 		);
 	}
 
 	visitEmptyCommand(
-		ctx: mongoParser.EmptyCommandContext,
+		ctx: mongoParser.EmptyCommandContext
 	): Promise<CompletionItem[]> {
 		return this.thenable(
-			this.createDbKeywordCompletion(this.createRangeAfter(ctx)),
+			this.createDbKeywordCompletion(this.createRangeAfter(ctx))
 		);
 	}
 
 	visitCommand(ctx: mongoParser.CommandContext): Promise<CompletionItem[]> {
 		if (ctx.childCount === 0) {
 			return this.thenable(
-				this.createDbKeywordCompletion(this.createRange(ctx)),
+				this.createDbKeywordCompletion(this.createRange(ctx))
 			);
 		}
 
@@ -68,7 +68,7 @@ export class CompletionItemsVisitor extends MongoVisitor<
 	}
 
 	visitCollection(
-		ctx: mongoParser.CollectionContext,
+		ctx: mongoParser.CollectionContext
 	): Promise<CompletionItem[]> {
 		return Promise.all([
 			this.createCollectionCompletions(this.createRange(ctx)),
@@ -80,7 +80,7 @@ export class CompletionItemsVisitor extends MongoVisitor<
 	}
 
 	visitFunctionCall(
-		ctx: mongoParser.FunctionCallContext,
+		ctx: mongoParser.FunctionCallContext
 	): Promise<CompletionItem[]> {
 		const previousNode = this.getPreviousNode(ctx);
 		if (previousNode instanceof TerminalNode) {
@@ -90,27 +90,27 @@ export class CompletionItemsVisitor extends MongoVisitor<
 	}
 
 	visitArguments(
-		ctx: mongoParser.ArgumentsContext,
+		ctx: mongoParser.ArgumentsContext
 	): Promise<CompletionItem[]> {
 		const terminalNode = this.getLastTerminalNode(ctx);
 		if (terminalNode && terminalNode.symbol === ctx._CLOSED_PARENTHESIS) {
 			return this.thenable(
 				this.createDbKeywordCompletion(
-					this.createRangeAfter(terminalNode),
-				),
+					this.createRangeAfter(terminalNode)
+				)
 			);
 		}
 		return this.thenable();
 	}
 
 	visitArgumentList(
-		ctx: mongoParser.ArgumentListContext,
+		ctx: mongoParser.ArgumentListContext
 	): Promise<CompletionItem[]> {
 		return ctx.parent.accept(this);
 	}
 
 	visitObjectLiteral(
-		ctx: mongoParser.ObjectLiteralContext,
+		ctx: mongoParser.ObjectLiteralContext
 	): Thenable<CompletionItem[]> {
 		let functionName = this.getFunctionName(ctx);
 		let collectionName = this.getCollectionName(ctx);
@@ -130,7 +130,7 @@ export class CompletionItemsVisitor extends MongoVisitor<
 				return this.getArgumentCompletionItems(
 					this.schemaService.queryDocumentUri(collectionName),
 					collectionName,
-					ctx,
+					ctx
 				);
 			}
 		}
@@ -138,7 +138,7 @@ export class CompletionItemsVisitor extends MongoVisitor<
 	}
 
 	visitArrayLiteral(
-		ctx: mongoParser.ArrayLiteralContext,
+		ctx: mongoParser.ArrayLiteralContext
 	): Thenable<CompletionItem[]> {
 		let functionName = this.getFunctionName(ctx);
 		let collectionName = this.getCollectionName(ctx);
@@ -147,7 +147,7 @@ export class CompletionItemsVisitor extends MongoVisitor<
 				return this.getArgumentCompletionItems(
 					this.schemaService.aggregateDocumentUri(collectionName),
 					collectionName,
-					ctx,
+					ctx
 				);
 			}
 		}
@@ -157,14 +157,14 @@ export class CompletionItemsVisitor extends MongoVisitor<
 	private getArgumentCompletionItems(
 		documentUri: string,
 		collectionName: string,
-		ctx: ParserRuleContext,
+		ctx: ParserRuleContext
 	): Thenable<CompletionItem[]> {
 		const text = this.textDocument.getText();
 		const document = TextDocument.create(
 			documentUri,
 			"json",
 			1,
-			text.substring(ctx.start.startIndex, ctx.stop.stopIndex + 1),
+			text.substring(ctx.start.startIndex, ctx.stop.stopIndex + 1)
 		);
 		const positionOffset = this.textDocument.offsetAt(this.at);
 		const contextOffset = ctx.start.startIndex;
@@ -173,23 +173,23 @@ export class CompletionItemsVisitor extends MongoVisitor<
 			.doComplete(
 				document,
 				position,
-				this.jsonLanguageService.parseJSONDocument(document),
+				this.jsonLanguageService.parseJSONDocument(document)
 			)
 			.then((list) => {
 				return list.items.map((item) => {
 					const startPositionOffset = document.offsetAt(
-						item.textEdit.range.start,
+						item.textEdit.range.start
 					);
 					const endPositionOffset = document.offsetAt(
-						item.textEdit.range.end,
+						item.textEdit.range.end
 					);
 					item.textEdit.range = Range.create(
 						this.textDocument.positionAt(
-							startPositionOffset + contextOffset,
+							startPositionOffset + contextOffset
 						),
 						this.textDocument.positionAt(
-							contextOffset + endPositionOffset,
-						),
+							contextOffset + endPositionOffset
+						)
 					);
 					return item;
 				});
@@ -243,31 +243,31 @@ export class CompletionItemsVisitor extends MongoVisitor<
 	}
 
 	visitElementList(
-		ctx: mongoParser.ElementListContext,
+		ctx: mongoParser.ElementListContext
 	): Promise<CompletionItem[]> {
 		return ctx.parent.accept(this);
 	}
 
 	visitPropertyNameAndValueList(
-		ctx: mongoParser.PropertyNameAndValueListContext,
+		ctx: mongoParser.PropertyNameAndValueListContext
 	): Promise<CompletionItem[]> {
 		return ctx.parent.accept(this);
 	}
 
 	visitPropertyAssignment(
-		ctx: mongoParser.PropertyAssignmentContext,
+		ctx: mongoParser.PropertyAssignmentContext
 	): Promise<CompletionItem[]> {
 		return ctx.parent.accept(this);
 	}
 
 	visitPropertyValue(
-		ctx: mongoParser.PropertyValueContext,
+		ctx: mongoParser.PropertyValueContext
 	): Promise<CompletionItem[]> {
 		return ctx.parent.accept(this);
 	}
 
 	visitPropertyName(
-		ctx: mongoParser.PropertyNameContext,
+		ctx: mongoParser.PropertyNameContext
 	): Promise<CompletionItem[]> {
 		return ctx.parent.accept(this);
 	}
@@ -285,16 +285,16 @@ export class CompletionItemsVisitor extends MongoVisitor<
 	}
 
 	private getCompletionItemsFromTerminalNode(
-		node: TerminalNode,
+		node: TerminalNode
 	): Promise<CompletionItem[]> {
 		if (node._symbol.type === mongoParser.mongoParser.DB) {
 			return this.thenable(
-				this.createDbKeywordCompletion(this.createRange(node)),
+				this.createDbKeywordCompletion(this.createRange(node))
 			);
 		}
 		if (node._symbol.type === mongoParser.mongoParser.SEMICOLON) {
 			return this.thenable(
-				this.createDbKeywordCompletion(this.createRangeAfter(node)),
+				this.createDbKeywordCompletion(this.createRangeAfter(node))
 			);
 		}
 		if (node._symbol.type === mongoParser.mongoParser.DOT) {
@@ -303,22 +303,22 @@ export class CompletionItemsVisitor extends MongoVisitor<
 				if (previousNode._symbol.type === mongoParser.mongoParser.DB) {
 					return Promise.all([
 						this.createCollectionCompletions(
-							this.createRangeAfter(node),
+							this.createRangeAfter(node)
 						),
 						this.createDbFunctionCompletions(
-							this.createRangeAfter(node),
+							this.createRangeAfter(node)
 						),
 					]).then(
 						([collectionCompletions, dbFunctionCompletions]) => [
 							...collectionCompletions,
 							...dbFunctionCompletions,
-						],
+						]
 					);
 				}
 			}
 			if (previousNode instanceof mongoParser.CollectionContext) {
 				return this.createCollectionFunctionsCompletions(
-					this.createRangeAfter(node),
+					this.createRangeAfter(node)
 				);
 			}
 		}
@@ -327,7 +327,7 @@ export class CompletionItemsVisitor extends MongoVisitor<
 			if (previousNode) {
 				if (previousNode instanceof TerminalNode) {
 					return this.getCompletionItemsFromTerminalNode(
-						previousNode,
+						previousNode
 					);
 				}
 				return previousNode.accept(this);
@@ -344,7 +344,7 @@ export class CompletionItemsVisitor extends MongoVisitor<
 						(node) =>
 							node instanceof TerminalNode &&
 							node.symbol.stopIndex > -1 &&
-							node.symbol.stopIndex < this.offset,
+							node.symbol.stopIndex < this.offset
 					)[0] : null;
 	}
 
@@ -373,7 +373,7 @@ export class CompletionItemsVisitor extends MongoVisitor<
 	}
 
 	private createDbFunctionCompletions(
-		range: Range,
+		range: Range
 	): Promise<CompletionItem[]> {
 		return this.thenable(
 			this.createFunctionCompletion("adminCommand", range),
@@ -424,12 +424,12 @@ export class CompletionItemsVisitor extends MongoVisitor<
 			this.createFunctionCompletion("setVerboseShell", range),
 			this.createFunctionCompletion("shotdownServer", range),
 			this.createFunctionCompletion("stats", range),
-			this.createFunctionCompletion("version", range),
+			this.createFunctionCompletion("version", range)
 		);
 	}
 
 	private createCollectionCompletions(
-		range: Range,
+		range: Range
 	): Promise<CompletionItem[]> {
 		if (this.db) {
 			return <Promise<CompletionItem[]>>(
@@ -445,7 +445,7 @@ export class CompletionItemsVisitor extends MongoVisitor<
 								kind: CompletionItemKind.Property,
 								filterText: collection.collectionName,
 								sortText: `1:${collection.collectionName}`,
-							},
+							}
 					);
 				})
 			);
@@ -454,7 +454,7 @@ export class CompletionItemsVisitor extends MongoVisitor<
 	}
 
 	private createCollectionFunctionsCompletions(
-		range: Range,
+		range: Range
 	): Promise<CompletionItem[]> {
 		return this.thenable(
 			this.createFunctionCompletion("bulkWrite", range),
@@ -505,13 +505,13 @@ export class CompletionItemsVisitor extends MongoVisitor<
 			this.createFunctionCompletion("getWriteConcern", range),
 			this.createFunctionCompletion("setWriteConcern", range),
 			this.createFunctionCompletion("unsetWriteConcern", range),
-			this.createFunctionCompletion("latencyStats", range),
+			this.createFunctionCompletion("latencyStats", range)
 		);
 	}
 
 	private createFunctionCompletion(
 		label: string,
-		range: Range,
+		range: Range
 	): CompletionItem {
 		return {
 			textEdit: {
@@ -542,7 +542,7 @@ export class CompletionItemsVisitor extends MongoVisitor<
 		if (parserRuleContext instanceof TerminalNode) {
 			return this._createRange(
 				parserRuleContext.symbol.startIndex,
-				parserRuleContext.symbol.stopIndex,
+				parserRuleContext.symbol.stopIndex
 			);
 		}
 
@@ -563,7 +563,7 @@ export class CompletionItemsVisitor extends MongoVisitor<
 		if (parserRuleContext instanceof TerminalNode) {
 			return this._createRange(
 				parserRuleContext.symbol.stopIndex + 1,
-				parserRuleContext.symbol.stopIndex + 1,
+				parserRuleContext.symbol.stopIndex + 1
 			);
 		}
 	}
