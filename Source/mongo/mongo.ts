@@ -41,7 +41,7 @@ class ServersJson {
 	private _filePath: string;
 
 	constructor(storagePath: string) {
-		this._filePath = storagePath + "/servers.json";
+		this._filePath = `${storagePath}/servers.json`;
 	}
 
 	async load(): Promise<string[]> {
@@ -615,7 +615,7 @@ export class Collection implements IMongoResource {
 			: [documentOrDocuments];
 		return documents.reduce((result, doc) => {
 			const id = doc._id;
-			delete doc._id;
+			doc._id = undefined;
 			result.push({
 				updateOne: {
 					filter: {
@@ -644,9 +644,9 @@ function reportProgress<T>(promise: Thenable<T>, title: string): Thenable<T> {
 function parseJSContent(content: string): any {
 	try {
 		const sandbox = {};
-		const key = "parse" + Math.floor(Math.random() * 1000000);
+		const key = `parse${Math.floor(Math.random() * 1000000)}`;
 		sandbox[key] = {};
-		vm.runInNewContext(key + "=" + content, sandbox);
+		vm.runInNewContext(`${key}=${content}`, sandbox);
 		return sandbox[key];
 	} catch (error) {
 		throw error.message;

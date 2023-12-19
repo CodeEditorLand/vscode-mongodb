@@ -109,7 +109,7 @@ export class Shell {
 			let executed = false;
 			const handler = setTimeout(() => {
 				if (!executed) {
-					e("Timed out executing " + script);
+					e(`Timed out executing ${script}`);
 				}
 			}, 5000);
 			const disposable = this.onResult.event((result) => {

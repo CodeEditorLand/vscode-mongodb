@@ -46,19 +46,19 @@ export default class SchemaService {
 	}
 
 	queryCollectionSchema(collectionName: string): string {
-		return "mongo://query/" + collectionName + ".schema";
+		return `mongo://query/${collectionName}.schema`;
 	}
 
 	aggregateCollectionSchema(collectionName: string): string {
-		return "mongo://aggregate/" + collectionName + ".schema";
+		return `mongo://aggregate/${collectionName}.schema`;
 	}
 
 	queryDocumentUri(collectionName: string): string {
-		return "mongo://query/" + collectionName + ".json";
+		return `mongo://query/${collectionName}.json`;
 	}
 
 	aggregateDocumentUri(collectionName: string): string {
-		return "mongo://aggregate/" + collectionName + ".json";
+		return `mongo://aggregate/${collectionName}.json`;
 	}
 
 	resolveSchema(uri: string): Thenable<string> {

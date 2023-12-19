@@ -130,10 +130,11 @@ function createScrapbook(): Thenable<void> {
 				),
 			);
 			if (
-				!vscode.workspace.textDocuments.find(
-					(doc) => doc.uri.fsPath === uri.fsPath,
-				) &&
-				!fs.existsSync(uri.fsPath)
+				!(
+					vscode.workspace.textDocuments.find(
+						(doc) => doc.uri.fsPath === uri.fsPath,
+					) || fs.existsSync(uri.fsPath)
+				)
 			) {
 				break;
 			}
@@ -196,7 +197,7 @@ class DatabaseQuickPick implements vscode.QuickPickItem {
 	readonly description: string;
 	constructor(readonly database: Database) {
 		this.label = database.label;
-		this.description = database.server.label + "/" + database.label;
+		this.description = `${database.server.label}/${database.label}`;
 	}
 }
 
@@ -222,9 +223,7 @@ function getDatabaseQuickPicks(): Thenable<DatabaseQuickPick[]> {
 function dropDatabase(database: Database): void {
 	vscode.window
 		.showInformationMessage(
-			"Are you sure you want to drop the database '" +
-				database.id +
-				"' and its collections?",
+			`Are you sure you want to drop the database '${database.id}' and its collections?`,
 			{ modal: true },
 			"Drop",
 		)
@@ -248,7 +247,7 @@ function connectToDatabase(database: Database): void {
 	connectedDb = database;
 	languageClient.connect(database);
 	vscode.window.setStatusBarMessage(
-		"Mongo: " + database.server.label + "/" + connectedDb.id,
+		`Mongo: ${database.server.label}/${connectedDb.id}`,
 	);
 }
 

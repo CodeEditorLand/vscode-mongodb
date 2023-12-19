@@ -220,21 +220,27 @@ export class mongoParser extends Parser {
 						this._errHandler.sync(this);
 						switch (this._input.LA(1)) {
 							case mongoParser.DB: {
-								this.state = 37;
-								this.command();
+								{
+									this.state = 37;
+									this.command();
+								}
+								break;
 							}
-							break;
 							case mongoParser.SEMICOLON: {
-								this.state = 38;
-								this.emptyCommand();
+								{
+									this.state = 38;
+									this.emptyCommand();
+								}
+								break;
 							}
-							break;
 							case mongoParser.SingleLineComment:
 							case mongoParser.MultiLineComment: {
-								this.state = 39;
-								this.comment();
+								{
+									this.state = 39;
+									this.comment();
+								}
+								break;
 							}
-							break;
 							default:
 								throw new NoViableAltException(this);
 						}
@@ -285,22 +291,26 @@ export class mongoParser extends Parser {
 					this.interpreter.adaptivePredict(this._input, 2, this._ctx)
 				) {
 					case 1: {
-						this.state = 46;
-						this.functionCall();
+						{
+							this.state = 46;
+							this.functionCall();
+						}
+						break;
 					}
-					break;
 
 					case 2: {
 						{
-							this.state = 47;
-							this.collection();
-							this.state = 48;
-							this.match(mongoParser.DOT);
-							this.state = 49;
-							this.functionCall();
+							{
+								this.state = 47;
+								this.collection();
+								this.state = 48;
+								this.match(mongoParser.DOT);
+								this.state = 49;
+								this.functionCall();
+							}
 						}
+						break;
 					}
-					break;
 				}
 				this.state = 54;
 				this._errHandler.sync(this);
@@ -308,10 +318,12 @@ export class mongoParser extends Parser {
 					this.interpreter.adaptivePredict(this._input, 3, this._ctx)
 				) {
 					case 1: {
-						this.state = 53;
-						this.match(mongoParser.SEMICOLON);
+						{
+							this.state = 53;
+							this.match(mongoParser.SEMICOLON);
+						}
+						break;
 					}
-					break;
 				}
 			}
 		} catch (re) {
@@ -472,27 +484,30 @@ export class mongoParser extends Parser {
 				case mongoParser.StringLiteral:
 				case mongoParser.NullLiteral:
 				case mongoParser.BooleanLiteral:
-				case mongoParser.NumericLiteral:
+				case mongoParser.NumericLiteral: {
 					this.enterOuterAlt(_localctx, 1);
 					{
 						this.state = 69;
 						this.literal();
 					}
 					break;
-				case mongoParser.T__2:
+				}
+				case mongoParser.T__2: {
 					this.enterOuterAlt(_localctx, 2);
 					{
 						this.state = 70;
 						this.objectLiteral();
 					}
 					break;
-				case mongoParser.T__5:
+				}
+				case mongoParser.T__5: {
 					this.enterOuterAlt(_localctx, 3);
 					{
 						this.state = 71;
 						this.arrayLiteral();
 					}
 					break;
+				}
 				default:
 					throw new NoViableAltException(this);
 			}
@@ -748,34 +763,38 @@ export class mongoParser extends Parser {
 				case mongoParser.StringLiteral:
 				case mongoParser.NullLiteral:
 				case mongoParser.BooleanLiteral:
-				case mongoParser.NumericLiteral:
+				case mongoParser.NumericLiteral: {
 					this.enterOuterAlt(_localctx, 1);
 					{
 						this.state = 109;
 						this.literal();
 					}
 					break;
-				case mongoParser.T__2:
+				}
+				case mongoParser.T__2: {
 					this.enterOuterAlt(_localctx, 2);
 					{
 						this.state = 110;
 						this.objectLiteral();
 					}
 					break;
-				case mongoParser.T__5:
+				}
+				case mongoParser.T__5: {
 					this.enterOuterAlt(_localctx, 3);
 					{
 						this.state = 111;
 						this.arrayLiteral();
 					}
 					break;
-				case mongoParser.STRING_LITERAL:
+				}
+				case mongoParser.STRING_LITERAL: {
 					this.enterOuterAlt(_localctx, 4);
 					{
 						this.state = 112;
 						this.functionCall();
 					}
 					break;
+				}
 				default:
 					throw new NoViableAltException(this);
 			}
@@ -806,7 +825,7 @@ export class mongoParser extends Parser {
 			switch (this._input.LA(1)) {
 				case mongoParser.StringLiteral:
 				case mongoParser.NullLiteral:
-				case mongoParser.BooleanLiteral:
+				case mongoParser.BooleanLiteral: {
 					this.enterOuterAlt(_localctx, 1);
 					{
 						this.state = 115;
@@ -830,13 +849,15 @@ export class mongoParser extends Parser {
 						}
 					}
 					break;
-				case mongoParser.NumericLiteral:
+				}
+				case mongoParser.NumericLiteral: {
 					this.enterOuterAlt(_localctx, 2);
 					{
 						this.state = 116;
 						this.match(mongoParser.NumericLiteral);
 					}
 					break;
+				}
 				default:
 					throw new NoViableAltException(this);
 			}
@@ -989,24 +1010,28 @@ export class MongoCommandsContext extends ParserRuleContext {
 		return this.getToken(mongoParser.EOF, 0);
 	}
 	constructor(parent: ParserRuleContext, invokingState: number);
-	constructor(parent: ParserRuleContext, invokingState: number) {
-		super(parent, invokingState);
-	}
 	@Override public get ruleIndex(): number {
 		return mongoParser.RULE_mongoCommands;
 	}
 	@Override
 	public enterRule(listener: mongoListener): void {
-		if (listener.enterMongoCommands) listener.enterMongoCommands(this);
+		if (listener.enterMongoCommands) {
+			listener.enterMongoCommands(this);
+		}
 	}
 	@Override
 	public exitRule(listener: mongoListener): void {
-		if (listener.exitMongoCommands) listener.exitMongoCommands(this);
+		if (listener.exitMongoCommands) {
+			listener.exitMongoCommands(this);
+		}
 	}
 	@Override
 	public accept<Result>(visitor: mongoVisitor<Result>): Result {
-		if (visitor.visitMongoCommands) return visitor.visitMongoCommands(this);
-		else return visitor.visitChildren(this);
+		if (visitor.visitMongoCommands) {
+			return visitor.visitMongoCommands(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
 	}
 }
 
@@ -1041,24 +1066,28 @@ export class CommandsContext extends ParserRuleContext {
 		}
 	}
 	constructor(parent: ParserRuleContext, invokingState: number);
-	constructor(parent: ParserRuleContext, invokingState: number) {
-		super(parent, invokingState);
-	}
 	@Override public get ruleIndex(): number {
 		return mongoParser.RULE_commands;
 	}
 	@Override
 	public enterRule(listener: mongoListener): void {
-		if (listener.enterCommands) listener.enterCommands(this);
+		if (listener.enterCommands) {
+			listener.enterCommands(this);
+		}
 	}
 	@Override
 	public exitRule(listener: mongoListener): void {
-		if (listener.exitCommands) listener.exitCommands(this);
+		if (listener.exitCommands) {
+			listener.exitCommands(this);
+		}
 	}
 	@Override
 	public accept<Result>(visitor: mongoVisitor<Result>): Result {
-		if (visitor.visitCommands) return visitor.visitCommands(this);
-		else return visitor.visitChildren(this);
+		if (visitor.visitCommands) {
+			return visitor.visitCommands(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
 	}
 }
 
@@ -1085,24 +1114,28 @@ export class CommandContext extends ParserRuleContext {
 		return this.tryGetRuleContext(0, CollectionContext);
 	}
 	constructor(parent: ParserRuleContext, invokingState: number);
-	constructor(parent: ParserRuleContext, invokingState: number) {
-		super(parent, invokingState);
-	}
 	@Override public get ruleIndex(): number {
 		return mongoParser.RULE_command;
 	}
 	@Override
 	public enterRule(listener: mongoListener): void {
-		if (listener.enterCommand) listener.enterCommand(this);
+		if (listener.enterCommand) {
+			listener.enterCommand(this);
+		}
 	}
 	@Override
 	public exitRule(listener: mongoListener): void {
-		if (listener.exitCommand) listener.exitCommand(this);
+		if (listener.exitCommand) {
+			listener.exitCommand(this);
+		}
 	}
 	@Override
 	public accept<Result>(visitor: mongoVisitor<Result>): Result {
-		if (visitor.visitCommand) return visitor.visitCommand(this);
-		else return visitor.visitChildren(this);
+		if (visitor.visitCommand) {
+			return visitor.visitCommand(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
 	}
 }
 
@@ -1111,24 +1144,28 @@ export class EmptyCommandContext extends ParserRuleContext {
 		return this.getToken(mongoParser.SEMICOLON, 0);
 	}
 	constructor(parent: ParserRuleContext, invokingState: number);
-	constructor(parent: ParserRuleContext, invokingState: number) {
-		super(parent, invokingState);
-	}
 	@Override public get ruleIndex(): number {
 		return mongoParser.RULE_emptyCommand;
 	}
 	@Override
 	public enterRule(listener: mongoListener): void {
-		if (listener.enterEmptyCommand) listener.enterEmptyCommand(this);
+		if (listener.enterEmptyCommand) {
+			listener.enterEmptyCommand(this);
+		}
 	}
 	@Override
 	public exitRule(listener: mongoListener): void {
-		if (listener.exitEmptyCommand) listener.exitEmptyCommand(this);
+		if (listener.exitEmptyCommand) {
+			listener.exitEmptyCommand(this);
+		}
 	}
 	@Override
 	public accept<Result>(visitor: mongoVisitor<Result>): Result {
-		if (visitor.visitEmptyCommand) return visitor.visitEmptyCommand(this);
-		else return visitor.visitChildren(this);
+		if (visitor.visitEmptyCommand) {
+			return visitor.visitEmptyCommand(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
 	}
 }
 
@@ -1137,24 +1174,28 @@ export class CollectionContext extends ParserRuleContext {
 		return this.getToken(mongoParser.STRING_LITERAL, 0);
 	}
 	constructor(parent: ParserRuleContext, invokingState: number);
-	constructor(parent: ParserRuleContext, invokingState: number) {
-		super(parent, invokingState);
-	}
 	@Override public get ruleIndex(): number {
 		return mongoParser.RULE_collection;
 	}
 	@Override
 	public enterRule(listener: mongoListener): void {
-		if (listener.enterCollection) listener.enterCollection(this);
+		if (listener.enterCollection) {
+			listener.enterCollection(this);
+		}
 	}
 	@Override
 	public exitRule(listener: mongoListener): void {
-		if (listener.exitCollection) listener.exitCollection(this);
+		if (listener.exitCollection) {
+			listener.exitCollection(this);
+		}
 	}
 	@Override
 	public accept<Result>(visitor: mongoVisitor<Result>): Result {
-		if (visitor.visitCollection) return visitor.visitCollection(this);
-		else return visitor.visitChildren(this);
+		if (visitor.visitCollection) {
+			return visitor.visitCollection(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
 	}
 }
 
@@ -1167,24 +1208,28 @@ export class FunctionCallContext extends ParserRuleContext {
 		return this.getToken(mongoParser.STRING_LITERAL, 0);
 	}
 	constructor(parent: ParserRuleContext, invokingState: number);
-	constructor(parent: ParserRuleContext, invokingState: number) {
-		super(parent, invokingState);
-	}
 	@Override public get ruleIndex(): number {
 		return mongoParser.RULE_functionCall;
 	}
 	@Override
 	public enterRule(listener: mongoListener): void {
-		if (listener.enterFunctionCall) listener.enterFunctionCall(this);
+		if (listener.enterFunctionCall) {
+			listener.enterFunctionCall(this);
+		}
 	}
 	@Override
 	public exitRule(listener: mongoListener): void {
-		if (listener.exitFunctionCall) listener.exitFunctionCall(this);
+		if (listener.exitFunctionCall) {
+			listener.exitFunctionCall(this);
+		}
 	}
 	@Override
 	public accept<Result>(visitor: mongoVisitor<Result>): Result {
-		if (visitor.visitFunctionCall) return visitor.visitFunctionCall(this);
-		else return visitor.visitChildren(this);
+		if (visitor.visitFunctionCall) {
+			return visitor.visitFunctionCall(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
 	}
 }
 
@@ -1195,24 +1240,28 @@ export class ArgumentsContext extends ParserRuleContext {
 		return this.tryGetRuleContext(0, ArgumentListContext);
 	}
 	constructor(parent: ParserRuleContext, invokingState: number);
-	constructor(parent: ParserRuleContext, invokingState: number) {
-		super(parent, invokingState);
-	}
 	@Override public get ruleIndex(): number {
 		return mongoParser.RULE_arguments;
 	}
 	@Override
 	public enterRule(listener: mongoListener): void {
-		if (listener.enterArguments) listener.enterArguments(this);
+		if (listener.enterArguments) {
+			listener.enterArguments(this);
+		}
 	}
 	@Override
 	public exitRule(listener: mongoListener): void {
-		if (listener.exitArguments) listener.exitArguments(this);
+		if (listener.exitArguments) {
+			listener.exitArguments(this);
+		}
 	}
 	@Override
 	public accept<Result>(visitor: mongoVisitor<Result>): Result {
-		if (visitor.visitArguments) return visitor.visitArguments(this);
-		else return visitor.visitChildren(this);
+		if (visitor.visitArguments) {
+			return visitor.visitArguments(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
 	}
 }
 
@@ -1227,24 +1276,28 @@ export class ArgumentListContext extends ParserRuleContext {
 		return this.tryGetRuleContext(0, ArrayLiteralContext);
 	}
 	constructor(parent: ParserRuleContext, invokingState: number);
-	constructor(parent: ParserRuleContext, invokingState: number) {
-		super(parent, invokingState);
-	}
 	@Override public get ruleIndex(): number {
 		return mongoParser.RULE_argumentList;
 	}
 	@Override
 	public enterRule(listener: mongoListener): void {
-		if (listener.enterArgumentList) listener.enterArgumentList(this);
+		if (listener.enterArgumentList) {
+			listener.enterArgumentList(this);
+		}
 	}
 	@Override
 	public exitRule(listener: mongoListener): void {
-		if (listener.exitArgumentList) listener.exitArgumentList(this);
+		if (listener.exitArgumentList) {
+			listener.exitArgumentList(this);
+		}
 	}
 	@Override
 	public accept<Result>(visitor: mongoVisitor<Result>): Result {
-		if (visitor.visitArgumentList) return visitor.visitArgumentList(this);
-		else return visitor.visitChildren(this);
+		if (visitor.visitArgumentList) {
+			return visitor.visitArgumentList(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
 	}
 }
 
@@ -1255,24 +1308,28 @@ export class ObjectLiteralContext extends ParserRuleContext {
 		return this.tryGetRuleContext(0, PropertyNameAndValueListContext);
 	}
 	constructor(parent: ParserRuleContext, invokingState: number);
-	constructor(parent: ParserRuleContext, invokingState: number) {
-		super(parent, invokingState);
-	}
 	@Override public get ruleIndex(): number {
 		return mongoParser.RULE_objectLiteral;
 	}
 	@Override
 	public enterRule(listener: mongoListener): void {
-		if (listener.enterObjectLiteral) listener.enterObjectLiteral(this);
+		if (listener.enterObjectLiteral) {
+			listener.enterObjectLiteral(this);
+		}
 	}
 	@Override
 	public exitRule(listener: mongoListener): void {
-		if (listener.exitObjectLiteral) listener.exitObjectLiteral(this);
+		if (listener.exitObjectLiteral) {
+			listener.exitObjectLiteral(this);
+		}
 	}
 	@Override
 	public accept<Result>(visitor: mongoVisitor<Result>): Result {
-		if (visitor.visitObjectLiteral) return visitor.visitObjectLiteral(this);
-		else return visitor.visitChildren(this);
+		if (visitor.visitObjectLiteral) {
+			return visitor.visitObjectLiteral(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
 	}
 }
 
@@ -1281,24 +1338,28 @@ export class ArrayLiteralContext extends ParserRuleContext {
 		return this.tryGetRuleContext(0, ElementListContext);
 	}
 	constructor(parent: ParserRuleContext, invokingState: number);
-	constructor(parent: ParserRuleContext, invokingState: number) {
-		super(parent, invokingState);
-	}
 	@Override public get ruleIndex(): number {
 		return mongoParser.RULE_arrayLiteral;
 	}
 	@Override
 	public enterRule(listener: mongoListener): void {
-		if (listener.enterArrayLiteral) listener.enterArrayLiteral(this);
+		if (listener.enterArrayLiteral) {
+			listener.enterArrayLiteral(this);
+		}
 	}
 	@Override
 	public exitRule(listener: mongoListener): void {
-		if (listener.exitArrayLiteral) listener.exitArrayLiteral(this);
+		if (listener.exitArrayLiteral) {
+			listener.exitArrayLiteral(this);
+		}
 	}
 	@Override
 	public accept<Result>(visitor: mongoVisitor<Result>): Result {
-		if (visitor.visitArrayLiteral) return visitor.visitArrayLiteral(this);
-		else return visitor.visitChildren(this);
+		if (visitor.visitArrayLiteral) {
+			return visitor.visitArrayLiteral(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
 	}
 }
 
@@ -1315,24 +1376,28 @@ export class ElementListContext extends ParserRuleContext {
 		}
 	}
 	constructor(parent: ParserRuleContext, invokingState: number);
-	constructor(parent: ParserRuleContext, invokingState: number) {
-		super(parent, invokingState);
-	}
 	@Override public get ruleIndex(): number {
 		return mongoParser.RULE_elementList;
 	}
 	@Override
 	public enterRule(listener: mongoListener): void {
-		if (listener.enterElementList) listener.enterElementList(this);
+		if (listener.enterElementList) {
+			listener.enterElementList(this);
+		}
 	}
 	@Override
 	public exitRule(listener: mongoListener): void {
-		if (listener.exitElementList) listener.exitElementList(this);
+		if (listener.exitElementList) {
+			listener.exitElementList(this);
+		}
 	}
 	@Override
 	public accept<Result>(visitor: mongoVisitor<Result>): Result {
-		if (visitor.visitElementList) return visitor.visitElementList(this);
-		else return visitor.visitChildren(this);
+		if (visitor.visitElementList) {
+			return visitor.visitElementList(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
 	}
 }
 
@@ -1349,27 +1414,28 @@ export class PropertyNameAndValueListContext extends ParserRuleContext {
 		}
 	}
 	constructor(parent: ParserRuleContext, invokingState: number);
-	constructor(parent: ParserRuleContext, invokingState: number) {
-		super(parent, invokingState);
-	}
 	@Override public get ruleIndex(): number {
 		return mongoParser.RULE_propertyNameAndValueList;
 	}
 	@Override
 	public enterRule(listener: mongoListener): void {
-		if (listener.enterPropertyNameAndValueList)
+		if (listener.enterPropertyNameAndValueList) {
 			listener.enterPropertyNameAndValueList(this);
+		}
 	}
 	@Override
 	public exitRule(listener: mongoListener): void {
-		if (listener.exitPropertyNameAndValueList)
+		if (listener.exitPropertyNameAndValueList) {
 			listener.exitPropertyNameAndValueList(this);
+		}
 	}
 	@Override
 	public accept<Result>(visitor: mongoVisitor<Result>): Result {
-		if (visitor.visitPropertyNameAndValueList)
+		if (visitor.visitPropertyNameAndValueList) {
 			return visitor.visitPropertyNameAndValueList(this);
-		else return visitor.visitChildren(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
 	}
 }
 
@@ -1381,27 +1447,28 @@ export class PropertyAssignmentContext extends ParserRuleContext {
 		return this.getRuleContext(0, PropertyValueContext);
 	}
 	constructor(parent: ParserRuleContext, invokingState: number);
-	constructor(parent: ParserRuleContext, invokingState: number) {
-		super(parent, invokingState);
-	}
 	@Override public get ruleIndex(): number {
 		return mongoParser.RULE_propertyAssignment;
 	}
 	@Override
 	public enterRule(listener: mongoListener): void {
-		if (listener.enterPropertyAssignment)
+		if (listener.enterPropertyAssignment) {
 			listener.enterPropertyAssignment(this);
+		}
 	}
 	@Override
 	public exitRule(listener: mongoListener): void {
-		if (listener.exitPropertyAssignment)
+		if (listener.exitPropertyAssignment) {
 			listener.exitPropertyAssignment(this);
+		}
 	}
 	@Override
 	public accept<Result>(visitor: mongoVisitor<Result>): Result {
-		if (visitor.visitPropertyAssignment)
+		if (visitor.visitPropertyAssignment) {
 			return visitor.visitPropertyAssignment(this);
-		else return visitor.visitChildren(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
 	}
 }
 
@@ -1419,24 +1486,28 @@ export class PropertyValueContext extends ParserRuleContext {
 		return this.tryGetRuleContext(0, FunctionCallContext);
 	}
 	constructor(parent: ParserRuleContext, invokingState: number);
-	constructor(parent: ParserRuleContext, invokingState: number) {
-		super(parent, invokingState);
-	}
 	@Override public get ruleIndex(): number {
 		return mongoParser.RULE_propertyValue;
 	}
 	@Override
 	public enterRule(listener: mongoListener): void {
-		if (listener.enterPropertyValue) listener.enterPropertyValue(this);
+		if (listener.enterPropertyValue) {
+			listener.enterPropertyValue(this);
+		}
 	}
 	@Override
 	public exitRule(listener: mongoListener): void {
-		if (listener.exitPropertyValue) listener.exitPropertyValue(this);
+		if (listener.exitPropertyValue) {
+			listener.exitPropertyValue(this);
+		}
 	}
 	@Override
 	public accept<Result>(visitor: mongoVisitor<Result>): Result {
-		if (visitor.visitPropertyValue) return visitor.visitPropertyValue(this);
-		else return visitor.visitChildren(this);
+		if (visitor.visitPropertyValue) {
+			return visitor.visitPropertyValue(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
 	}
 }
 
@@ -1454,24 +1525,28 @@ export class LiteralContext extends ParserRuleContext {
 		return this.tryGetToken(mongoParser.NumericLiteral, 0);
 	}
 	constructor(parent: ParserRuleContext, invokingState: number);
-	constructor(parent: ParserRuleContext, invokingState: number) {
-		super(parent, invokingState);
-	}
 	@Override public get ruleIndex(): number {
 		return mongoParser.RULE_literal;
 	}
 	@Override
 	public enterRule(listener: mongoListener): void {
-		if (listener.enterLiteral) listener.enterLiteral(this);
+		if (listener.enterLiteral) {
+			listener.enterLiteral(this);
+		}
 	}
 	@Override
 	public exitRule(listener: mongoListener): void {
-		if (listener.exitLiteral) listener.exitLiteral(this);
+		if (listener.exitLiteral) {
+			listener.exitLiteral(this);
+		}
 	}
 	@Override
 	public accept<Result>(visitor: mongoVisitor<Result>): Result {
-		if (visitor.visitLiteral) return visitor.visitLiteral(this);
-		else return visitor.visitChildren(this);
+		if (visitor.visitLiteral) {
+			return visitor.visitLiteral(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
 	}
 }
 
@@ -1480,24 +1555,28 @@ export class PropertyNameContext extends ParserRuleContext {
 		return this.getToken(mongoParser.StringLiteral, 0);
 	}
 	constructor(parent: ParserRuleContext, invokingState: number);
-	constructor(parent: ParserRuleContext, invokingState: number) {
-		super(parent, invokingState);
-	}
 	@Override public get ruleIndex(): number {
 		return mongoParser.RULE_propertyName;
 	}
 	@Override
 	public enterRule(listener: mongoListener): void {
-		if (listener.enterPropertyName) listener.enterPropertyName(this);
+		if (listener.enterPropertyName) {
+			listener.enterPropertyName(this);
+		}
 	}
 	@Override
 	public exitRule(listener: mongoListener): void {
-		if (listener.exitPropertyName) listener.exitPropertyName(this);
+		if (listener.exitPropertyName) {
+			listener.exitPropertyName(this);
+		}
 	}
 	@Override
 	public accept<Result>(visitor: mongoVisitor<Result>): Result {
-		if (visitor.visitPropertyName) return visitor.visitPropertyName(this);
-		else return visitor.visitChildren(this);
+		if (visitor.visitPropertyName) {
+			return visitor.visitPropertyName(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
 	}
 }
 
@@ -1509,23 +1588,27 @@ export class CommentContext extends ParserRuleContext {
 		return this.tryGetToken(mongoParser.MultiLineComment, 0);
 	}
 	constructor(parent: ParserRuleContext, invokingState: number);
-	constructor(parent: ParserRuleContext, invokingState: number) {
-		super(parent, invokingState);
-	}
 	@Override public get ruleIndex(): number {
 		return mongoParser.RULE_comment;
 	}
 	@Override
 	public enterRule(listener: mongoListener): void {
-		if (listener.enterComment) listener.enterComment(this);
+		if (listener.enterComment) {
+			listener.enterComment(this);
+		}
 	}
 	@Override
 	public exitRule(listener: mongoListener): void {
-		if (listener.exitComment) listener.exitComment(this);
+		if (listener.exitComment) {
+			listener.exitComment(this);
+		}
 	}
 	@Override
 	public accept<Result>(visitor: mongoVisitor<Result>): Result {
-		if (visitor.visitComment) return visitor.visitComment(this);
-		else return visitor.visitChildren(this);
+		if (visitor.visitComment) {
+			return visitor.visitComment(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
 	}
 }
