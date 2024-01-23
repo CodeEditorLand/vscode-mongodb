@@ -218,7 +218,7 @@
 		"antlr4ts": "0.5.0-alpha.4",
 		"mongodb": "6.3.0",
 		"request-light": "0.7.0",
-		"vscode-json-languageservice": "5.3.7",
+		"vscode-json-languageservice": "5.3.9",
 		"vscode-languageclient": "9.0.1",
 		"vscode-languageserver": "9.0.1",
 		"vscode-nls": "5.2.0",
