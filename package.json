@@ -5,7 +5,7 @@
 	"displayName": "MongoDB [DEPRECATED]",
 	"description": "[DEPRECATED] Create, browse, and update MongoDB NoSQL collections and documents.",
 	"engines": {
-		"vscode": "^1.19.0"
+		"vscode": "1.19.0"
 	},
 	"galleryBanner": {
 		"color": "#3E8E3A",
@@ -226,22 +226,22 @@
 		"antlr4ts": "antlr4ts -visitor ./grammar/mongo.g4 -o ./src"
 	},
 	"devDependencies": {
-		"@types/mocha": "^10.0.6",
-		"@types/mongodb": "^4.0.6",
-		"@types/node": "^20.11.13",
-		"antlr4ts-cli": "^0.5.0-alpha.4",
-		"mocha": "^10.2.0",
-		"typescript": "^5.3.3",
-		"vscode": "^1.0.0"
+		"@types/mocha": "10.0.6",
+		"@types/mongodb": "4.0.6",
+		"@types/node": "20.11.13",
+		"antlr4ts-cli": "0.5.0-alpha.4",
+		"mocha": "10.2.0",
+		"typescript": "5.3.3",
+		"vscode": "1.0.0"
 	},
 	"dependencies": {
-		"antlr4ts": "^0.5.0-alpha.4",
-		"mongodb": "^6.3.0",
-		"request-light": "^0.7.0",
-		"vscode-languageclient": "^9.0.1",
-		"vscode-languageserver": "^9.0.1",
-		"vscode-nls": "^5.2.0",
-		"vscode-uri": "^3.0.8",
-		"vscode-json-languageservice": "^5.3.9"
+		"antlr4ts": "0.5.0-alpha.4",
+		"mongodb": "6.3.0",
+		"request-light": "0.7.0",
+		"vscode-languageclient": "9.0.1",
+		"vscode-languageserver": "9.0.1",
+		"vscode-nls": "5.2.0",
+		"vscode-uri": "3.0.8",
+		"vscode-json-languageservice": "5.3.9"
 	}
 }
