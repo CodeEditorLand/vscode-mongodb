@@ -1,24 +1,19 @@
 {
-  "name": "vscode-mongodb",
-  "displayName": "MongoDB [DEPRECATED]",
-  "version": "0.0.2",
-  "description": "[DEPRECATED] Create, browse, and update MongoDB NoSQL collections and documents.",
-  "homepage": "https://github.com/microsoft/vscode-mongodb/blob/master/README.md",
+  "activationEvents": [
+    "onView:mongoExplorer",
+    "onCommand:mongo.execute",
+    "onCommand:mongo.addServer",
+    "onCommand:mongo.createDatabase",
+    "onCommand:mongo.removeServer",
+    "onCommand:mongo.connect",
+    "onCommand:mongo.connectDb",
+    "onCommand:mongo.dropDb",
+    "onCommand:mongo.newScrapbook",
+    "onCommand:mongo.updateDocuments",
+    "onCommand:mongo.openCollection"
+  ],
   "bugs": {
     "url": "https://github.com/microsoft/vscode-mongodb/issues"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/microsoft/vscode-mongodb"
-  },
-  "license": "SEE LICENSE IN LICENSE.md",
-  "publisher": "ms-vscode-devlab",
-  "main": "./out/src/extension",
-  "scripts": {
-    "antlr4ts": "antlr4ts -visitor ./grammar/mongo.g4 -o ./src",
-    "compile": "tsc -watch -p ./",
-    "postinstall": "node ./node_modules/vscode/bin/install",
-    "vscode:prepublish": "tsc -p ./"
   },
   "contributes": {
     "commands": [
@@ -201,41 +196,46 @@
       ]
     }
   },
-  "activationEvents": [
-    "onView:mongoExplorer",
-    "onCommand:mongo.execute",
-    "onCommand:mongo.addServer",
-    "onCommand:mongo.createDatabase",
-    "onCommand:mongo.removeServer",
-    "onCommand:mongo.connect",
-    "onCommand:mongo.connectDb",
-    "onCommand:mongo.dropDb",
-    "onCommand:mongo.newScrapbook",
-    "onCommand:mongo.updateDocuments",
-    "onCommand:mongo.openCollection"
-  ],
   "dependencies": {
-    "antlr4ts": "^0.4.0-alpha.4",
-    "mongodb": "^2.2.25",
-    "request-light": "^0.2.0",
-    "vscode-json-languageservice": "^2.0.9",
-    "vscode-languageclient": "^3.1.0-alpha.1",
-    "vscode-languageserver": "^3.1.0-alpha.1",
-    "vscode-nls": "^2.0.2",
-    "vscode-uri": "^1.0.0"
+    "antlr4ts": "0.4.0-alpha.4",
+    "mongodb": "2.2.25",
+    "request-light": "0.2.0",
+    "vscode-json-languageservice": "2.0.9",
+    "vscode-languageclient": "3.1.0-alpha.1",
+    "vscode-languageserver": "3.1.0-alpha.1",
+    "vscode-nls": "2.0.2",
+    "vscode-uri": "1.0.0"
   },
+  "description": "[DEPRECATED] Create, browse, and update MongoDB NoSQL collections and documents.",
   "devDependencies": {
-    "@types/mocha": "^2.2.32",
-    "@types/mongodb": "^2.2.9",
-    "@types/node": "^6.0.40",
-    "antlr4ts-cli": "^0.4.0-alpha.4",
-    "mocha": "^2.3.3",
-    "typescript": "^2.0.3",
-    "vscode": "^1.0.0"
+    "@types/mocha": "2.2.32",
+    "@types/mongodb": "2.2.9",
+    "@types/node": "6.0.40",
+    "antlr4ts-cli": "0.4.0-alpha.4",
+    "mocha": "2.3.3",
+    "typescript": "2.0.3",
+    "vscode": "1.0.0"
   },
-  "icon": "media/MongoDB_Gray_Logo_FullColor_RGB-01.jpg",
+  "displayName": "MongoDB [DEPRECATED]",
   "galleryBanner": {
     "color": "#3E8E3A",
     "theme": "light"
-  }
+  },
+  "homepage": "https://github.com/microsoft/vscode-mongodb/blob/master/README.md",
+  "icon": "media/MongoDB_Gray_Logo_FullColor_RGB-01.jpg",
+  "license": "SEE LICENSE IN LICENSE.md",
+  "main": "./out/src/extension",
+  "name": "vscode-mongodb",
+  "publisher": "ms-vscode-devlab",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/microsoft/vscode-mongodb"
+  },
+  "scripts": {
+    "antlr4ts": "antlr4ts -visitor ./grammar/mongo.g4 -o ./src",
+    "compile": "tsc -watch -p ./",
+    "postinstall": "node ./node_modules/vscode/bin/install",
+    "vscode:prepublish": "tsc -p ./"
+  },
+  "version": "0.0.2"
 }
