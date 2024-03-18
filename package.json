@@ -226,22 +226,22 @@
 		"antlr4ts": "antlr4ts -visitor ./grammar/mongo.g4 -o ./src"
 	},
 	"devDependencies": {
-		"@types/mocha": "2.2.32",
-		"@types/mongodb": "2.2.9",
-		"@types/node": "6.0.40",
-		"antlr4ts-cli": "0.4.0-alpha.4",
-		"mocha": "2.3.3",
-		"typescript": "2.0.3",
+		"@types/mocha": "10.0.6",
+		"@types/mongodb": "4.0.6",
+		"@types/node": "20.11.28",
+		"antlr4ts-cli": "0.5.0-alpha.4",
+		"mocha": "10.3.0",
+		"typescript": "5.4.2",
 		"vscode": "1.0.0"
 	},
 	"dependencies": {
-		"antlr4ts": "0.4.0-alpha.4",
-		"mongodb": "2.2.25",
-		"request-light": "0.2.0",
-		"vscode-languageclient": "3.1.0-alpha.1",
-		"vscode-languageserver": "3.1.0-alpha.1",
-		"vscode-nls": "2.0.2",
-		"vscode-uri": "1.0.0",
-		"vscode-json-languageservice": "2.0.9"
+		"antlr4ts": "0.5.0-alpha.4",
+		"mongodb": "6.5.0",
+		"request-light": "0.7.0",
+		"vscode-languageclient": "9.0.1",
+		"vscode-languageserver": "9.0.1",
+		"vscode-nls": "5.2.0",
+		"vscode-uri": "3.0.8",
+		"vscode-json-languageservice": "5.3.9"
 	}
 }
