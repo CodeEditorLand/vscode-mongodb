@@ -4,28 +4,30 @@
 	"version": "0.0.1",
 	"private": false,
 	"description": "[DEPRECATED] Create, browse, and update MongoDB NoSQL collections and documents.",
-	"homepage": "https://github.com/CodeEditorLand/Foundation#readme",
+	"keywords": [
+		"land"
+	],
+	"homepage": "HTTPS://GitHub.Com/CodeEditorLand/LandMongoDB#readme",
 	"bugs": {
-		"url": "https://github.com/CodeEditorLand/Foundation/issues"
+		"url": "HTTPS://GitHub.Com/CodeEditorLand/LandMongoDB/issues"
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/CodeEditorLand/Foundation.git"
+		"url": "git+HTTPS://github.com/CodeEditorLand/LandMongoDB.git"
 	},
 	"license": "SEE LICENSE IN LICENSE",
 	"author": {
-		"name": "Playform",
-		"email": "Hello@Playform.Cloud",
-		"url": "https://playform.cloud"
+		"name": "🌆 — Land —",
+		"email": "Land@PlayForm.Cloud",
+		"url": "HTTPS://Land.PlayForm.Cloud"
 	},
 	"type": "module",
 	"main": "./out/src/extension",
 	"scripts": {
+		"Document": "Document 'Source/**/*.ts'",
 		"antlr4ts": "antlr4ts -visitor ./grammar/mongo.g4 -o ./src",
 		"compile": "tsc -watch -p ./",
-		"postinstall": "node ./node_modules/vscode/bin/install",
-		"prepublishOnly": "TypeScriptESBuild 'Source/**/*.ts'",
-		"vscode:prepublish": "tsc -p ./"
+		"prepublishOnly": "Build 'Source/**/*.ts'"
 	},
 	"contributes": {
 		"commands": [
@@ -224,22 +226,14 @@
 	"dependencies": {
 		"antlr4ts": "0.5.0-alpha.4",
 		"mongodb": "6.5.0",
-		"request-light": "0.7.0",
-		"vscode-json-languageservice": "5.3.9",
-		"vscode-languageclient": "9.0.1",
-		"vscode-languageserver": "9.0.1",
-		"vscode-nls": "5.2.0",
-		"vscode-uri": "3.0.8"
+		"request-light": "0.7.0"
 	},
 	"devDependencies": {
-		"@types/mocha": "10.0.6",
+		"@playform/build": "0.0.7",
+		"@playform/document": "0.0.6",
 		"@types/mongodb": "4.0.6",
-		"@types/node": "20.11.30",
-		"antlr4ts-cli": "0.5.0-alpha.4",
-		"mocha": "10.3.0",
-		"typescript": "5.4.2",
-		"typescript-esbuild": "0.4.5",
-		"vscode": "1.0.0"
+		"@types/node": "20.12.7",
+		"antlr4ts-cli": "0.5.0-alpha.4"
 	},
 	"publishConfig": {
 		"access": "public"
