@@ -225,14 +225,14 @@
 	],
 	"dependencies": {
 		"antlr4ts": "0.5.0-alpha.4",
-		"mongodb": "6.5.0",
+		"mongodb": "6.6.0",
 		"request-light": "0.7.0"
 	},
 	"devDependencies": {
 		"@playform/build": "0.0.7",
 		"@playform/document": "0.0.6",
 		"@types/mongodb": "4.0.6",
-		"@types/node": "20.12.7",
+		"@types/node": "20.12.10",
 		"antlr4ts-cli": "0.5.0-alpha.4"
 	},
 	"publishConfig": {
