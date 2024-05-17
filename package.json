@@ -1,27 +1,7 @@
 {
 	"name": "vscode-mongodb",
 	"displayName": "MongoDB [DEPRECATED]",
-	"version": "0.0.1",
-	"private": false,
 	"description": "[DEPRECATED] Create, browse, and update MongoDB NoSQL collections and documents.",
-	"keywords": [
-		"land"
-	],
-	"homepage": "HTTPS://GitHub.Com/CodeEditorLand/LandMongoDB#readme",
-	"bugs": {
-		"url": "HTTPS://GitHub.Com/CodeEditorLand/LandMongoDB/issues"
-	},
-	"repository": {
-		"type": "git",
-		"url": "git+HTTPS://github.com/CodeEditorLand/LandMongoDB.git"
-	},
-	"license": "SEE LICENSE IN LICENSE",
-	"author": {
-		"name": "🛬 Land —",
-		"email": "Land@PlayForm.Cloud",
-		"url": "HTTPS://Land.PlayForm.Cloud"
-	},
-	"type": "module",
 	"main": "./out/src/extension",
 	"scripts": {
 		"Document": "Document 'Source/**/*.ts'",
@@ -230,13 +210,9 @@
 	},
 	"devDependencies": {
 		"@playform/build": "0.0.7",
-		"@playform/document": "0.0.6",
 		"@types/mongodb": "4.0.6",
 		"@types/node": "20.12.10",
 		"antlr4ts-cli": "0.5.0-alpha.4"
-	},
-	"publishConfig": {
-		"access": "public"
 	},
 	"icon": "media/MongoDB_Gray_Logo_FullColor_RGB-01.jpg",
 	"galleryBanner": {
