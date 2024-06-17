@@ -1,13 +1,74 @@
 {
 	"name": "vscode-mongodb",
+	"version": "0.0.2",
+	"publisher": "ms-vscode-devlab",
 	"displayName": "MongoDB [DEPRECATED]",
 	"description": "[DEPRECATED] Create, browse, and update MongoDB NoSQL collections and documents.",
-	"main": "./out/src/extension",
-	"scripts": {
-		"antlr4ts": "antlr4ts -visitor ./grammar/mongo.g4 -o ./src",
-		"compile": "tsc -watch -p ./"
+	"engines": {
+		"vscode": "^1.19.0"
 	},
+	"galleryBanner": {
+		"color": "#3E8E3A",
+		"theme": "light"
+	},
+	"icon": "media/MongoDB_Gray_Logo_FullColor_RGB-01.jpg",
+	"categories": [
+		"Other"
+	],
+	"homepage": "https://github.com/microsoft/vscode-mongodb/blob/master/README.md",
+	"bugs": {
+		"url": "https://github.com/microsoft/vscode-mongodb/issues"
+	},
+	"license": "SEE LICENSE IN LICENSE.md",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/microsoft/vscode-mongodb"
+	},
+	"main": "./out/src/extension",
+	"activationEvents": [
+		"onView:mongoExplorer",
+		"onCommand:mongo.execute",
+		"onCommand:mongo.addServer",
+		"onCommand:mongo.createDatabase",
+		"onCommand:mongo.removeServer",
+		"onCommand:mongo.connect",
+		"onCommand:mongo.connectDb",
+		"onCommand:mongo.dropDb",
+		"onCommand:mongo.newScrapbook",
+		"onCommand:mongo.updateDocuments",
+		"onCommand:mongo.openCollection"
+	],
 	"contributes": {
+		"views": {
+			"explorer": [
+				{
+					"id": "mongoExplorer",
+					"name": "Mongo",
+					"when": "config.mongo.showExplorer == true"
+				}
+			]
+		},
+		"languages": [
+			{
+				"id": "mongo",
+				"extensions": [
+					".mongo"
+				],
+				"firstLine": "^#!/.*\\bmongo*\\b",
+				"configuration": "./grammar/configuration.json"
+			}
+		],
+		"grammars": [
+			{
+				"language": "mongo",
+				"scopeName": "source.js",
+				"path": "./grammar/JavaScript.tmLanguage.json"
+			},
+			{
+				"scopeName": "source.js.regexp",
+				"path": "./grammar/Regular Expressions (JavaScript).tmLanguage"
+			}
+		],
 		"commands": [
 			{
 				"category": "Mongo",
@@ -17,11 +78,11 @@
 			{
 				"category": "Mongo",
 				"command": "mongo.addServer",
+				"title": "Add Server",
 				"icon": {
-					"dark": "resources/icons/dark/add.svg",
-					"light": "resources/icons/light/add.svg"
-				},
-				"title": "Add Server"
+					"light": "resources/icons/light/add.svg",
+					"dark": "resources/icons/dark/add.svg"
+				}
 			},
 			{
 				"category": "Mongo",
@@ -51,20 +112,20 @@
 			{
 				"category": "Mongo",
 				"command": "mongo.newScrapbook",
+				"title": "New Scrapbook",
 				"icon": {
-					"dark": "resources/icons/dark/addFile.svg",
-					"light": "resources/icons/light/addFile.svg"
-				},
-				"title": "New Scrapbook"
+					"light": "resources/icons/light/addFile.svg",
+					"dark": "resources/icons/dark/addFile.svg"
+				}
 			},
 			{
 				"category": "Mongo",
 				"command": "mongo.refreshExplorer",
+				"title": "Refresh",
 				"icon": {
-					"dark": "resources/icons/dark/refresh.svg",
-					"light": "resources/icons/light/refresh.svg"
-				},
-				"title": "Refresh"
+					"light": "resources/icons/light/refresh.svg",
+					"dark": "resources/icons/dark/refresh.svg"
+				}
 			},
 			{
 				"category": "Mongo",
@@ -77,61 +138,7 @@
 				"title": "Open Collection"
 			}
 		],
-		"configuration": {
-			"properties": {
-				"mongo.shell.path": {
-					"default": null,
-					"description": "Path to the Mongo shell executable",
-					"isExecutable": true,
-					"type": [
-						"string",
-						"null"
-					]
-				},
-				"mongo.showExplorer": {
-					"default": true,
-					"description": "Show or hide the Mongo Explorer",
-					"type": "boolean"
-				}
-			},
-			"title": "Mongo"
-		},
-		"grammars": [
-			{
-				"language": "mongo",
-				"path": "./grammar/JavaScript.tmLanguage.json",
-				"scopeName": "source.js"
-			},
-			{
-				"path": "./grammar/Regular Expressions (JavaScript).tmLanguage",
-				"scopeName": "source.js.regexp"
-			}
-		],
-		"keybindings": [
-			{
-				"command": "mongo.executeCommand",
-				"key": "ctrl+shift+'",
-				"mac": "cmd+shift+'",
-				"when": "editorLangId == 'mongo' && editorTextFocus"
-			}
-		],
-		"languages": [
-			{
-				"configuration": "./grammar/configuration.json",
-				"extensions": [
-					".mongo"
-				],
-				"firstLine": "^#!/.*\\bmongo*\\b",
-				"id": "mongo"
-			}
-		],
 		"menus": {
-			"commandPalette": [
-				{
-					"command": "mongo.connect",
-					"when": "view == mongoExplorer && viewItem == mongoDb"
-				}
-			],
 			"editor/context": [
 				{
 					"command": "mongo.executeCommand",
@@ -140,6 +147,23 @@
 				{
 					"command": "mongo.updateDocuments",
 					"when": "resourceFilename==result.json"
+				}
+			],
+			"view/title": [
+				{
+					"command": "mongo.refreshExplorer",
+					"when": "view == mongoExplorer",
+					"group": "navigation"
+				},
+				{
+					"command": "mongo.addServer",
+					"when": "view == mongoExplorer",
+					"group": "navigation"
+				},
+				{
+					"command": "mongo.newScrapbook",
+					"when": "view == mongoExplorer",
+					"group": "navigation"
 				}
 			],
 			"view/item/context": [
@@ -160,60 +184,64 @@
 					"when": "view == mongoExplorer && viewItem == mongoDb"
 				}
 			],
-			"view/title": [
+			"commandPalette": [
 				{
-					"command": "mongo.refreshExplorer",
-					"group": "navigation",
-					"when": "view == mongoExplorer"
-				},
-				{
-					"command": "mongo.addServer",
-					"group": "navigation",
-					"when": "view == mongoExplorer"
-				},
-				{
-					"command": "mongo.newScrapbook",
-					"group": "navigation",
-					"when": "view == mongoExplorer"
+					"command": "mongo.connect",
+					"when": "view == mongoExplorer && viewItem == mongoDb"
 				}
 			]
 		},
-		"views": {
-			"explorer": [
-				{
-					"id": "mongoExplorer",
-					"name": "Mongo",
-					"when": "config.mongo.showExplorer == true"
+		"keybindings": [
+			{
+				"command": "mongo.executeCommand",
+				"key": "ctrl+shift+'",
+				"mac": "cmd+shift+'",
+				"when": "editorLangId == 'mongo' && editorTextFocus"
+			}
+		],
+		"configuration": {
+			"title": "Mongo",
+			"properties": {
+				"mongo.shell.path": {
+					"type": [
+						"string",
+						"null"
+					],
+					"description": "Path to the Mongo shell executable",
+					"default": null,
+					"isExecutable": true
+				},
+				"mongo.showExplorer": {
+					"type": "boolean",
+					"default": true,
+					"description": "Show or hide the Mongo Explorer"
 				}
-			]
+			}
 		}
 	},
-	"activationEvents": [
-		"onView:mongoExplorer",
-		"onCommand:mongo.execute",
-		"onCommand:mongo.addServer",
-		"onCommand:mongo.createDatabase",
-		"onCommand:mongo.removeServer",
-		"onCommand:mongo.connect",
-		"onCommand:mongo.connectDb",
-		"onCommand:mongo.dropDb",
-		"onCommand:mongo.newScrapbook",
-		"onCommand:mongo.updateDocuments",
-		"onCommand:mongo.openCollection"
-	],
-	"dependencies": {
-		"antlr4ts": "^0.5.0-alpha.4",
-		"mongodb": "^6.7.0",
-		"request-light": "^0.7.0"
+	"scripts": {
+		"vscode:prepublish": "tsc -p ./",
+		"compile": "tsc -watch -p ./",
+		"postinstall": "node ./node_modules/vscode/bin/install",
+		"antlr4ts": "antlr4ts -visitor ./grammar/mongo.g4 -o ./src"
 	},
 	"devDependencies": {
-		"@types/mongodb": "^4.0.6",
-		"@types/node": "^20.14.2",
-		"antlr4ts-cli": "^0.5.0-alpha.4"
+		"@types/mocha": "^2.2.32",
+		"@types/mongodb": "^2.2.9",
+		"@types/node": "^6.0.40",
+		"antlr4ts-cli": "^0.4.0-alpha.4",
+		"mocha": "^2.3.3",
+		"typescript": "^2.0.3",
+		"vscode": "^1.0.0"
 	},
-	"icon": "media/MongoDB_Gray_Logo_FullColor_RGB-01.jpg",
-	"galleryBanner": {
-		"color": "#3E8E3A",
-		"theme": "light"
+	"dependencies": {
+		"antlr4ts": "^0.4.0-alpha.4",
+		"mongodb": "^2.2.25",
+		"request-light": "^0.2.0",
+		"vscode-languageclient": "^3.1.0-alpha.1",
+		"vscode-languageserver": "^3.1.0-alpha.1",
+		"vscode-nls": "^2.0.2",
+		"vscode-uri": "^1.0.0",
+		"vscode-json-languageservice": "^2.0.9"
 	}
 }
