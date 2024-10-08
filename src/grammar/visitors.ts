@@ -3,23 +3,16 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { ParserRuleContext } from "antlr4ts/ParserRuleContext";
-import { ErrorNode } from "antlr4ts/tree/ErrorNode";
-import { ParseTree } from "antlr4ts/tree/ParseTree";
-import { ParseTreeVisitor } from "antlr4ts/tree/ParseTreeVisitor";
-import { TerminalNode } from "antlr4ts/tree/TerminalNode";
-
-import {
-	ArgumentListContext,
-	CollectionContext,
-	CommandContext,
-	CommandsContext,
-	FunctionCallContext,
-	MongoCommandsContext,
-} from "./mongoParser";
-import { mongoVisitor } from "./mongoVisitor";
+import { ParseTreeVisitor } from 'antlr4ts/tree/ParseTreeVisitor';
+import { ParseTree } from 'antlr4ts/tree/ParseTree';
+import { TerminalNode } from 'antlr4ts/tree/TerminalNode';
+import { ErrorNode } from 'antlr4ts/tree/ErrorNode';
+import { ParserRuleContext } from 'antlr4ts/ParserRuleContext';
+import { CommandsContext, CommandContext, FunctionCallContext, MongoCommandsContext, CollectionContext, ArgumentListContext } from './mongoParser';
+import { mongoVisitor } from './mongoVisitor';
 
 export class MongoVisitor<T> implements mongoVisitor<T> {
+
 	visitMongoCommands(ctx: MongoCommandsContext): T {
 		return this.visitChildren(ctx);
 	}
@@ -50,7 +43,7 @@ export class MongoVisitor<T> implements mongoVisitor<T> {
 
 	visitChildren(ctx: ParserRuleContext): T {
 		var result = this.defaultResult(ctx);
-		var n = ctx.childCount;
+		var n = ctx.childCount
 		for (var i = 0; i < n; i++) {
 			if (!this.shouldVisitNextChild(ctx, result)) {
 				break;
