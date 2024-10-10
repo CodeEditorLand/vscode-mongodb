@@ -1,12 +1,17 @@
 {
-	"name": "vscode-mongodb",
-	"displayName": "MongoDB [DEPRECATED]",
-	"description": "[DEPRECATED] Create, browse, and update MongoDB NoSQL collections and documents.",
-	"main": "./out/src/extension",
-	"scripts": {
-		"antlr4ts": "antlr4ts -visitor ./grammar/mongo.g4 -o ./src",
-		"compile": "tsc -watch -p ./"
-	},
+	"activationEvents": [
+		"onView:mongoExplorer",
+		"onCommand:mongo.execute",
+		"onCommand:mongo.addServer",
+		"onCommand:mongo.createDatabase",
+		"onCommand:mongo.removeServer",
+		"onCommand:mongo.connect",
+		"onCommand:mongo.connectDb",
+		"onCommand:mongo.dropDb",
+		"onCommand:mongo.newScrapbook",
+		"onCommand:mongo.updateDocuments",
+		"onCommand:mongo.openCollection"
+	],
 	"contributes": {
 		"commands": [
 			{
@@ -188,32 +193,27 @@
 			]
 		}
 	},
-	"activationEvents": [
-		"onView:mongoExplorer",
-		"onCommand:mongo.execute",
-		"onCommand:mongo.addServer",
-		"onCommand:mongo.createDatabase",
-		"onCommand:mongo.removeServer",
-		"onCommand:mongo.connect",
-		"onCommand:mongo.connectDb",
-		"onCommand:mongo.dropDb",
-		"onCommand:mongo.newScrapbook",
-		"onCommand:mongo.updateDocuments",
-		"onCommand:mongo.openCollection"
-	],
 	"dependencies": {
 		"antlr4ts": "0.5.0-alpha.4",
 		"mongodb": "6.9.0",
 		"request-light": "0.8.0"
 	},
+	"description": "[DEPRECATED] Create, browse, and update MongoDB NoSQL collections and documents.",
 	"devDependencies": {
 		"@types/mongodb": "4.0.7",
 		"@types/node": "22.7.5",
 		"antlr4ts-cli": "0.5.0-alpha.4"
 	},
-	"icon": "media/MongoDB_Gray_Logo_FullColor_RGB-01.jpg",
+	"displayName": "MongoDB [DEPRECATED]",
 	"galleryBanner": {
 		"color": "#3E8E3A",
 		"theme": "light"
+	},
+	"icon": "media/MongoDB_Gray_Logo_FullColor_RGB-01.jpg",
+	"main": "./out/src/extension",
+	"name": "vscode-mongodb",
+	"scripts": {
+		"antlr4ts": "antlr4ts -visitor ./grammar/mongo.g4 -o ./src",
+		"compile": "tsc -watch -p ./"
 	}
 }
