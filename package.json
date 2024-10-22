@@ -195,7 +195,7 @@
 	},
 	"dependencies": {
 		"antlr4ts": "0.5.0-alpha.4",
-		"mongodb": "6.9.0",
+		"mongodb": "6.10.0",
 		"request-light": "0.8.0"
 	},
 	"description": "[DEPRECATED] Create, browse, and update MongoDB NoSQL collections and documents.",
