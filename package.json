@@ -201,7 +201,7 @@
 	"description": "[DEPRECATED] Create, browse, and update MongoDB NoSQL collections and documents.",
 	"devDependencies": {
 		"@types/mongodb": "4.0.7",
-		"@types/node": "22.8.4",
+		"@types/node": "22.8.6",
 		"antlr4ts-cli": "0.5.0-alpha.4"
 	},
 	"displayName": "MongoDB [DEPRECATED]",
