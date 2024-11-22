@@ -34,6 +34,7 @@ export interface MongoCommand {
 export interface IMongoResource extends vscode.TreeItem {
 	id: string;
 	label: string;
+
 	getChildren?(): Thenable<IMongoResource[]>;
 	onChange?: Event<void>;
 	contextValue?: string;
@@ -97,12 +98,14 @@ export class Model implements IMongoResource {
 	getChildren(): Promise<IMongoResource[]> {
 		return this._serversJson.load().then((serverConnections) => {
 			this._serverConnections = serverConnections;
+
 			return Promise.all(
 				this._serverConnections.map((server) =>
 					this.resolveServer(server, false),
 				),
 			).then((servers) => {
 				this._servers = servers.filter((server) => !!server);
+
 				return this._servers;
 			});
 		});
@@ -124,7 +127,9 @@ export class Model implements IMongoResource {
 				: server instanceof NoConnectionServer
 					? server.id
 					: null;
+
 		const index = this._servers.findIndex((value) => value.id === id);
+
 		if (index !== -1) {
 			this._servers.splice(index, 1);
 			this._serversJson.write(this._servers.map((server) => server.id));
@@ -142,6 +147,7 @@ export class Model implements IMongoResource {
 				(error: MongoError, db: Db) => {
 					if (error) {
 						vscode.window.showErrorMessage(error.message);
+
 						if (throwError) {
 							e(error.message);
 						} else {
@@ -194,6 +200,7 @@ export class Server implements IMongoResource {
 			// this may not be best solution, but the connection (below) gives
 			// the replicaset host name, which is different than what is in the connection string
 			let rs: any = this.mongoServer;
+
 			return rs.s.replset.s.seedlist[0].host;
 
 			// returns the replication set host name (different from connction string)
@@ -209,6 +216,7 @@ export class Server implements IMongoResource {
 		// Azure CosmosDB comes back as a ReplSet
 		if (this.mongoServer instanceof ReplSet) {
 			let rs: any = this.mongoServer;
+
 			return rs.s.replset.s.seedlist[0].port;
 
 			// returns the replication set port (different from connction string)
@@ -237,6 +245,7 @@ export class Server implements IMongoResource {
 							(database) => new Database(database.name, this),
 						);
 						db.close();
+
 						return <IMongoResource[]>this._databases;
 					}),
 		);
@@ -248,8 +257,10 @@ export class Server implements IMongoResource {
 
 	createDatabase(name: string, collection: string): Thenable<Database> {
 		const database = new Database(name, this);
+
 		return database.createCollection(collection).then(() => {
 			this._onChange.fire();
+
 			return database;
 		});
 	}
@@ -313,7 +324,9 @@ export class Database implements IMongoResource {
 
 	getDb(): Promise<Db> {
 		const uri = vscode.Uri.parse(this.server.id);
+
 		const connectionString = `${uri.scheme}://${uri.authority}/${this.id}?${uri.query}`;
+
 		return <Promise<Db>>MongoClient.connect(connectionString).then((db) => {
 			return db.db(this.id);
 		});
@@ -323,11 +336,13 @@ export class Database implements IMongoResource {
 		if (command.collection) {
 			return this.getDb().then((db) => {
 				const collection = db.collection(command.collection);
+
 				if (collection) {
 					const result = new Collection(
 						collection,
 						this,
 					).executeCommand(command.name, command.arguments);
+
 					if (result) {
 						return result;
 					}
@@ -360,6 +375,7 @@ export class Database implements IMongoResource {
 	): Thenable<string> {
 		return this.getDb().then((db) => {
 			const collection = db.collection(collectionName);
+
 			if (collection) {
 				return new Collection(collection, this).update(
 					documentOrDocuments,
@@ -373,6 +389,7 @@ export class Database implements IMongoResource {
 			.then((db) => db.createCollection(collectionName))
 			.then((collection) => {
 				this._onChange.fire();
+
 				return new Collection(collection, this);
 			});
 	}
@@ -406,6 +423,7 @@ export class Database implements IMongoResource {
 		const shellPath = <string>(
 			vscode.workspace.getConfiguration().get("mongo.shell.path")
 		);
+
 		if (!shellPath) {
 			return <Promise<null>>vscode.window
 				.showInputBox({
@@ -539,6 +557,7 @@ export class Collection implements IMongoResource {
 
 	update(documentOrDocuments: any): Thenable<string> {
 		let operations = this.toOperations(documentOrDocuments);
+
 		return reportProgress(
 			this.collection.bulkWrite(operations, { w: 1 }).then(
 				(result) => {
@@ -546,6 +565,7 @@ export class Collection implements IMongoResource {
 				},
 				(error) => {
 					console.log(error);
+
 					return Promise.resolve(null);
 				},
 			),
@@ -559,6 +579,7 @@ export class Collection implements IMongoResource {
 
 	private find(args?: any): Thenable<string> {
 		const maxDocs = 20;
+
 		return this.collection
 			.find(args)
 			.limit(maxDocs)
@@ -626,6 +647,7 @@ export class Collection implements IMongoResource {
 		const documents = Array.isArray(documentOrDocuments)
 			? documentOrDocuments
 			: [documentOrDocuments];
+
 		return documents.reduce((result, doc) => {
 			const id = doc._id;
 			delete doc._id;
@@ -637,6 +659,7 @@ export class Collection implements IMongoResource {
 					update: doc,
 				},
 			});
+
 			return result;
 		}, []);
 	}
@@ -657,9 +680,11 @@ function reportProgress<T>(promise: Thenable<T>, title: string): Thenable<T> {
 function parseJSContent(content: string): any {
 	try {
 		const sandbox = {};
+
 		const key = "parse" + Math.floor(Math.random() * 1000000);
 		sandbox[key] = {};
 		vm.runInNewContext(key + "=" + content, sandbox);
+
 		return sandbox[key];
 	} catch (error) {
 		throw error.message;

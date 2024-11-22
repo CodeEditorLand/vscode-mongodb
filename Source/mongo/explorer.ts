@@ -38,7 +38,9 @@ export class MongoExplorer implements TreeDataProvider<IMongoResource> {
 
 	getChildren(node: IMongoResource): Thenable<IMongoResource[]> {
 		node = node ? node : this.model;
+
 		const disposables = this._disposables.get(node);
+
 		if (disposables) {
 			for (const disposable of disposables) {
 				disposable.dispose();
@@ -56,6 +58,7 @@ export class MongoExplorer implements TreeDataProvider<IMongoResource> {
 					return new Disposable(() => {});
 				}),
 			);
+
 			return children;
 		});
 	}

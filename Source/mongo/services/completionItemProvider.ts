@@ -62,6 +62,7 @@ export class CompletionItemsVisitor extends MongoVisitor<
 		}
 
 		const lastTerminalNode = this.getLastTerminalNode(ctx);
+
 		if (lastTerminalNode) {
 			return this.getCompletionItemsFromTerminalNode(lastTerminalNode);
 		}
@@ -84,6 +85,7 @@ export class CompletionItemsVisitor extends MongoVisitor<
 		ctx: mongoParser.FunctionCallContext,
 	): Promise<CompletionItem[]> {
 		const previousNode = this.getPreviousNode(ctx);
+
 		if (previousNode instanceof TerminalNode) {
 			return this.getCompletionItemsFromTerminalNode(previousNode);
 		}
@@ -94,6 +96,7 @@ export class CompletionItemsVisitor extends MongoVisitor<
 		ctx: mongoParser.ArgumentsContext,
 	): Promise<CompletionItem[]> {
 		const terminalNode = this.getLastTerminalNode(ctx);
+
 		if (terminalNode && terminalNode.symbol === ctx._CLOSED_PARENTHESIS) {
 			return this.thenable(
 				this.createDbKeywordCompletion(
@@ -114,7 +117,9 @@ export class CompletionItemsVisitor extends MongoVisitor<
 		ctx: mongoParser.ObjectLiteralContext,
 	): Thenable<CompletionItem[]> {
 		let functionName = this.getFunctionName(ctx);
+
 		let collectionName = this.getCollectionName(ctx);
+
 		if (collectionName && functionName) {
 			if (
 				[
@@ -142,7 +147,9 @@ export class CompletionItemsVisitor extends MongoVisitor<
 		ctx: mongoParser.ArrayLiteralContext,
 	): Thenable<CompletionItem[]> {
 		let functionName = this.getFunctionName(ctx);
+
 		let collectionName = this.getCollectionName(ctx);
+
 		if (collectionName && functionName) {
 			if (["aggregate"].indexOf(functionName) !== -1) {
 				return this.getArgumentCompletionItems(
@@ -161,15 +168,20 @@ export class CompletionItemsVisitor extends MongoVisitor<
 		ctx: ParserRuleContext,
 	): Thenable<CompletionItem[]> {
 		const text = this.textDocument.getText();
+
 		const document = TextDocument.create(
 			documentUri,
 			"json",
 			1,
 			text.substring(ctx.start.startIndex, ctx.stop.stopIndex + 1),
 		);
+
 		const positionOffset = this.textDocument.offsetAt(this.at);
+
 		const contextOffset = ctx.start.startIndex;
+
 		const position = document.positionAt(positionOffset - contextOffset);
+
 		return this.jsonLanguageService
 			.doComplete(
 				document,
@@ -181,6 +193,7 @@ export class CompletionItemsVisitor extends MongoVisitor<
 					const startPositionOffset = document.offsetAt(
 						item.textEdit.range.start,
 					);
+
 					const endPositionOffset = document.offsetAt(
 						item.textEdit.range.end,
 					);
@@ -192,6 +205,7 @@ export class CompletionItemsVisitor extends MongoVisitor<
 							contextOffset + endPositionOffset,
 						),
 					);
+
 					return item;
 				});
 			});
@@ -199,14 +213,17 @@ export class CompletionItemsVisitor extends MongoVisitor<
 
 	private getFunctionName(ctx: ParseTree): string {
 		let parent = ctx.parent;
+
 		if (!(parent && parent instanceof mongoParser.ArgumentListContext)) {
 			return null;
 		}
 		parent = parent.parent;
+
 		if (!(parent && parent instanceof mongoParser.ArgumentsContext)) {
 			return null;
 		}
 		parent = parent.parent;
+
 		if (!(parent && parent instanceof mongoParser.FunctionCallContext)) {
 			return null;
 		}
@@ -215,24 +232,29 @@ export class CompletionItemsVisitor extends MongoVisitor<
 
 	private getCollectionName(ctx: ParseTree): string {
 		let parent = ctx.parent;
+
 		if (!(parent && parent instanceof mongoParser.ArgumentListContext)) {
 			return null;
 		}
 		parent = parent.parent;
+
 		if (!(parent && parent instanceof mongoParser.ArgumentsContext)) {
 			return null;
 		}
 		parent = parent.parent;
+
 		if (!(parent && parent instanceof mongoParser.FunctionCallContext)) {
 			return null;
 		}
 		let previousNode = this.getPreviousNode(parent);
+
 		if (
 			previousNode &&
 			previousNode instanceof TerminalNode &&
 			previousNode.symbol.type === mongoLexer.DOT
 		) {
 			previousNode = this.getPreviousNode(previousNode);
+
 			if (
 				previousNode &&
 				previousNode instanceof mongoParser.CollectionContext
@@ -300,6 +322,7 @@ export class CompletionItemsVisitor extends MongoVisitor<
 		}
 		if (node._symbol.type === mongoParser.mongoParser.DOT) {
 			const previousNode = this.getPreviousNode(node);
+
 			if (previousNode && previousNode instanceof TerminalNode) {
 				if (previousNode._symbol.type === mongoParser.mongoParser.DB) {
 					return Promise.all([
@@ -325,6 +348,7 @@ export class CompletionItemsVisitor extends MongoVisitor<
 		}
 		if (node instanceof ErrorNode) {
 			const previousNode = this.getPreviousNode(node);
+
 			if (previousNode) {
 				if (previousNode instanceof TerminalNode) {
 					return this.getCompletionItemsFromTerminalNode(
@@ -351,9 +375,12 @@ export class CompletionItemsVisitor extends MongoVisitor<
 
 	private getPreviousNode(node: ParseTree): ParseTree {
 		let previousNode = null;
+
 		const parentNode = node.parent;
+
 		for (let i = 0; i < parentNode.childCount; i++) {
 			const currentNode = parentNode.getChild(i);
+
 			if (currentNode === node) {
 				break;
 			}
@@ -528,7 +555,9 @@ export class CompletionItemsVisitor extends MongoVisitor<
 	private createRange(parserRuleContext: ParseTree): Range {
 		if (parserRuleContext instanceof ParserRuleContext) {
 			var startToken = parserRuleContext.start;
+
 			var stopToken = parserRuleContext.stop;
+
 			if (
 				stopToken === null ||
 				startToken.type === mongoParser.mongoParser.EOF
@@ -537,6 +566,7 @@ export class CompletionItemsVisitor extends MongoVisitor<
 			}
 
 			var stop = stopToken.stopIndex;
+
 			return this._createRange(startToken.startIndex, stop);
 		}
 
@@ -553,11 +583,13 @@ export class CompletionItemsVisitor extends MongoVisitor<
 	private createRangeAfter(parserRuleContext: ParseTree): Range {
 		if (parserRuleContext instanceof ParserRuleContext) {
 			var stopToken = parserRuleContext.stop;
+
 			if (stopToken === null) {
 				stopToken = parserRuleContext.start;
 			}
 
 			var stop = stopToken.stopIndex;
+
 			return this._createRange(stop + 1, stop + 1);
 		}
 
@@ -571,10 +603,12 @@ export class CompletionItemsVisitor extends MongoVisitor<
 
 	private _createRange(start: number, end: number): Range {
 		const endPosition = this.textDocument.positionAt(end);
+
 		if (endPosition.line < this.at.line) {
 			return Range.create(Position.create(this.at.line, 0), this.at);
 		}
 		const startPosition = this.textDocument.positionAt(start);
+
 		return Range.create(startPosition, endPosition);
 	}
 

@@ -19,6 +19,7 @@ export interface IDisposable {
 
 export function dispose<T extends IDisposable>(disposables: T[]): T[] {
 	disposables.forEach((d) => d.dispose());
+
 	return [];
 }
 
@@ -75,6 +76,7 @@ export function once<T>(event: Event<T>): Event<T> {
 		const result = event(
 			(e) => {
 				result.dispose();
+
 				return listener.call(thisArgs, e);
 			},
 			null,
@@ -109,6 +111,7 @@ export function uniqBy<T>(arr: T[], fn: (el: T) => string): T[] {
 		}
 
 		seen[key] = true;
+
 		return true;
 	});
 }
@@ -120,6 +123,7 @@ export function groupBy<T>(
 	return arr.reduce((result, el) => {
 		const key = fn(el);
 		result[key] = [...(result[key] || []), el];
+
 		return result;
 	}, Object.create(null));
 }

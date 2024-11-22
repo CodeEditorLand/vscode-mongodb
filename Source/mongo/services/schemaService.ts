@@ -16,8 +16,10 @@ export default class SchemaService {
 	registerSchemas(db: Db): Thenable<SchemaConfiguration[]> {
 		this._db = db;
 		this._schemasCache.clear();
+
 		return this._db.collections().then((collections) => {
 			const schemas: SchemaConfiguration[] = [];
+
 			for (const collection of collections) {
 				schemas.push(
 					...[
@@ -66,6 +68,7 @@ export default class SchemaService {
 
 	resolveSchema(uri: string): Thenable<string> {
 		const schema = this._schemasCache.get(uri);
+
 		if (schema) {
 			return Promise.resolve(schema);
 		}
@@ -78,6 +81,7 @@ export default class SchemaService {
 				uri,
 			).then((schema) => {
 				this._schemasCache.set(uri, schema);
+
 				return schema;
 			});
 		}
@@ -89,6 +93,7 @@ export default class SchemaService {
 				),
 			).then((schema) => {
 				this._schemasCache.set(uri, schema);
+
 				return schema;
 			});
 		}
@@ -100,13 +105,16 @@ export default class SchemaService {
 		schemaUri: string,
 	): Thenable<string> {
 		const collection = this._db.collection(collectionName);
+
 		const cursor = collection.find();
+
 		return new Promise((c, e) => {
 			this.readNext([], cursor, 10, (result) => {
 				const schema: JSONSchema = {
 					type: "object",
 					properties: {},
 				};
+
 				for (const document of result) {
 					this.setSchemaForDocument(null, document, schema);
 				}
@@ -121,7 +129,9 @@ export default class SchemaService {
 		collectionName: string,
 	): Thenable<string> {
 		const collection = this._db.collection(collectionName);
+
 		const cursor = collection.find();
+
 		return new Promise((c, e) => {
 			this.readNext([], cursor, 10, (result) => {
 				const schema: JSONSchema = {
@@ -141,6 +151,7 @@ export default class SchemaService {
 		schema: JSONSchema,
 	): void {
 		const type = Array.isArray(document) ? "array" : typeof document;
+
 		if (type === "object") {
 			for (const property of Object.keys(document)) {
 				if (!parent && ["_id"].indexOf(property) !== -1) {
@@ -163,7 +174,9 @@ export default class SchemaService {
 		schema: JSONSchema,
 	): void {
 		const scopedProperty = parent ? `${parent}.${property}` : property;
+
 		const value = document[property];
+
 		const type = Array.isArray(value) ? "array" : typeof value;
 
 		const propertySchema: JSONSchema = {
@@ -686,6 +699,7 @@ Use the $where operator to pass either a string containing a JavaScript expressi
 				},
 			},
 		});
+
 		return {
 			type: "object",
 			oneOf: schemas,
@@ -700,12 +714,14 @@ Use the $where operator to pass either a string containing a JavaScript expressi
 	): void {
 		if (result.length === batchSize) {
 			callback(result);
+
 			return;
 		}
 
 		cursor.hasNext().then((hasNext) => {
 			if (!hasNext) {
 				callback(result);
+
 				return;
 			}
 

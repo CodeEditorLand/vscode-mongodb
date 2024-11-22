@@ -26,6 +26,7 @@ export class Shell {
 					"--quiet",
 					connectionString,
 				]);
+
 				return c(new Shell(shellProcess));
 			} catch (error) {
 				e(
@@ -60,7 +61,9 @@ export class Shell {
 		let buffers: string[] = [];
 		on(this.mongoShell.stdout, "data", (b) => {
 			let data: string = b.toString();
+
 			const delimitter = `${this.executionId}${os.EOL}`;
+
 			if (data.endsWith(delimitter)) {
 				const result =
 					buffers.join("") +
@@ -90,6 +93,7 @@ export class Shell {
 
 	async exec(script: string): Promise<string> {
 		script = this.convertToSingleLine(script);
+
 		const executionId = this._generateExecutionSequenceId();
 
 		try {
@@ -102,6 +106,7 @@ export class Shell {
 		}
 
 		const disposables: IDisposable[] = [];
+
 		const once = (ee: NodeJS.EventEmitter, name: string, fn: Function) => {
 			ee.once(name, fn);
 			disposables.push(toDisposable(() => ee.removeListener(name, fn)));
@@ -109,13 +114,16 @@ export class Shell {
 
 		return await new Promise<string>((c, e) => {
 			let executed = false;
+
 			const handler = setTimeout(() => {
 				if (!executed) {
 					e("Timed out executing " + script);
 				}
 			}, 5000);
+
 			const disposable = this.onResult.event((result) => {
 				disposable.dispose();
+
 				let lines = (<string>result.result)
 					.split(os.EOL)
 					.filter((line) => !!line && line !== 'Type "it" for more');
@@ -123,9 +131,11 @@ export class Shell {
 					lines[lines.length - 1] === 'Type "it" for more'
 						? lines.splice(lines.length - 1, 1)
 						: lines;
+
 				let value = lines.join(os.EOL);
 				executed = true;
 				c(lines.join(os.EOL));
+
 				if (handler) {
 					clearTimeout(handler);
 				}

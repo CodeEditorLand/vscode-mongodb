@@ -181,6 +181,7 @@ export class mongoParser extends Parser {
 			this.state,
 		);
 		this.enterRule(_localctx, 0, mongoParser.RULE_mongoCommands);
+
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
@@ -209,17 +210,21 @@ export class mongoParser extends Parser {
 			this.state,
 		);
 		this.enterRule(_localctx, 2, mongoParser.RULE_commands);
+
 		let _la: number;
+
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
 				this.state = 40;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
+
 				do {
 					{
 						this.state = 40;
 						this._errHandler.sync(this);
+
 						switch (this._input.LA(1)) {
 							case mongoParser.DB:
 								{
@@ -227,12 +232,14 @@ export class mongoParser extends Parser {
 									this.command();
 								}
 								break;
+
 							case mongoParser.SEMICOLON:
 								{
 									this.state = 38;
 									this.emptyCommand();
 								}
 								break;
+
 							case mongoParser.SingleLineComment:
 							case mongoParser.MultiLineComment:
 								{
@@ -240,6 +247,7 @@ export class mongoParser extends Parser {
 									this.comment();
 								}
 								break;
+
 							default:
 								throw new NoViableAltException(this);
 						}
@@ -277,6 +285,7 @@ export class mongoParser extends Parser {
 			this.state,
 		);
 		this.enterRule(_localctx, 4, mongoParser.RULE_command);
+
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
@@ -286,6 +295,7 @@ export class mongoParser extends Parser {
 				this.match(mongoParser.DOT);
 				this.state = 51;
 				this._errHandler.sync(this);
+
 				switch (
 					this.interpreter.adaptivePredict(this._input, 2, this._ctx)
 				) {
@@ -311,6 +321,7 @@ export class mongoParser extends Parser {
 				}
 				this.state = 54;
 				this._errHandler.sync(this);
+
 				switch (
 					this.interpreter.adaptivePredict(this._input, 3, this._ctx)
 				) {
@@ -342,6 +353,7 @@ export class mongoParser extends Parser {
 			this.state,
 		);
 		this.enterRule(_localctx, 6, mongoParser.RULE_emptyCommand);
+
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
@@ -368,6 +380,7 @@ export class mongoParser extends Parser {
 			this.state,
 		);
 		this.enterRule(_localctx, 8, mongoParser.RULE_collection);
+
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
@@ -394,6 +407,7 @@ export class mongoParser extends Parser {
 			this.state,
 		);
 		this.enterRule(_localctx, 10, mongoParser.RULE_functionCall);
+
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
@@ -424,7 +438,9 @@ export class mongoParser extends Parser {
 			this.state,
 		);
 		this.enterRule(_localctx, 12, mongoParser.RULE_arguments);
+
 		let _la: number;
+
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
@@ -433,6 +449,7 @@ export class mongoParser extends Parser {
 				this.state = 65;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
+
 				if (
 					(_la & ~0x1f) === 0 &&
 					((1 << _la) &
@@ -473,9 +490,11 @@ export class mongoParser extends Parser {
 			this.state,
 		);
 		this.enterRule(_localctx, 14, mongoParser.RULE_argumentList);
+
 		try {
 			this.state = 72;
 			this._errHandler.sync(this);
+
 			switch (this._input.LA(1)) {
 				case mongoParser.StringLiteral:
 				case mongoParser.NullLiteral:
@@ -487,6 +506,7 @@ export class mongoParser extends Parser {
 						this.literal();
 					}
 					break;
+
 				case mongoParser.T__2:
 					this.enterOuterAlt(_localctx, 2);
 					{
@@ -494,6 +514,7 @@ export class mongoParser extends Parser {
 						this.objectLiteral();
 					}
 					break;
+
 				case mongoParser.T__5:
 					this.enterOuterAlt(_localctx, 3);
 					{
@@ -501,6 +522,7 @@ export class mongoParser extends Parser {
 						this.arrayLiteral();
 					}
 					break;
+
 				default:
 					throw new NoViableAltException(this);
 			}
@@ -524,7 +546,9 @@ export class mongoParser extends Parser {
 			this.state,
 		);
 		this.enterRule(_localctx, 16, mongoParser.RULE_objectLiteral);
+
 		let _la: number;
+
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
@@ -533,6 +557,7 @@ export class mongoParser extends Parser {
 				this.state = 76;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
+
 				if (_la === mongoParser.StringLiteral) {
 					{
 						this.state = 75;
@@ -543,6 +568,7 @@ export class mongoParser extends Parser {
 				this.state = 79;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
+
 				if (_la === mongoParser.T__3) {
 					{
 						this.state = 78;
@@ -573,7 +599,9 @@ export class mongoParser extends Parser {
 			this.state,
 		);
 		this.enterRule(_localctx, 18, mongoParser.RULE_arrayLiteral);
+
 		let _la: number;
+
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
@@ -582,6 +610,7 @@ export class mongoParser extends Parser {
 				this.state = 85;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
+
 				if (
 					(_la & ~0x1f) === 0 &&
 					((1 << _la) &
@@ -623,7 +652,9 @@ export class mongoParser extends Parser {
 			this.state,
 		);
 		this.enterRule(_localctx, 20, mongoParser.RULE_elementList);
+
 		let _la: number;
+
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
@@ -632,6 +663,7 @@ export class mongoParser extends Parser {
 				this.state = 94;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
+
 				while (_la === mongoParser.T__3) {
 					{
 						{
@@ -668,6 +700,7 @@ export class mongoParser extends Parser {
 			22,
 			mongoParser.RULE_propertyNameAndValueList,
 		);
+
 		try {
 			let _alt: number;
 			this.enterOuterAlt(_localctx, 1);
@@ -681,6 +714,7 @@ export class mongoParser extends Parser {
 					10,
 					this._ctx,
 				);
+
 				while (_alt !== 2 && _alt !== ATN.INVALID_ALT_NUMBER) {
 					if (_alt === 1) {
 						{
@@ -719,6 +753,7 @@ export class mongoParser extends Parser {
 		let _localctx: PropertyAssignmentContext =
 			new PropertyAssignmentContext(this._ctx, this.state);
 		this.enterRule(_localctx, 24, mongoParser.RULE_propertyAssignment);
+
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
@@ -749,9 +784,11 @@ export class mongoParser extends Parser {
 			this.state,
 		);
 		this.enterRule(_localctx, 26, mongoParser.RULE_propertyValue);
+
 		try {
 			this.state = 113;
 			this._errHandler.sync(this);
+
 			switch (this._input.LA(1)) {
 				case mongoParser.StringLiteral:
 				case mongoParser.NullLiteral:
@@ -763,6 +800,7 @@ export class mongoParser extends Parser {
 						this.literal();
 					}
 					break;
+
 				case mongoParser.T__2:
 					this.enterOuterAlt(_localctx, 2);
 					{
@@ -770,6 +808,7 @@ export class mongoParser extends Parser {
 						this.objectLiteral();
 					}
 					break;
+
 				case mongoParser.T__5:
 					this.enterOuterAlt(_localctx, 3);
 					{
@@ -777,6 +816,7 @@ export class mongoParser extends Parser {
 						this.arrayLiteral();
 					}
 					break;
+
 				case mongoParser.STRING_LITERAL:
 					this.enterOuterAlt(_localctx, 4);
 					{
@@ -784,6 +824,7 @@ export class mongoParser extends Parser {
 						this.functionCall();
 					}
 					break;
+
 				default:
 					throw new NoViableAltException(this);
 			}
@@ -807,10 +848,13 @@ export class mongoParser extends Parser {
 			this.state,
 		);
 		this.enterRule(_localctx, 28, mongoParser.RULE_literal);
+
 		let _la: number;
+
 		try {
 			this.state = 117;
 			this._errHandler.sync(this);
+
 			switch (this._input.LA(1)) {
 				case mongoParser.StringLiteral:
 				case mongoParser.NullLiteral:
@@ -819,6 +863,7 @@ export class mongoParser extends Parser {
 					{
 						this.state = 115;
 						_la = this._input.LA(1);
+
 						if (
 							!(
 								(_la & ~0x1f) === 0 &&
@@ -840,6 +885,7 @@ export class mongoParser extends Parser {
 						}
 					}
 					break;
+
 				case mongoParser.NumericLiteral:
 					this.enterOuterAlt(_localctx, 2);
 					{
@@ -847,6 +893,7 @@ export class mongoParser extends Parser {
 						this.match(mongoParser.NumericLiteral);
 					}
 					break;
+
 				default:
 					throw new NoViableAltException(this);
 			}
@@ -870,6 +917,7 @@ export class mongoParser extends Parser {
 			this.state,
 		);
 		this.enterRule(_localctx, 30, mongoParser.RULE_propertyName);
+
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
@@ -896,12 +944,15 @@ export class mongoParser extends Parser {
 			this.state,
 		);
 		this.enterRule(_localctx, 32, mongoParser.RULE_comment);
+
 		let _la: number;
+
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
 				this.state = 121;
 				_la = this._input.LA(1);
+
 				if (
 					!(
 						_la === mongoParser.SingleLineComment ||
@@ -1001,6 +1052,7 @@ export class MongoCommandsContext extends ParserRuleContext {
 		return this.getToken(mongoParser.EOF, 0);
 	}
 	constructor(parent: ParserRuleContext, invokingState: number);
+
 	constructor(parent: ParserRuleContext, invokingState: number) {
 		super(parent, invokingState);
 	}
@@ -1018,6 +1070,7 @@ export class MongoCommandsContext extends ParserRuleContext {
 	@Override
 	public accept<Result>(visitor: mongoVisitor<Result>): Result {
 		if (visitor.visitMongoCommands) return visitor.visitMongoCommands(this);
+
 		else return visitor.visitChildren(this);
 	}
 }
@@ -1053,6 +1106,7 @@ export class CommandsContext extends ParserRuleContext {
 		}
 	}
 	constructor(parent: ParserRuleContext, invokingState: number);
+
 	constructor(parent: ParserRuleContext, invokingState: number) {
 		super(parent, invokingState);
 	}
@@ -1070,6 +1124,7 @@ export class CommandsContext extends ParserRuleContext {
 	@Override
 	public accept<Result>(visitor: mongoVisitor<Result>): Result {
 		if (visitor.visitCommands) return visitor.visitCommands(this);
+
 		else return visitor.visitChildren(this);
 	}
 }
@@ -1097,6 +1152,7 @@ export class CommandContext extends ParserRuleContext {
 		return this.tryGetRuleContext(0, CollectionContext);
 	}
 	constructor(parent: ParserRuleContext, invokingState: number);
+
 	constructor(parent: ParserRuleContext, invokingState: number) {
 		super(parent, invokingState);
 	}
@@ -1114,6 +1170,7 @@ export class CommandContext extends ParserRuleContext {
 	@Override
 	public accept<Result>(visitor: mongoVisitor<Result>): Result {
 		if (visitor.visitCommand) return visitor.visitCommand(this);
+
 		else return visitor.visitChildren(this);
 	}
 }
@@ -1123,6 +1180,7 @@ export class EmptyCommandContext extends ParserRuleContext {
 		return this.getToken(mongoParser.SEMICOLON, 0);
 	}
 	constructor(parent: ParserRuleContext, invokingState: number);
+
 	constructor(parent: ParserRuleContext, invokingState: number) {
 		super(parent, invokingState);
 	}
@@ -1140,6 +1198,7 @@ export class EmptyCommandContext extends ParserRuleContext {
 	@Override
 	public accept<Result>(visitor: mongoVisitor<Result>): Result {
 		if (visitor.visitEmptyCommand) return visitor.visitEmptyCommand(this);
+
 		else return visitor.visitChildren(this);
 	}
 }
@@ -1149,6 +1208,7 @@ export class CollectionContext extends ParserRuleContext {
 		return this.getToken(mongoParser.STRING_LITERAL, 0);
 	}
 	constructor(parent: ParserRuleContext, invokingState: number);
+
 	constructor(parent: ParserRuleContext, invokingState: number) {
 		super(parent, invokingState);
 	}
@@ -1166,6 +1226,7 @@ export class CollectionContext extends ParserRuleContext {
 	@Override
 	public accept<Result>(visitor: mongoVisitor<Result>): Result {
 		if (visitor.visitCollection) return visitor.visitCollection(this);
+
 		else return visitor.visitChildren(this);
 	}
 }
@@ -1179,6 +1240,7 @@ export class FunctionCallContext extends ParserRuleContext {
 		return this.getToken(mongoParser.STRING_LITERAL, 0);
 	}
 	constructor(parent: ParserRuleContext, invokingState: number);
+
 	constructor(parent: ParserRuleContext, invokingState: number) {
 		super(parent, invokingState);
 	}
@@ -1196,6 +1258,7 @@ export class FunctionCallContext extends ParserRuleContext {
 	@Override
 	public accept<Result>(visitor: mongoVisitor<Result>): Result {
 		if (visitor.visitFunctionCall) return visitor.visitFunctionCall(this);
+
 		else return visitor.visitChildren(this);
 	}
 }
@@ -1207,6 +1270,7 @@ export class ArgumentsContext extends ParserRuleContext {
 		return this.tryGetRuleContext(0, ArgumentListContext);
 	}
 	constructor(parent: ParserRuleContext, invokingState: number);
+
 	constructor(parent: ParserRuleContext, invokingState: number) {
 		super(parent, invokingState);
 	}
@@ -1224,6 +1288,7 @@ export class ArgumentsContext extends ParserRuleContext {
 	@Override
 	public accept<Result>(visitor: mongoVisitor<Result>): Result {
 		if (visitor.visitArguments) return visitor.visitArguments(this);
+
 		else return visitor.visitChildren(this);
 	}
 }
@@ -1239,6 +1304,7 @@ export class ArgumentListContext extends ParserRuleContext {
 		return this.tryGetRuleContext(0, ArrayLiteralContext);
 	}
 	constructor(parent: ParserRuleContext, invokingState: number);
+
 	constructor(parent: ParserRuleContext, invokingState: number) {
 		super(parent, invokingState);
 	}
@@ -1256,6 +1322,7 @@ export class ArgumentListContext extends ParserRuleContext {
 	@Override
 	public accept<Result>(visitor: mongoVisitor<Result>): Result {
 		if (visitor.visitArgumentList) return visitor.visitArgumentList(this);
+
 		else return visitor.visitChildren(this);
 	}
 }
@@ -1267,6 +1334,7 @@ export class ObjectLiteralContext extends ParserRuleContext {
 		return this.tryGetRuleContext(0, PropertyNameAndValueListContext);
 	}
 	constructor(parent: ParserRuleContext, invokingState: number);
+
 	constructor(parent: ParserRuleContext, invokingState: number) {
 		super(parent, invokingState);
 	}
@@ -1284,6 +1352,7 @@ export class ObjectLiteralContext extends ParserRuleContext {
 	@Override
 	public accept<Result>(visitor: mongoVisitor<Result>): Result {
 		if (visitor.visitObjectLiteral) return visitor.visitObjectLiteral(this);
+
 		else return visitor.visitChildren(this);
 	}
 }
@@ -1293,6 +1362,7 @@ export class ArrayLiteralContext extends ParserRuleContext {
 		return this.tryGetRuleContext(0, ElementListContext);
 	}
 	constructor(parent: ParserRuleContext, invokingState: number);
+
 	constructor(parent: ParserRuleContext, invokingState: number) {
 		super(parent, invokingState);
 	}
@@ -1310,6 +1380,7 @@ export class ArrayLiteralContext extends ParserRuleContext {
 	@Override
 	public accept<Result>(visitor: mongoVisitor<Result>): Result {
 		if (visitor.visitArrayLiteral) return visitor.visitArrayLiteral(this);
+
 		else return visitor.visitChildren(this);
 	}
 }
@@ -1327,6 +1398,7 @@ export class ElementListContext extends ParserRuleContext {
 		}
 	}
 	constructor(parent: ParserRuleContext, invokingState: number);
+
 	constructor(parent: ParserRuleContext, invokingState: number) {
 		super(parent, invokingState);
 	}
@@ -1344,6 +1416,7 @@ export class ElementListContext extends ParserRuleContext {
 	@Override
 	public accept<Result>(visitor: mongoVisitor<Result>): Result {
 		if (visitor.visitElementList) return visitor.visitElementList(this);
+
 		else return visitor.visitChildren(this);
 	}
 }
@@ -1361,6 +1434,7 @@ export class PropertyNameAndValueListContext extends ParserRuleContext {
 		}
 	}
 	constructor(parent: ParserRuleContext, invokingState: number);
+
 	constructor(parent: ParserRuleContext, invokingState: number) {
 		super(parent, invokingState);
 	}
@@ -1381,6 +1455,7 @@ export class PropertyNameAndValueListContext extends ParserRuleContext {
 	public accept<Result>(visitor: mongoVisitor<Result>): Result {
 		if (visitor.visitPropertyNameAndValueList)
 			return visitor.visitPropertyNameAndValueList(this);
+
 		else return visitor.visitChildren(this);
 	}
 }
@@ -1393,6 +1468,7 @@ export class PropertyAssignmentContext extends ParserRuleContext {
 		return this.getRuleContext(0, PropertyValueContext);
 	}
 	constructor(parent: ParserRuleContext, invokingState: number);
+
 	constructor(parent: ParserRuleContext, invokingState: number) {
 		super(parent, invokingState);
 	}
@@ -1413,6 +1489,7 @@ export class PropertyAssignmentContext extends ParserRuleContext {
 	public accept<Result>(visitor: mongoVisitor<Result>): Result {
 		if (visitor.visitPropertyAssignment)
 			return visitor.visitPropertyAssignment(this);
+
 		else return visitor.visitChildren(this);
 	}
 }
@@ -1431,6 +1508,7 @@ export class PropertyValueContext extends ParserRuleContext {
 		return this.tryGetRuleContext(0, FunctionCallContext);
 	}
 	constructor(parent: ParserRuleContext, invokingState: number);
+
 	constructor(parent: ParserRuleContext, invokingState: number) {
 		super(parent, invokingState);
 	}
@@ -1448,6 +1526,7 @@ export class PropertyValueContext extends ParserRuleContext {
 	@Override
 	public accept<Result>(visitor: mongoVisitor<Result>): Result {
 		if (visitor.visitPropertyValue) return visitor.visitPropertyValue(this);
+
 		else return visitor.visitChildren(this);
 	}
 }
@@ -1466,6 +1545,7 @@ export class LiteralContext extends ParserRuleContext {
 		return this.tryGetToken(mongoParser.NumericLiteral, 0);
 	}
 	constructor(parent: ParserRuleContext, invokingState: number);
+
 	constructor(parent: ParserRuleContext, invokingState: number) {
 		super(parent, invokingState);
 	}
@@ -1483,6 +1563,7 @@ export class LiteralContext extends ParserRuleContext {
 	@Override
 	public accept<Result>(visitor: mongoVisitor<Result>): Result {
 		if (visitor.visitLiteral) return visitor.visitLiteral(this);
+
 		else return visitor.visitChildren(this);
 	}
 }
@@ -1492,6 +1573,7 @@ export class PropertyNameContext extends ParserRuleContext {
 		return this.getToken(mongoParser.StringLiteral, 0);
 	}
 	constructor(parent: ParserRuleContext, invokingState: number);
+
 	constructor(parent: ParserRuleContext, invokingState: number) {
 		super(parent, invokingState);
 	}
@@ -1509,6 +1591,7 @@ export class PropertyNameContext extends ParserRuleContext {
 	@Override
 	public accept<Result>(visitor: mongoVisitor<Result>): Result {
 		if (visitor.visitPropertyName) return visitor.visitPropertyName(this);
+
 		else return visitor.visitChildren(this);
 	}
 }
@@ -1521,6 +1604,7 @@ export class CommentContext extends ParserRuleContext {
 		return this.tryGetToken(mongoParser.MultiLineComment, 0);
 	}
 	constructor(parent: ParserRuleContext, invokingState: number);
+
 	constructor(parent: ParserRuleContext, invokingState: number) {
 		super(parent, invokingState);
 	}
@@ -1538,6 +1622,7 @@ export class CommentContext extends ParserRuleContext {
 	@Override
 	public accept<Result>(visitor: mongoVisitor<Result>): Result {
 		if (visitor.visitComment) return visitor.visitComment(this);
+
 		else return visitor.visitChildren(this);
 	}
 }

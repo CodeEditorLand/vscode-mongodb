@@ -19,14 +19,17 @@ export class MongoCommands {
 		database: Database,
 	): MongoCommand {
 		const activeEditor = vscode.window.activeTextEditor;
+
 		if (activeEditor.document.languageId !== "mongo") {
 			return;
 		}
 		const selection = activeEditor.selection;
+
 		const command = MongoCommands.getCommand(
 			activeEditor.document.getText(),
 			selection.start,
 		);
+
 		if (command) {
 			MongoCommands.executeCommand(command, database).then((result) =>
 				this.showResult(result, activeEditor.viewColumn + 1),
@@ -46,6 +49,7 @@ export class MongoCommands {
 			vscode.window.showErrorMessage(
 				"Please connect to the database first",
 			);
+
 			return;
 		}
 		return database.executeCommand(command).then(
@@ -61,6 +65,7 @@ export class MongoCommands {
 		let uri = vscode.Uri.file(
 			path.join(vscode.workspace.rootPath, "result.json"),
 		);
+
 		if (!fs.existsSync(uri.fsPath)) {
 			uri = uri.with({ scheme: "untitled" });
 		}
@@ -106,10 +111,12 @@ export class MongoCommands {
 			vscode.window.showErrorMessage(
 				"Please connect to the database first",
 			);
+
 			return;
 		}
 
 		const editor = vscode.window.activeTextEditor;
+
 		const documents = JSON.parse(editor.document.getText());
 		database
 			.updateDocuments(documents, command.collection)
@@ -140,6 +147,7 @@ export class MongoCommands {
 	): MongoCommand {
 		const lexer = new mongoLexer(new InputStream(content));
 		lexer.removeErrorListeners();
+
 		const parser = new mongoParser.mongoParser(
 			new CommonTokenStream(lexer),
 		);
@@ -148,8 +156,11 @@ export class MongoCommands {
 		const commands = new MongoScriptDocumentVisitor().visit(
 			parser.commands(),
 		);
+
 		let lastCommandOnSameLine = null;
+
 		let lastCommandBeforePosition = null;
+
 		if (position) {
 			for (const command of commands) {
 				if (command.range.contains(position)) {
@@ -185,11 +196,13 @@ export class MongoScriptDocumentVisitor extends MongoVisitor<MongoCommand[]> {
 			text: ctx.text,
 			name: "",
 		});
+
 		return super.visitCommand(ctx);
 	}
 
 	visitCollection(ctx: mongoParser.CollectionContext): MongoCommand[] {
 		this.commands[this.commands.length - 1].collection = ctx.text;
+
 		return super.visitCollection(ctx);
 	}
 
@@ -203,8 +216,10 @@ export class MongoScriptDocumentVisitor extends MongoVisitor<MongoCommand[]> {
 
 	visitArgumentList(ctx: mongoParser.ArgumentListContext): MongoCommand[] {
 		let argumentsContext = ctx.parent;
+
 		if (argumentsContext) {
 			let functionCallContext = argumentsContext.parent;
+
 			if (
 				functionCallContext &&
 				functionCallContext.parent instanceof mongoParser.CommandContext

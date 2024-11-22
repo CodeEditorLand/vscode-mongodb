@@ -50,13 +50,16 @@ export class MongoVisitor<T> implements mongoVisitor<T> {
 
 	visitChildren(ctx: ParserRuleContext): T {
 		var result = this.defaultResult(ctx);
+
 		var n = ctx.childCount;
+
 		for (var i = 0; i < n; i++) {
 			if (!this.shouldVisitNextChild(ctx, result)) {
 				break;
 			}
 
 			var childNode = ctx.getChild(i);
+
 			var childResult = childNode.accept(this);
 			result = this.aggregateResult(result, childResult);
 		}

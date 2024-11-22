@@ -41,6 +41,7 @@ export class LanguageService {
 		connection.onInitialize(
 			(params: InitializeParams): InitializeResult => {
 				workspaceRoot = URI.parse(params.rootPath);
+
 				return {
 					capabilities: {
 						textDocumentSync: this.textDocuments.syncKind, // Tell the client that the server works in FULL text document sync mode
@@ -69,6 +70,7 @@ export class LanguageService {
 
 		connection.onRequest("disconnect", () => {
 			this.db = null;
+
 			for (const schema of this.schemas) {
 				this.jsonLanguageService.resetSchema(schema.uri);
 			}
@@ -92,10 +94,12 @@ export class LanguageService {
 		const textDocument = this.textDocuments.get(
 			positionParams.textDocument.uri,
 		);
+
 		const mongoScriptDocument = this.mongoDocumentsManager.getDocument(
 			textDocument,
 			this.db,
 		);
+
 		return mongoScriptDocument.provideCompletionItemsAt(
 			positionParams.position,
 		);

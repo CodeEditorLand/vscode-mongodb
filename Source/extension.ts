@@ -22,8 +22,11 @@ import {
 } from "./mongo/mongo";
 
 let connectedDb: Database = null;
+
 let languageClient: MongoDBLanguageClient = null;
+
 let model: Model;
+
 let lastCommand: MongoCommand;
 
 export function activate(context: vscode.ExtensionContext) {
@@ -123,8 +126,11 @@ export function activate(context: vscode.ExtensionContext) {
 function createScrapbook(): Thenable<void> {
 	return new Promise(() => {
 		let uri: vscode.Uri = null;
+
 		let count = 1;
+
 		const max = 99999;
+
 		while (count < max) {
 			uri = vscode.Uri.file(
 				path.join(
@@ -132,6 +138,7 @@ function createScrapbook(): Thenable<void> {
 					`Scrapbook-${count}.mongo`,
 				),
 			);
+
 			if (
 				!vscode.workspace.textDocuments.find(
 					(doc) => doc.uri.fsPath === uri.fsPath,
@@ -145,6 +152,7 @@ function createScrapbook(): Thenable<void> {
 
 		if (count === max) {
 			vscode.window.showErrorMessage("Could not create new scrapbook.");
+
 			return;
 		}
 
@@ -197,6 +205,7 @@ function createDatabase(server: Server): void {
 class DatabaseQuickPick implements vscode.QuickPickItem {
 	readonly label: string;
 	readonly description: string;
+
 	constructor(readonly database: Database) {
 		this.label = database.label;
 		this.description = database.server.label + "/" + database.label;
@@ -205,6 +214,7 @@ class DatabaseQuickPick implements vscode.QuickPickItem {
 
 function getDatabaseQuickPicks(): Thenable<DatabaseQuickPick[]> {
 	const quickPicks: DatabaseQuickPick[] = [];
+
 	return model.getChildren().then((servers) => {
 		return Promise.all(servers.map((server) => server.getChildren())).then(
 			(allDatabases) => {
@@ -216,6 +226,7 @@ function getDatabaseQuickPicks(): Thenable<DatabaseQuickPick[]> {
 						),
 					);
 				});
+
 				return quickPicks;
 			},
 		);
