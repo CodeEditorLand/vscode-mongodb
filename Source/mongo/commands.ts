@@ -23,6 +23,7 @@ export class MongoCommands {
 		if (activeEditor.document.languageId !== "mongo") {
 			return;
 		}
+
 		const selection = activeEditor.selection;
 
 		const command = MongoCommands.getCommand(
@@ -52,6 +53,7 @@ export class MongoCommands {
 
 			return;
 		}
+
 		return database.executeCommand(command).then(
 			(result) => result,
 			(error) => vscode.window.showErrorMessage(error),
@@ -69,6 +71,7 @@ export class MongoCommands {
 		if (!fs.existsSync(uri.fsPath)) {
 			uri = uri.with({ scheme: "untitled" });
 		}
+
 		return vscode.workspace
 			.openTextDocument(uri)
 			.then((textDocument) =>
@@ -88,6 +91,7 @@ export class MongoCommands {
 						const lastLine = editor.document.lineAt(
 							editor.document.lineCount - 1,
 						);
+
 						editorBuilder.delete(
 							new vscode.Range(
 								new vscode.Position(0, 0),
@@ -98,6 +102,7 @@ export class MongoCommands {
 							),
 						);
 					}
+
 					editorBuilder.insert(new vscode.Position(0, 0), result);
 				});
 			});
@@ -118,6 +123,7 @@ export class MongoCommands {
 		const editor = vscode.window.activeTextEditor;
 
 		const documents = JSON.parse(editor.document.getText());
+
 		database
 			.updateDocuments(documents, command.collection)
 			.then((result) => {
@@ -126,6 +132,7 @@ export class MongoCommands {
 						const lastLine = editor.document.lineAt(
 							editor.document.lineCount - 1,
 						);
+
 						editorBuilder.delete(
 							new vscode.Range(
 								new vscode.Position(0, 0),
@@ -136,6 +143,7 @@ export class MongoCommands {
 							),
 						);
 					}
+
 					editorBuilder.insert(new vscode.Position(0, 0), result);
 				});
 			});
@@ -146,11 +154,13 @@ export class MongoCommands {
 		position?: vscode.Position,
 	): MongoCommand {
 		const lexer = new mongoLexer(new InputStream(content));
+
 		lexer.removeErrorListeners();
 
 		const parser = new mongoParser.mongoParser(
 			new CommonTokenStream(lexer),
 		);
+
 		parser.removeErrorListeners();
 
 		const commands = new MongoScriptDocumentVisitor().visit(
@@ -166,14 +176,17 @@ export class MongoCommands {
 				if (command.range.contains(position)) {
 					return command;
 				}
+
 				if (command.range.end.line === position.line) {
 					lastCommandOnSameLine = command;
 				}
+
 				if (command.range.end.isBefore(position)) {
 					lastCommandBeforePosition = command;
 				}
 			}
 		}
+
 		return (
 			lastCommandOnSameLine ||
 			lastCommandBeforePosition ||
@@ -211,6 +224,7 @@ export class MongoScriptDocumentVisitor extends MongoVisitor<MongoCommand[]> {
 			this.commands[this.commands.length - 1].name =
 				ctx._FUNCTION_NAME.text;
 		}
+
 		return super.visitFunctionCall(ctx);
 	}
 
@@ -227,6 +241,7 @@ export class MongoScriptDocumentVisitor extends MongoVisitor<MongoCommand[]> {
 				this.commands[this.commands.length - 1].arguments = ctx.text;
 			}
 		}
+
 		return super.visitArgumentList(ctx);
 	}
 

@@ -25,20 +25,29 @@ import { Shell } from "./shell";
 
 export interface MongoCommand {
 	range: vscode.Range;
+
 	text: string;
+
 	collection?: string;
+
 	name: string;
+
 	arguments?: string;
 }
 
 export interface IMongoResource extends vscode.TreeItem {
 	id: string;
+
 	label: string;
 
 	getChildren?(): Thenable<IMongoResource[]>;
+
 	onChange?: Event<void>;
+
 	contextValue?: string;
+
 	command?: Command;
+
 	iconPath?: { light: string; dark: string };
 }
 
@@ -80,15 +89,21 @@ class ServersJson {
 
 export class Model implements IMongoResource {
 	readonly id: string = "mongoExplorer";
+
 	readonly label: string = "Mongo";
+
 	readonly type: string = "mongoRoot";
+
 	readonly canHaveChildren: boolean = true;
 
 	private _serversJson: ServersJson;
+
 	private _servers: IMongoResource[] = [];
+
 	private _serverConnections: string[] = [];
 
 	private _onChange: EventEmitter<void> = new EventEmitter<void>();
+
 	readonly onChange: Event<void> = this._onChange.event;
 
 	constructor(storagePath: string) {
@@ -114,6 +129,7 @@ export class Model implements IMongoResource {
 	add(connectionString: string) {
 		this.resolveServer(connectionString, true).then((server) => {
 			this._serverConnections.push(connectionString);
+
 			this._serversJson.write(this._serverConnections).then(() => {
 				this._onChange.fire();
 			});
@@ -132,7 +148,9 @@ export class Model implements IMongoResource {
 
 		if (index !== -1) {
 			this._servers.splice(index, 1);
+
 			this._serversJson.write(this._servers.map((server) => server.id));
+
 			this._onChange.fire();
 		}
 	}
@@ -169,6 +187,7 @@ export class Model implements IMongoResource {
 
 export class NoConnectionServer implements IMongoResource {
 	readonly contextValue: string = "mongoServer";
+
 	readonly label: string;
 
 	constructor(
@@ -183,7 +202,9 @@ export class Server implements IMongoResource {
 	readonly contextValue: string = "mongoServer";
 
 	private _databases: Database[] = [];
+
 	private _onChange: EventEmitter<void> = new EventEmitter<void>();
+
 	readonly onChange: Event<void> = this._onChange.event;
 
 	constructor(
@@ -244,6 +265,7 @@ export class Server implements IMongoResource {
 						this._databases = value.databases.map(
 							(database) => new Database(database.name, this),
 						);
+
 						db.close();
 
 						return <IMongoResource[]>this._databases;
@@ -274,6 +296,7 @@ export class Database implements IMongoResource {
 	readonly contextValue: string = "mongoDb";
 
 	private _onChange: EventEmitter<void> = new EventEmitter<void>();
+
 	readonly onChange: Event<void> = this._onChange.event;
 
 	constructor(
@@ -347,6 +370,7 @@ export class Database implements IMongoResource {
 						return result;
 					}
 				}
+
 				return reportProgress(
 					this.executeCommandInShell(command),
 					"Executing command",
@@ -404,6 +428,7 @@ export class Database implements IMongoResource {
 				if (result) {
 					this._onChange.fire();
 				}
+
 				return JSON.stringify({ "dropped": result });
 			});
 		});
@@ -504,51 +529,60 @@ export class Collection implements IMongoResource {
 					"Running find query",
 				);
 			}
+
 			if (name === "drop") {
 				return reportProgress(this.drop(), "Dropping collection");
 			}
+
 			if (name === "findOne") {
 				return reportProgress(
 					this.findOne(args ? parseJSContent(args) : undefined),
 					"Running find query",
 				);
 			}
+
 			if (name === "insertMany") {
 				return reportProgress(
 					this.insertMany(args ? parseJSContent(args) : undefined),
 					"Inserting documents",
 				);
 			}
+
 			if (name === "insert") {
 				return reportProgress(
 					this.insert(args ? parseJSContent(args) : undefined),
 					"Inserting document",
 				);
 			}
+
 			if (name === "insertOne") {
 				return reportProgress(
 					this.insertOne(args ? parseJSContent(args) : undefined),
 					"Inserting document",
 				);
 			}
+
 			if (name === "deleteOne") {
 				return reportProgress(
 					this.deleteOne(args ? parseJSContent(args) : undefined),
 					"Deleting document",
 				);
 			}
+
 			if (name === "deleteMany") {
 				return reportProgress(
 					this.deleteMany(args ? parseJSContent(args) : undefined),
 					"Deleting documents",
 				);
 			}
+
 			if (name === "remove") {
 				return reportProgress(
 					this.remove(args ? parseJSContent(args) : undefined),
 					"Removing",
 				);
 			}
+
 			return null;
 		} catch (error) {
 			return Promise.resolve(error);
@@ -650,7 +684,9 @@ export class Collection implements IMongoResource {
 
 		return documents.reduce((result, doc) => {
 			const id = doc._id;
+
 			delete doc._id;
+
 			result.push({
 				updateOne: {
 					filter: {
@@ -682,7 +718,9 @@ function parseJSContent(content: string): any {
 		const sandbox = {};
 
 		const key = "parse" + Math.floor(Math.random() * 1000000);
+
 		sandbox[key] = {};
+
 		vm.runInNewContext(key + "=" + content, sandbox);
 
 		return sandbox[key];
@@ -698,5 +736,6 @@ function stripQuotes(term: string): string {
 	) {
 		return term.substring(1, term.length - 1);
 	}
+
 	return term;
 }

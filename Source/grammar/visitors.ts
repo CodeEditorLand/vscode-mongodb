@@ -61,8 +61,10 @@ export class MongoVisitor<T> implements mongoVisitor<T> {
 			var childNode = ctx.getChild(i);
 
 			var childResult = childNode.accept(this);
+
 			result = this.aggregateResult(result, childResult);
 		}
+
 		return result;
 	}
 

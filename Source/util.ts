@@ -122,6 +122,7 @@ export function groupBy<T>(
 ): { [key: string]: T[] } {
 	return arr.reduce((result, el) => {
 		const key = fn(el);
+
 		result[key] = [...(result[key] || []), el];
 
 		return result;
@@ -171,6 +172,7 @@ export async function mkdirp(path: string, mode?: number): Promise<boolean> {
 		}
 
 		await mkdirp(dirname(path), mode);
+
 		await mkdir();
 	}
 

@@ -88,6 +88,7 @@ export default class MongoDBLanguageClient {
 		const uri = Uri.parse(database.server.id);
 
 		const connectionString = `${uri.scheme}://${uri.authority}/${database.id}?${uri.query}`;
+
 		this.client.sendRequest("connect", { connectionString });
 	}
 

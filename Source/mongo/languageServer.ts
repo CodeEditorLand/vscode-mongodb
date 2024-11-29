@@ -8,7 +8,9 @@ import { LanguageService } from "./services/languageService";
 
 // Create a connection for the server
 let connection: IConnection = createConnection();
+
 console.log = connection.console.log.bind(connection.console);
+
 console.error = connection.console.error.bind(connection.console);
 
 new LanguageService(connection);

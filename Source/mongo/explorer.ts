@@ -22,6 +22,7 @@ export class MongoExplorer implements TreeDataProvider<IMongoResource> {
 
 	private _onDidChangeTreeData: EventEmitter<IMongoResource> =
 		new EventEmitter<IMongoResource>();
+
 	readonly onDidChangeTreeData: Event<IMongoResource> =
 		this._onDidChangeTreeData.event;
 
@@ -46,6 +47,7 @@ export class MongoExplorer implements TreeDataProvider<IMongoResource> {
 				disposable.dispose();
 			}
 		}
+
 		return node.getChildren().then((children) => {
 			this._disposables.set(
 				node,
@@ -55,6 +57,7 @@ export class MongoExplorer implements TreeDataProvider<IMongoResource> {
 							this._onDidChangeTreeData.fire(child),
 						);
 					}
+
 					return new Disposable(() => {});
 				}),
 			);

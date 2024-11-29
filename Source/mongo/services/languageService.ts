@@ -24,11 +24,15 @@ import SchemaService from "./schemaService";
 
 export class LanguageService {
 	private textDocuments: TextDocuments = new TextDocuments();
+
 	private readonly mongoDocumentsManager: MongoScriptDocumentManager;
+
 	private db: Db;
 
 	private jsonLanguageService: JsonLanguageService;
+
 	private schemaService: SchemaService;
+
 	private schemas: SchemaConfiguration[];
 
 	constructor(connection: IConnection) {
@@ -38,6 +42,7 @@ export class LanguageService {
 		// After the server has started the client sends an initilize request. The server receives
 		// in the passed params the rootPath of the workspace plus the client capabilities.
 		let workspaceRoot: URI;
+
 		connection.onInitialize(
 			(params: InitializeParams): InitializeResult => {
 				workspaceRoot = URI.parse(params.rootPath);
@@ -59,6 +64,7 @@ export class LanguageService {
 			MongoClient.connect(connectionParams.connectionString).then(
 				(db) => {
 					this.db = db;
+
 					this.schemaService
 						.registerSchemas(this.db)
 						.then((schemas) => {

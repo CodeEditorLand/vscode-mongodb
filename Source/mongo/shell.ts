@@ -11,6 +11,7 @@ import { dispose, IDisposable, toDisposable } from "./../util";
 
 export class Shell {
 	private executionId: number = 0;
+
 	private disposables: IDisposable[] = [];
 
 	private onResult: EventEmitter<{ exitCode; result; stderr }> =
@@ -43,6 +44,7 @@ export class Shell {
 	private initialize() {
 		const once = (ee: NodeJS.EventEmitter, name: string, fn: Function) => {
 			ee.once(name, fn);
+
 			this.disposables.push(
 				toDisposable(() => ee.removeListener(name, fn)),
 			);
@@ -50,15 +52,18 @@ export class Shell {
 
 		const on = (ee: NodeJS.EventEmitter, name: string, fn: Function) => {
 			ee.on(name, fn);
+
 			this.disposables.push(
 				toDisposable(() => ee.removeListener(name, fn)),
 			);
 		};
 
 		once(this.mongoShell, "error", (result) => this.onResult.fire(result));
+
 		once(this.mongoShell, "exit", (result) => this.onResult.fire(result));
 
 		let buffers: string[] = [];
+
 		on(this.mongoShell.stdout, "data", (b) => {
 			let data: string = b.toString();
 
@@ -68,7 +73,9 @@ export class Shell {
 				const result =
 					buffers.join("") +
 					data.substring(0, data.length - delimitter.length);
+
 				buffers = [];
+
 				this.onResult.fire({
 					exitCode: void 0,
 					result,
@@ -82,6 +89,7 @@ export class Shell {
 		on(this.mongoShell.stderr, "data", (result) =>
 			this.onResult.fire(result),
 		);
+
 		once(this.mongoShell.stderr, "close", (result) =>
 			this.onResult.fire(result),
 		);
@@ -98,8 +106,11 @@ export class Shell {
 
 		try {
 			this.mongoShell.stdin.write(script, "utf8");
+
 			this.mongoShell.stdin.write(os.EOL);
+
 			this.mongoShell.stdin.write(executionId, "utf8");
+
 			this.mongoShell.stdin.write(os.EOL);
 		} catch (error) {
 			window.showErrorMessage(error.toString());
@@ -109,6 +120,7 @@ export class Shell {
 
 		const once = (ee: NodeJS.EventEmitter, name: string, fn: Function) => {
 			ee.once(name, fn);
+
 			disposables.push(toDisposable(() => ee.removeListener(name, fn)));
 		};
 
@@ -127,13 +139,16 @@ export class Shell {
 				let lines = (<string>result.result)
 					.split(os.EOL)
 					.filter((line) => !!line && line !== 'Type "it" for more');
+
 				lines =
 					lines[lines.length - 1] === 'Type "it" for more'
 						? lines.splice(lines.length - 1, 1)
 						: lines;
 
 				let value = lines.join(os.EOL);
+
 				executed = true;
+
 				c(lines.join(os.EOL));
 
 				if (handler) {

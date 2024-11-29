@@ -52,6 +52,7 @@ export class MongoScriptDocument {
 		private jsonLanguageService: JsonLanguageService,
 	) {
 		this._lexer = new mongoLexer(new InputStream(textDocument.getText()));
+
 		this._lexer.removeErrorListeners();
 	}
 
@@ -59,6 +60,7 @@ export class MongoScriptDocument {
 		const parser = new mongoParser.mongoParser(
 			new CommonTokenStream(this._lexer),
 		);
+
 		parser.removeErrorListeners();
 
 		const offset = this.textDocument.offsetAt(position);
@@ -74,6 +76,7 @@ export class MongoScriptDocument {
 				this.jsonLanguageService,
 			).visit(lastNode);
 		}
+
 		return Promise.resolve([]);
 	}
 }
@@ -90,14 +93,18 @@ class NodeFinder extends MongoVisitor<ParseTree> {
 			if (stop < this.offset) {
 				return ctx;
 			}
+
 			return null;
 		}
+
 		if (ctx instanceof TerminalNode) {
 			if (ctx.symbol.stopIndex < this.offset) {
 				return ctx;
 			}
+
 			return null;
 		}
+
 		return null;
 	}
 
@@ -133,8 +140,10 @@ class NodeFinder extends MongoVisitor<ParseTree> {
 			) {
 				return aggregate;
 			}
+
 			return nextResult;
 		}
+
 		return nextResult ? nextResult : aggregate;
 	}
 }
