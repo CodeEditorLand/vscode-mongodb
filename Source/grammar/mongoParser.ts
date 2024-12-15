@@ -1296,7 +1296,6 @@ export class MongoCommandsContext extends ParserRuleContext {
 	@Override
 	public accept<Result>(visitor: mongoVisitor<Result>): Result {
 		if (visitor.visitMongoCommands) return visitor.visitMongoCommands(this);
-
 		else return visitor.visitChildren(this);
 	}
 }
@@ -1359,7 +1358,6 @@ export class CommandsContext extends ParserRuleContext {
 	@Override
 	public accept<Result>(visitor: mongoVisitor<Result>): Result {
 		if (visitor.visitCommands) return visitor.visitCommands(this);
-
 		else return visitor.visitChildren(this);
 	}
 }
@@ -1412,7 +1410,6 @@ export class CommandContext extends ParserRuleContext {
 	@Override
 	public accept<Result>(visitor: mongoVisitor<Result>): Result {
 		if (visitor.visitCommand) return visitor.visitCommand(this);
-
 		else return visitor.visitChildren(this);
 	}
 }
@@ -1441,7 +1438,6 @@ export class EmptyCommandContext extends ParserRuleContext {
 	@Override
 	public accept<Result>(visitor: mongoVisitor<Result>): Result {
 		if (visitor.visitEmptyCommand) return visitor.visitEmptyCommand(this);
-
 		else return visitor.visitChildren(this);
 	}
 }
@@ -1470,7 +1466,6 @@ export class CollectionContext extends ParserRuleContext {
 	@Override
 	public accept<Result>(visitor: mongoVisitor<Result>): Result {
 		if (visitor.visitCollection) return visitor.visitCollection(this);
-
 		else return visitor.visitChildren(this);
 	}
 }
@@ -1505,7 +1500,6 @@ export class FunctionCallContext extends ParserRuleContext {
 	@Override
 	public accept<Result>(visitor: mongoVisitor<Result>): Result {
 		if (visitor.visitFunctionCall) return visitor.visitFunctionCall(this);
-
 		else return visitor.visitChildren(this);
 	}
 }
@@ -1538,7 +1532,6 @@ export class ArgumentsContext extends ParserRuleContext {
 	@Override
 	public accept<Result>(visitor: mongoVisitor<Result>): Result {
 		if (visitor.visitArguments) return visitor.visitArguments(this);
-
 		else return visitor.visitChildren(this);
 	}
 }
@@ -1575,7 +1568,6 @@ export class ArgumentListContext extends ParserRuleContext {
 	@Override
 	public accept<Result>(visitor: mongoVisitor<Result>): Result {
 		if (visitor.visitArgumentList) return visitor.visitArgumentList(this);
-
 		else return visitor.visitChildren(this);
 	}
 }
@@ -1606,7 +1598,6 @@ export class ObjectLiteralContext extends ParserRuleContext {
 	@Override
 	public accept<Result>(visitor: mongoVisitor<Result>): Result {
 		if (visitor.visitObjectLiteral) return visitor.visitObjectLiteral(this);
-
 		else return visitor.visitChildren(this);
 	}
 }
@@ -1635,7 +1626,6 @@ export class ArrayLiteralContext extends ParserRuleContext {
 	@Override
 	public accept<Result>(visitor: mongoVisitor<Result>): Result {
 		if (visitor.visitArrayLiteral) return visitor.visitArrayLiteral(this);
-
 		else return visitor.visitChildren(this);
 	}
 }
@@ -1674,7 +1664,6 @@ export class ElementListContext extends ParserRuleContext {
 	@Override
 	public accept<Result>(visitor: mongoVisitor<Result>): Result {
 		if (visitor.visitElementList) return visitor.visitElementList(this);
-
 		else return visitor.visitChildren(this);
 	}
 }
@@ -1716,7 +1705,6 @@ export class PropertyNameAndValueListContext extends ParserRuleContext {
 	public accept<Result>(visitor: mongoVisitor<Result>): Result {
 		if (visitor.visitPropertyNameAndValueList)
 			return visitor.visitPropertyNameAndValueList(this);
-
 		else return visitor.visitChildren(this);
 	}
 }
@@ -1752,7 +1740,6 @@ export class PropertyAssignmentContext extends ParserRuleContext {
 	public accept<Result>(visitor: mongoVisitor<Result>): Result {
 		if (visitor.visitPropertyAssignment)
 			return visitor.visitPropertyAssignment(this);
-
 		else return visitor.visitChildren(this);
 	}
 }
@@ -1793,7 +1780,6 @@ export class PropertyValueContext extends ParserRuleContext {
 	@Override
 	public accept<Result>(visitor: mongoVisitor<Result>): Result {
 		if (visitor.visitPropertyValue) return visitor.visitPropertyValue(this);
-
 		else return visitor.visitChildren(this);
 	}
 }
@@ -1834,7 +1820,6 @@ export class LiteralContext extends ParserRuleContext {
 	@Override
 	public accept<Result>(visitor: mongoVisitor<Result>): Result {
 		if (visitor.visitLiteral) return visitor.visitLiteral(this);
-
 		else return visitor.visitChildren(this);
 	}
 }
@@ -1863,7 +1848,6 @@ export class PropertyNameContext extends ParserRuleContext {
 	@Override
 	public accept<Result>(visitor: mongoVisitor<Result>): Result {
 		if (visitor.visitPropertyName) return visitor.visitPropertyName(this);
-
 		else return visitor.visitChildren(this);
 	}
 }
@@ -1896,7 +1880,6 @@ export class CommentContext extends ParserRuleContext {
 	@Override
 	public accept<Result>(visitor: mongoVisitor<Result>): Result {
 		if (visitor.visitComment) return visitor.visitComment(this);
-
 		else return visitor.visitChildren(this);
 	}
 }
